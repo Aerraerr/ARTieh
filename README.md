@@ -1,6 +1,4 @@
-![Image Description](resources/images/ARTiehlogo.png)
-
-![Project Logo](images/logo.png)
+![Project Logo](resources/images/ARTiehlogo.png)
 # 🎨ARTieh: AN INTEGRATED E-COMMERCE PLATFORM FOR LOCAL ARTISTS AND ART ENTHUSIASTS IN ALBAY
 
 ## DESCRIPTION
