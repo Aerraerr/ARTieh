@@ -10,20 +10,20 @@
 
 </head>
 <body  class="bg-white text-gray-900">
-    
+
     
     <!-- Navbar   style="height:3000px;" -->
     <nav style="height:60px;" class="flex justify-between items-center px-10 py-6 shadow-sm bg-transparent">
         <div>
-            <img src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh Logo" class="h-12">
+            <img style="width:150px;" src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh" class="ml-[-30px] mt-2 sm:ml-2 h-10 sm:h-12">
         </div>
 
         <!-- Navigation Links -->
-        <div id="forNav" style="margin-left:600px;" class=" hidden md:flex space-x-6 " style="font-family: 'Rubik', sans-serif;  ">
-            <a href="#" class=" text-[#6e4d41] hover:text-gray-500 font-medium">PAINTINGS</a>
-            <a href="#" class="text-[#6e4d41]  hover:text-gray-500 font-medium">DRAWINGS</a>
-            <a href="#" class="text-[#6e4d41]  hover:text-gray-500 font-medium">SCULPTURE</a>
-            <a href="#" class="text-[#6e4d41]  hover:text-gray-500 font-medium">ARTISTS</a>
+        <div id="forNav" style="margin-left:600px;" class="mr-2  hidden md:flex space-x-2" style="font-family: 'Rubik', sans-serif;  ">
+            <a href="{{ route('paintings') }}" class="flex items-center justify-center  text-[#6e4d41] hover:text-gray-500 font-medium h-[60px] px-4  transition duration-300">PAINTINGS</a>
+            <a href="{{ route('paintings') }}" class="flex items-center justify-center  text-[#6e4d41] hover:text-gray-500 font-medium h-[60px] px-4  transition duration-300">DRAWINGS</a>
+            <a href="{{ route('paintings') }}" class="flex items-center justify-center  text-[#6e4d41] hover:text-gray-500 font-medium h-[60px] px-4  transition duration-300">SCULPTURES</a>
+            <a href="{{ route('paintings') }}" class="flex items-center justify-center  text-[#6e4d41] hover:text-gray-500 font-medium h-[60px] px-4  transition duration-300">ARTISTS</a>
         </div>
 
         <!-- Login/Register Buttons -->
@@ -34,17 +34,29 @@
         
 
         <!-- Mobile Menu Button -->
-        <button class="md:hidden block text-gray-800 focus:outline-none">
-            ☰
-        </button>
-    </nav>
+        <button id="menuBtn" class="md:hidden mr-[-25px] block text-[#6e4d41] focus:outline-none text-2xl ">☰</button>
+
+        </nav>
+        <div id="mobileMenu" class="hidden fixed inset-0 bg-white flex flex-col items-center justify-top space-y-7  shadow-md z-40">
+            <a id="navmobi" href="{{ route('paintings') }}" class="menu-link">PAINTINGS</a>
+            <a id="navmobi" href="{{ route('drawings') }}" class="menu-link">DRAWINGS</a>
+            <a id="navmobi" href="{{ route('sculptures') }}" class="menu-link">SCULPTURE</a>
+            <a id="navmobi" href="{{ route('artists') }}" class="menu-link">ARTISTS</a>
+
+            <a href="{{ route('login') }}" class="w-28 h-10 flex items-center justify-center bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">LOGIN</a>
+            <a href="{{ route('register') }}" class="w-28 h-10 flex items-center justify-center bg-[#6e4d41] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
+            <button id="closeMenu" class="absolute top-3 right-4 text-2xl text-gray-800">
+                &times;
+            </button>
+        </div>
+    
     
 
     <!-- Hero Section -->
-    <section class="ml-2 flex flex-col lg:flex-row items-center justify-between px-10 py-20">
+    <section class="ml-[-20px] sm:ml-5 flex flex-col lg:flex-row items-center justify-between px-10 py-20">
         <div class="max-w-lg">
-            <h1 class="text-4xl sm:text-6xl font-extrabold font-rubik text-[#1e1e1e] sm:text-[#6e4d41]" style="font-family: 'Rubik', sans-serif;  " >WELCOME!</h1>
-            <p class="text-3xl sm:text-6xl font-light mt-4 text-[#1e1e1e] sm:text-[#6e4d41]" style="line-height:1;">Where <br><b>Creativity</b>  <br>Finds Its <b>Home.</b> </p>
+            <h1 class="text-5xl sm:text-6xl font-bold font-rubik text-[#6e4d41] sm:text-[#6e4d41] " style="font-family: 'Rubik', sans-serif;  " >WELCOME!</h1>
+            <p class="text-4xl sm:text-6xl font-light mt-4 text-[#6e4d41] sm:text-[#6e4d41]" style="line-height:1;">Where <br><b>Creativity</b>  <br>Finds Its <b>Home.</b> </p>
             <p class="text-600 mt-4 text-[#1e1e1e] sm:text-[#6e4d41]" >
                 Discover unique artworks, connect with Albay's local artists, 
                 and bring creativity into your space.
@@ -55,7 +67,7 @@
     </section>
     
 
-    <div class="bgpaint">
+    <div class="bgpaint opacity-45 sm:opacity-100">
         <svg id="blob3" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
 	        <path fill="#A99476" d="M344.5,254Q327,268,318.5,279.5Q310,291,329.5,341Q349,391,330.5,426Q312,461,276,399.5Q240,338,212.5,374Q185,410,166.5,388.5Q148,367,148.5,336.5Q149,306,103,302.5Q57,299,46.5,269.5Q36,240,89.5,224.5Q143,209,118.5,171.5Q94,134,135.5,143.5Q177,153,181,111Q185,69,212.5,66.5Q240,64,265.5,74Q291,84,286.5,133Q282,182,337.5,155.5Q393,129,374,166Q355,203,358.5,221.5Q362,240,344.5,254Z" />
         </svg>
@@ -147,3 +159,21 @@
     </section>-->
 </body>
 </html>
+<script>
+    document.getElementById("menuBtn").addEventListener("click", function () {
+        let mobileMenu = document.getElementById("mobileMenu");
+        mobileMenu.classList.toggle("hidden");
+    });
+
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMenu = document.getElementById('closeMenu');
+
+    menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.remove('hidden');
+    });
+
+    closeMenu.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+    });
+</script>

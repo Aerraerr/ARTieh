@@ -109,12 +109,13 @@
     </div>
 
     <div class="modal-overlay" x-show="open">
-        <div class="modal-content bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 relative">
+        <div class="ml-1 mr-1 modal-content bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 relative">
         <!-- Close Button -->
-        <button @click="window.location.href='{{ url('/') }}'" 
-            class="absolute top-3 right-3 text-gray-600 hover:text-gray-800">
+        <button onclick="window.location.href='{{ route('home') }}'" 
+            class="absolute top-1 right-2 text-gray-300 hover:text-gray-800 text-2xl">
             &times;
         </button>
+
 
 
         <!-- Modal Content -->
@@ -141,10 +142,10 @@
                     <input type="password" id="password" placeholder="Confirm password" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
                 </div>
 
-                <div class="flex justify-between items-center mt-3">
-                    <label class="ml-1 flex items-center text-sm text-gray-600">
-                        <input type="checkbox" class="mr-2"> I agree <a href="#" class="ml-1 mr-1 text-sm text-[#A99476] hover:underline"> Terms of Service</a>
-                         and <a href="#" class="ml-1 text-sm text-[#A99476] hover:underline"> Privacy Policy</a>
+                <div class="flex justify-between items-center mt-3 ">
+                    <label class="ml-1 flex items-center text-[12px] text-gray-600">
+                        <input type="checkbox" class="mr-2 w-3 h-3"> I agree <a href="#" class="ml-1 mr-1 text-[12px] text-[#A99476] hover:underline"> Terms of Service</a>
+                         and <a href="#" class="ml-1 text-[12px] text-[#A99476] hover:underline"> Privacy Policy</a>
                     </label>
                 </div>
 
@@ -154,7 +155,7 @@
             </form>
 
             <!-- Register Link -->
-            <p class="text-center text-gray-600 text-sm mt-4">
+            <p class="text-center text-gray-600 text-[13px] mt-4">
                 Already have an account? <a href="{{ route('login') }}" class="text-[#A99476] hover:underline">Login</a>
             </p>
 
