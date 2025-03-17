@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARTieh - Where Creativity Finds Its Home</title>
+    <title>Paintings</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -40,11 +40,11 @@
 
     </nav>
     <div id="mobileMenu" class="hidden fixed inset-0 bg-white flex flex-col items-center justify-top space-y-7  shadow-md z-40">
-    <a id="navmobi" href="{{ route('paintings') }}" style="text-decoration: underline;text-underline-offset: 23px;text-decoration-thickness:2px; " class="menu-link flex items-center justify-center  text-[#6e4d41] hover:text-gray-500 font-medium h-[60px] px-3  transition duration-500 ">PAINTINGS</a>
-    <a id="navmobi" href="{{ route('drawings') }}" class="hover:text-[#6e4d41] hover:opacity-90 menu-link  opacity-60 transition duration-500 ">DRAWINGS</a>
-    <a id="navmobi" href="{{ route('sculptures') }}" class="hover:text-[#6e4d41] hover:opacity-90 menu-link opacity-60 transition duration-500 ">SCULPTURE</a>
-    <a id="navmobi" href="{{ route('artists') }}" class="hover:text-[#6e4d41] hover:opacity-90 menu-link opacity-60 transition duration-500 ">ARTISTS</a>
-    <a id="navmobi" href="{{ route('artists') }}" class="hover:text-[#6e4d41] hover:opacity-90 menu-link opacity-60 transition duration-500 ">ANNOUNCMENTS</a>
+    <a id="navmobi" href="{{ route('paintings') }}" style="text-decoration: underline;text-underline-offset: 23px;text-decoration-thickness:2px; " class="menu-link flex items-center justify-center  text-[#6e4d41] hover:text-gray-500 font-medium h-[60px] px-3  transition duration-300 ">PAINTINGS</a>
+    <a id="navmobi" href="{{ route('drawings') }}" class="hover:text-[#6e4d41] hover:opacity-90 menu-link  opacity-60 transition duration-300 ">DRAWINGS</a>
+    <a id="navmobi" href="{{ route('sculptures') }}" class="hover:text-[#6e4d41] hover:opacity-90 menu-link opacity-60 transition duration-300 ">SCULPTURE</a>
+    <a id="navmobi" href="{{ route('artists') }}" class="hover:text-[#6e4d41] hover:opacity-90 menu-link opacity-60 transition duration-300 ">ARTISTS</a>
+    <a id="navmobi" href="{{ route('artists') }}" class="hover:text-[#6e4d41] hover:opacity-90 menu-link opacity-60 transition duration-300 ">ANNOUNCMENTS</a>
 
         <a href="{{ route('login') }}" class="w-28 h-10 flex items-center justify-center bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">LOGIN</a>
         <a href="{{ route('register') }}" class="w-28 h-10 flex items-center justify-center bg-[#6e4d41] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
@@ -56,7 +56,7 @@
     
     
 
-    <div class="bgpaint opacity-45 sm:opacity-100">
+    <div class="bgpaint opacity-45 sm:opacity-45">
         <svg id="blob3" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
 	        <path fill="#A99476" d="M344.5,254Q327,268,318.5,279.5Q310,291,329.5,341Q349,391,330.5,426Q312,461,276,399.5Q240,338,212.5,374Q185,410,166.5,388.5Q148,367,148.5,336.5Q149,306,103,302.5Q57,299,46.5,269.5Q36,240,89.5,224.5Q143,209,118.5,171.5Q94,134,135.5,143.5Q177,153,181,111Q185,69,212.5,66.5Q240,64,265.5,74Q291,84,286.5,133Q282,182,337.5,155.5Q393,129,374,166Q355,203,358.5,221.5Q362,240,344.5,254Z" />
         </svg>

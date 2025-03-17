@@ -36,4 +36,7 @@ Route::get('/artists', function () {
 })->name('artists');
 
 
-
+//  FOR ADMIN
+Route::get('/admin', function () {
+    return view('Admin.admin');
+})->name('admin');
