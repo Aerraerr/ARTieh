@@ -127,3 +127,14 @@ Contributions to this project are **restricted** to students enrolled in **BSIT 
 
 Contributions from outside the class are currently not being accepted. Thank you for your understanding.
 
+
+
+## Bonus -- Install Datatable ( If Not Installed)
+
+```sh
+composer require yajra/laravel-datatables-oracle
+
+php artisan vendor:publish --tag=datatables
+```
+
+
