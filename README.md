@@ -1,66 +1,129 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+![Project Logo](resources/images/ARTiehlogo.png)
+# 🎨ARTieh: AN INTEGRATED E-COMMERCE PLATFORM FOR LOCAL ARTISTS AND ART ENTHUSIASTS IN ALBAY
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## DESCRIPTION
 
-## About Laravel
+<h3><strong></strong></h3>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+ARTieh is a dedicated e-commerce platform that connects local artists with buyers in the Albay area. It provides a seamless marketplace where artists can showcase and sell their artworks while art enthusiasts can discover and purchase unique pieces, fostering a thriving local art community.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## OBJECTIVES
+1. Streamline the showcasing and selling of artworks for better efficiency and convenience.
+2. Develop a user-friendly e-commerce platform that offers personalized customer needs, allowing users to easily discover and purchase local artworks.
+3. Support all types of artists, from traditional painters to digital creators, ensuring a diverse representation of Albay’s art scene.
+4. Empower small and medium-sized artists in Albay by providing them with an online marketplace to increase visibility and sales, helping them grow their creative businesses.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## VISION
+This project aims to empower local artists by providing them with a dedicated platform to showcase their work while fostering a thriving art community in Albay.
 
-## Learning Laravel
+## TARGET MARKET
+1. Small and medium-sized artists in Albay who need a reliable digital platform to showcase and sell their artwork.
+2. Art enthusiasts and collectors from Albay and beyond, looking for unique, local artworks to add to their collection.
+3. Local residents of Albay seeking to support and purchase original artwork that represents their cultural heritage.
+4. People hosting events, such as exhibitions or gallery openings, who need to source local artworks for display.
+5. Individuals seeking meaningful, one-of-a-kind pieces for their homes or businesses.
+6. Tourists and visitors to Albay who are interested in purchasing local artwork as souvenirs or to support the local art scene.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## INSTALLATION AND USAGE INSTRUCTIONS
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Prerequisites
+- PHP >= 8.0
+- Composer
+- MySQL
+- Node.js & npm
+- Git
 
-## Laravel Sponsors
+## Steps
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+#### 1. Clone the repository: First, clone the project from your Git repository
+```sh
+    git clone https://github.com/Aerraerr/ARTieh.git
+    cd ARTieh
+```
 
-### Premium Partners
+#### 2. Install PHP Dependencies: Use Composer to install the required PHP dependencies for Laravel
+```sh
+    composer install
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+#### 2.1 Install Doctrine DBAL: This package is often required for database migrations and schema management.
+```sh
+    composer require doctrine/dbal
+```
 
-## Contributing
+#### 3. Install JavaScript Dependencies: Install the required JavaScript packages (Bootstrap, etc.) using npm
+```sh
+    npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### 3.1 Install Laravel Mix through NPM
+```sh
+    npm init -y
+    npm install laravel-mix --save-dev
+```
 
-## Code of Conduct
+#### 4. Open the webpack.mix.js file and add this following code (if it's not yet there)
+```js
+    let mix = require('laravel-mix');
+    mix.js('src/app.js', 'dist').setPublicPath('dist');
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### 5. Install Livewire
+```sh
+    composer require livewire/livewire
+```
 
-## Security Vulnerabilities
+#### 6. Set Up Environment Variables: Create a .env file by copying the example file
+```sh
+    cp .env.example .env
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### 7. Open the .env file and update the following variables to match your local environment
+```sh
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE= artiehdb
+    DB_USERNAME=root
+    DB_PASSWORD=""
+```
 
-## License
+#### 8. Go to your XAMPP and create a database named "artiehdb", make sure your XAMPP server is running
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### 9. Run the Artisan Key Generate Command
+```sh
+    php artisan key:generate
+```
+
+#### 10. Run the artisan migrate command to migrate the database to your local machine
+```sh
+    php artisan migrate
+```
+
+#### 11. Run the database seed command to populate your database
+```sh
+    php artisan db:seed
+```
+
+#### 12. Run the Application: Finally, run the application locally
+```sh
+    php artisan serve
+```
+
+The application will be available at [http://localhost:8000](http://localhost:8000)
+
+## CONTRIBUTIONS
+
+Contributions to this project are **restricted** to students enrolled in **BSIT - 3B of Bicol University College of Science**. If you are a member of this class and would like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them with descriptive messages.
+4. Push your branch to your forked repository.
+5. Create a pull request to the main repository.
+
+## Note
+
+Contributions from outside the class are currently not being accepted. Thank you for your understanding.
+
