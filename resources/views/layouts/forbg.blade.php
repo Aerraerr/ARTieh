@@ -3,30 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARTieh - Where Creativity Finds Its Home</title>
+    <title>Drawings</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 </head>
 <body  class="bg-white text-gray-900">
-@include('layouts.forNav')
-    <!-- Hero Section -->
-    <section class="ml-[-20px] sm:ml-5 flex flex-col lg:flex-row items-center justify-between px-10 py-20">
-        <div class="max-w-lg">
-            <h1 class="text-5xl sm:text-6xl font-bold font-rubik text-[#6e4d41] sm:text-[#6e4d41] " style="font-family: 'Rubik', sans-serif;  " >WELCOME!</h1>
-            <p class="text-4xl sm:text-6xl font-light mt-4 text-[#6e4d41] sm:text-[#6e4d41]" style="line-height:1;">Where <br><b>Creativity</b>  <br>Finds Its <b>Home.</b> </p>
-            <p class="text-600 mt-4 text-[#1e1e1e] sm:text-[#6e4d41]" >
-                Discover unique artworks, connect with Albay's local artists, 
-                and bring creativity into your space.
-            </p>
-            <a style="text-decoration:none;" href="#" class="bg-[#6e4d41] sm:bg-[#6e4d41] sm:bg-500 mt-6 inline-block text-white px-6 py-3 rounded-lg text-lg hover:bg-[#A99476] transition">Explore Now</a>
 
-        </div>
-    </section>
-    
-
-    <div class="bgpaint opacity-45 sm:opacity-100">
+    <div class="bgpaint opacity-45 sm:opacity-30">
         <svg id="blob3" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
 	        <path fill="#A99476" d="M344.5,254Q327,268,318.5,279.5Q310,291,329.5,341Q349,391,330.5,426Q312,461,276,399.5Q240,338,212.5,374Q185,410,166.5,388.5Q148,367,148.5,336.5Q149,306,103,302.5Q57,299,46.5,269.5Q36,240,89.5,224.5Q143,209,118.5,171.5Q94,134,135.5,143.5Q177,153,181,111Q185,69,212.5,66.5Q240,64,265.5,74Q291,84,286.5,133Q282,182,337.5,155.5Q393,129,374,166Q355,203,358.5,221.5Q362,240,344.5,254Z" />
         </svg>
@@ -90,32 +75,9 @@
             </g>
         </svg>
     </div>
-    <section>
-        <!--<div class="section2">-->
-
-        </div>
-
-    </section>
 
 
-    
 
-
-    
-
-
-    <!-- Featured Paintings 
-    <section class="text-center px-10 py-16 bg-gray-100">
-        <h2 class="text-4xl font-bold">Featured Paintings</h2>
-        <div class="flex justify-center mt-6">
-            <div class="p-4 bg-white shadow-lg rounded-lg max-w-xs">
-                <img src="{{ asset('storage/featured-art.jpg') }}" alt="Wallowing Breeze" class="w-full h-80 object-cover rounded-md">
-                <p class="font-semibold mt-2">Wallowing Breeze</p>
-                <p class="text-gray-500">Aeron Jead Marquez</p>
-                <p class="text-gray-500 text-sm">Oil on canvas, 2008</p>
-            </div>
-        </div>
-    </section>-->
 </body>
 </html>
 <script>
