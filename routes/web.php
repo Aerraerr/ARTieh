@@ -40,3 +40,7 @@ Route::get('/artists', function () {
 Route::get('/admin', function () {
     return view('Admin.admin');
 })->name('admin');
+
+Route::get('/profile', function () {
+    return view('Mods.profile');
+})->name('profile');
