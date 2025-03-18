@@ -17,7 +17,7 @@
     <nav style="height:60px;" class="flex justify-between items-center px-10 py-6 shadow-sm bg-transparent">
         <div >
         <a href="{{ route('home') }}">
-            <img style="max-width:150px;" src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh" class="ml-[-30px] mt-2 sm:ml-2 h-10 sm:h-12">
+            <img style="max-width:120px;" src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh" class="ml-[-30px] mt-2 sm:ml-2 h-10 sm:h-12">
         </a>
         </div>
 
