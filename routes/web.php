@@ -1,10 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\UserController;
-use App\Models\Register;
-use Illuminate\Http\Request;
+
 
 Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
 
@@ -86,54 +84,3 @@ Route::get('/footer', function () {
 Route::get('/profile', function () {
     return view('Mods.profile');
 })->name('profile');
-
-Route::get('/login', function () {
-    return view('Registration.login');
-})->name('login');
-
-//code para mag check kang acc if existing
-Route::post('/login', function (Request $request) {   
-    // Validate the input
-    $credentials = $request->validate([
-        'email' => 'required|email',
-        'password' => 'required'
-    ]);
-
-    // Find the user by email
-    $user = Register::where('email', $credentials['email'])->first();
-
-    // Compare the plain-text password (no hashing yes na yes)
-    if ($user && $user->password === $credentials['password']) {
-        // Store user data in session
-        Session::put('user_id', $user->id);
-        Session::put('user_email', $user->email);
-
-        // Redirect to the landing page with success message
-        echo "<script>alert('Logged in successfully!'); window.location.href='/';</script>";
-    } else {
-        // Redirect back with error message
-        return redirect()->back()->with('error', 'Invalid email or password');
-    }
-})->name('login');
-
-
-Route::get('/register', function () {
-    return view('Registration.register');
-})->name('register');
-
-//tapok sa database so form data
-Route::post('/register', function (){ // Inject Request here : Request $request
-    $register = new Register();
-    $register->email = request('email');
-    $register->password = request('password');  //Hash::make($request->password); dai ko namuna tig hash for the sake of presentation onli whahah
-    $register->save();
-    
-    //balik sa home page
-    return redirect('/')->with('success', 'Registration successful!');
-});
-
-//logout na ano paman
-Route::get('/logout', function () {
-    Session::flush(); 
-    echo "<script>alert('Logged out successfully!'); window.location.href='/';</script>";
-})->name('logout');

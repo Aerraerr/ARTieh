@@ -27,9 +27,6 @@
     left: 0;
 }
 
-body{
-    height:3000px;
-}
 .logo-size {
     width: 120px;
 }
@@ -54,7 +51,7 @@ body{
 }
 #blob1 {
     position: absolute;
-    top: 5%;
+    top: 12%;
     left: 95%;
     transform: translate(-50%, -50%); /* Centers the blob */
     width: 500px; /* Adjust size as needed */
@@ -71,7 +68,7 @@ body{
 }
 #blob3 {
     position: absolute;
-    top: 15%;
+    top: 40%;
     left: 93%;
     transform: translate(-50%, -50%) rotate(-40deg); /* Centers the blob */
     width: 2500px;
@@ -81,7 +78,7 @@ body{
 }
 #blob4 {
     position: absolute;
-    top: 20%;
+    top: 52%;
     left: 95%;
     transform: translate(-50%, -50%) rotate(45deg); /* Centers the blob */
     width: 300px; /* Adjust size as needed */
@@ -89,7 +86,7 @@ body{
 }
 #blob5 {
     position: absolute;
-    top: 28%;
+    top: 75%;
     left: 70%;
     transform: translate(-50%, -50%) rotate(5deg); /* Centers the blob */
     width: 500px; /* Adjust size as needed */
@@ -97,7 +94,7 @@ body{
 }
 #blob6{
     position: absolute;
-    top: 30%;
+    top: 82%;
     left: 80%;
     transform: translate(-50%, -50%) rotate(5deg); /* Centers the blob */
     width: 600px; /* Adjust size as needed */
@@ -105,7 +102,7 @@ body{
 }
 #blob7{
     position: absolute;
-    top: 36%;
+    top: 97%;
     left: 75%;
     transform: translate(-50%, -50%) rotate(55deg); /* Centers the blob */
     width: 600px; /* Adjust size as needed */
@@ -113,7 +110,7 @@ body{
 }
 #blob8{
     position: absolute;
-    top: 40%;
+    top: 100%;
     left: 90%;
     transform: translate(-50%, -50%) rotate(10deg); /* Centers the blob */
     width: 900px; /* Adjust size as needed */
@@ -121,7 +118,7 @@ body{
 }
 #blobout5{
     position: absolute;
-    top: 40%;
+    top: 100%;
     left: 95%;
     transform: translate(-50%, -50%) rotate(10deg); /* Centers the blob */
     width: 900px; /* Adjust size as needed */
@@ -129,7 +126,7 @@ body{
 }
 #blobout4{
     position: absolute;
-    top: 30%;
+    top: 82%;
     left: 78%;
     transform: translate(-50%, -50%) rotate(5deg); /* Centers the blob */
     width: 600px; /* Adjust size as needed */
@@ -138,7 +135,7 @@ body{
 
 #blobout3 {
     position: absolute;
-    top: 20%;
+    top: 52%;
     left: 97%;
     transform: translate(-50%, -50%) rotate(45deg); /* Centers the blob */
     width: 350px; /* Adjust size as needed */
@@ -146,7 +143,7 @@ body{
 }
 #blobout2 {
     position: absolute;
-    top: 15%;
+    top: 42%;
     left: 90%;
     transform: translate(-50%, -50%) rotate(-40deg); /* Centers the blob */
     width: 2500px;
@@ -167,7 +164,6 @@ body{
 
 .bgpaint{
     width: 100%;
-    height: 2000px;
 }
 .section2{
     background-color: #F6EBDA;
@@ -178,89 +174,32 @@ body{
 
 #paintbrush{
     position: absolute;
-    top: 23%;
+    top: 60%;
     left: 95%;
     transform: translate(-50%, -50%) rotate(95deg);
 }
 #paint2{
     position: absolute;
-    top: 30%;
+    top: 75%;
     left: 90%;
     transform: translate(-50%, -50%) rotate(-25deg);
 }
 
-#loginbtn{
-    font-family: Rubik;
-}
-#navmobi {
-    position: relative;
-    text-decoration: none;
-    color: #6e4d41;
-    font-weight: 600;
-    transition: color 0.3s ease-in-out;
-}
 
-#navmobi::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: -2px;
-    width: 0;
-    height: 2px;
-    background-color: #6e4d41;
-    transition: width 0.4s ease-in-out 0.1s, left 0.4s ease-in-out 0.1s, opacity 0.3s;
-    opacity: 0;
-    margin-top: -200px;
-}
 
-#navmobi:hover {
-    color: #4a322a;
-}
 
-#navmobi:hover::after {
-    width: 100%;
+/* LOGIN*/
+
+.modal-overlay {
+    position: fixed; /* Covers entire screen */
+    top: 0;
     left: 0;
-    opacity: 1;
-
-}
-
-
-
-#mobileMenu{
-    padding-top: 100px;
-    
-}
-#mobileMenu a{
-    text-decoration: none;
-}
-.search-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Ensures filters are in one row */
-.search-bar div {
-    display: flex;
-    gap: 10px;
     width: 100%;
-}
-
-/* Input and Button on the next row */
-@media (min-width: 768px) { /* For larger screens */
-    .search-bar {
-        flex-wrap: nowrap;
-    }
-    .search-bar div {
-        width: auto;
-    }
-}
-.btn-primary{
-    background-color: #6e4d41;
-    border: none;
-}
-.btn-primary:hover {
-    color: #FFE0B2;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+    backdrop-filter: blur(2px); /* Optional: Adds slight blur */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50; /* Ensures it's above other elements */
 }

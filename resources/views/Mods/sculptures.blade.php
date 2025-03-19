@@ -15,7 +15,6 @@
 @include('layouts.forNav')
 @extends('layouts.forbg')
 
-
     
     
     
