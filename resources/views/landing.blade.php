@@ -10,48 +10,7 @@
 
 </head>
 <body  class="bg-white text-gray-900">
-
-    
-    <!-- Navbar   style="height:3000px;" -->
-    <nav style="height:60px;" class="flex justify-between items-center px-10 py-6 shadow-sm bg-transparent">
-        <div>
-            <img style="width:150px;" src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh" class="ml-[-30px] mt-2 sm:ml-2 h-10 sm:h-12">
-        </div>
-
-        <!-- Navigation Links -->
-        <div id="forNav" style="margin-left:600px;" class="mr-2  hidden md:flex space-x-2" style="font-family: 'Rubik', sans-serif;  ">
-            <a href="{{ route('paintings') }}" class="flex items-center justify-center  text-[#6e4d41] hover:text-gray-500 font-medium h-[60px] px-4  transition duration-300">PAINTINGS</a>
-            <a href="{{ route('paintings') }}" class="flex items-center justify-center  text-[#6e4d41] hover:text-gray-500 font-medium h-[60px] px-4  transition duration-300">DRAWINGS</a>
-            <a href="{{ route('paintings') }}" class="flex items-center justify-center  text-[#6e4d41] hover:text-gray-500 font-medium h-[60px] px-4  transition duration-300">SCULPTURES</a>
-            <a href="{{ route('paintings') }}" class="flex items-center justify-center  text-[#6e4d41] hover:text-gray-500 font-medium h-[60px] px-4  transition duration-300">ARTISTS</a>
-        </div>
-
-        <!-- Login/Register Buttons -->
-        <div class="hidden md:flex space-x-4">
-            <a id="loginbtn" href="{{ route('login') }}" class=" px-7 py-1 bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">LOGIN</a>
-            <a href="{{ route('register') }}" class="px-7 py-1 bg-[#A99476] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
-        </div>
-        
-
-        <!-- Mobile Menu Button -->
-        <button id="menuBtn" class="md:hidden mr-[-25px] block text-[#6e4d41] focus:outline-none text-2xl ">☰</button>
-
-        </nav>
-        <div id="mobileMenu" class="hidden fixed inset-0 bg-white flex flex-col items-center justify-top space-y-7  shadow-md z-40">
-            <a id="navmobi" href="{{ route('paintings') }}" class="menu-link">PAINTINGS</a>
-            <a id="navmobi" href="{{ route('drawings') }}" class="menu-link">DRAWINGS</a>
-            <a id="navmobi" href="{{ route('sculptures') }}" class="menu-link">SCULPTURE</a>
-            <a id="navmobi" href="{{ route('artists') }}" class="menu-link">ARTISTS</a>
-
-            <a href="{{ route('login') }}" class="w-28 h-10 flex items-center justify-center bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">LOGIN</a>
-            <a href="{{ route('register') }}" class="w-28 h-10 flex items-center justify-center bg-[#6e4d41] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
-            <button id="closeMenu" class="absolute top-3 right-4 text-2xl text-gray-800">
-                &times;
-            </button>
-        </div>
-    
-    
-
+@include('layouts.forNav')
     <!-- Hero Section -->
     <section class="ml-[-20px] sm:ml-5 flex flex-col lg:flex-row items-center justify-between px-10 py-20">
         <div class="max-w-lg">
@@ -61,7 +20,7 @@
                 Discover unique artworks, connect with Albay's local artists, 
                 and bring creativity into your space.
             </p>
-            <a href="#" class="bg-[#6e4d41] sm:bg-[#6e4d41] sm:bg-500 mt-6 inline-block text-white px-6 py-3 rounded-lg text-lg hover:bg-[#A99476] transition">Explore Now</a>
+            <a style="text-decoration:none;" href="#" class="bg-[#6e4d41] sm:bg-[#6e4d41] sm:bg-500 mt-6 inline-block text-white px-6 py-3 rounded-lg text-lg hover:bg-[#A99476] transition">Explore Now</a>
 
         </div>
     </section>

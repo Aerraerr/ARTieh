@@ -32,12 +32,12 @@
 .search-bar .btn:hover {
     background-color: #5A3D32; /* Darker brown on hover */
 }
-.line{
-    width: 94%;
-    height: 0.5px;
-    margin: 20px;
-    border-radius: 5px;
-    background-color: #6E4D41;
+.line {
+    width: 92%;  /* Adjust width relative to parent */
+    margin: 20px auto;  /* Center the line */
+    border: none;  /* Remove default border */
+    height: 2px;  /* Adjust thickness */
+    background-color: #6e4d41;  /* Match color theme */
 }
 
 /* Ensures all cards are uniform */
