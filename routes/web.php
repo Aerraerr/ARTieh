@@ -1,22 +1,24 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
     return view('landing');
 });
 
+
 Route::get('/', function () {
     return view('landing');
 })->name('home'); 
 
-Route::get('/login', function () {
-    return view('Registration.login');
-})->name('login');
 
-Route::get('/register', function () {
-    return view('Registration.register');
-})->name('register');
+Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 Route::get('/paintings', function () {
@@ -40,3 +42,5 @@ Route::get('/artists', function () {
 Route::get('/admin', function () {
     return view('Admin.admin');
 })->name('admin');
+
+

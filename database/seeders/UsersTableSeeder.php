@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\Hash; 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -20,6 +20,7 @@ class UsersTableSeeder extends Seeder
                 'last_name' => '', 
                 'email' => 'administrator@artieh.com',
                 'password' => Hash::make('artiehadministrator'),
+                'phone' => null,
                 'role' => 'admin',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -27,7 +28,7 @@ class UsersTableSeeder extends Seeder
             [
                 'first_name' => 'Aeron Jead',
                 'last_name' => 'Marquez',
-                'email' => 'marquezaeronjead@gmail..com',
+                'email' => 'marquezaeronjead@gmail.com',
                 'password' => Hash::make('marquezaeronjead'),
                 'phone' => '09916668005',
                 'role' => 'seller',
@@ -46,11 +47,4 @@ class UsersTableSeeder extends Seeder
             ],
         ]);
     }
-    public function run(): void
-    {
-        $this->call([
-            UsersTableSeeder::class,
-        ]);
-    }
-
 }

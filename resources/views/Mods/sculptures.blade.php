@@ -30,8 +30,21 @@
 
         <!-- Login/Register Buttons -->
         <div class="hidden md:flex space-x-4">
-            <a id="loginbtn" href="{{ route('login') }}" class=" px-7 py-1 bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">LOGIN</a>
-            <a href="{{ route('register') }}" class="px-7 py-1 bg-[#A99476] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
+            @auth
+                    <!-- User is logged in: buttons hidden -->
+                    <span   class="px-7 py-1 text-white"> {{ explode('@', Auth::user()->email)[0] }} </span><!-- so inot na name lang tigdisplay ko sa email -->
+                    
+                    <form action="{{ route('logout') }}" method="POST" class="px-7 py-1 bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">
+                        @csrf
+                        <button class="btn">LOGOUT</button>
+                    </form>
+            @endauth
+
+            @guest
+                <!-- User is not logged in: show Login/Register buttons -->
+                <a id="loginbtn" href="{{ route('show.login') }}" class="px-7 py-1 bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">LOGIN</a>
+                <a href="{{ route('show.register') }}" class="px-7 py-1 bg-[#A99476] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
+            @endguest
         </div>
         
 

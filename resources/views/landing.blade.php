@@ -11,7 +11,18 @@
 </head>
 <body  class="bg-white text-gray-900">
 
-    
+    @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif" 
+
     <!-- Navbar   style="height:3000px;" -->
     <nav style="height:60px;" class="flex justify-between items-center px-10 py-6 shadow-sm bg-transparent">
         <div>
@@ -28,8 +39,21 @@
 
         <!-- Login/Register Buttons -->
         <div class="hidden md:flex space-x-4">
-            <a id="loginbtn" href="{{ route('login') }}" class=" px-7 py-1 bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">LOGIN</a>
-            <a href="{{ route('register') }}" class="px-7 py-1 bg-[#A99476] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
+            @auth
+                    <!-- User is logged in: buttons hidden -->
+                    <span   class="px-7 py-1 text-white"> {{ explode('@', Auth::user()->email)[0] }} </span><!-- so inot na name lang tigdisplay ko sa email -->
+                    
+                    <form action="{{ route('logout') }}" method="POST" class="px-7 py-1 bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">
+                        @csrf
+                        <button class="btn">LOGOUT</button>
+                    </form>
+            @endauth
+
+            @guest
+                <!-- User is not logged in: show Login/Register buttons -->
+                <a id="loginbtn" href="{{ route('show.login') }}" class="px-7 py-1 bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">LOGIN</a>
+                <a href="{{ route('show.register') }}" class="px-7 py-1 bg-[#A99476] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
+            @endguest
         </div>
         
 
@@ -43,8 +67,8 @@
             <a id="navmobi" href="{{ route('sculptures') }}" class="menu-link">SCULPTURE</a>
             <a id="navmobi" href="{{ route('artists') }}" class="menu-link">ARTISTS</a>
 
-            <a href="{{ route('login') }}" class="w-28 h-10 flex items-center justify-center bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">LOGIN</a>
-            <a href="{{ route('register') }}" class="w-28 h-10 flex items-center justify-center bg-[#6e4d41] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
+            <a href="{{ route('show.login') }}" class="w-28 h-10 flex items-center justify-center bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">LOGIN</a>
+            <a href="{{ route('show.register') }}" class="w-28 h-10 flex items-center justify-center bg-[#6e4d41] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
             <button id="closeMenu" class="absolute top-3 right-4 text-2xl text-gray-800">
                 &times;
             </button>
