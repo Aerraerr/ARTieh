@@ -126,7 +126,6 @@
             <h2 class="text-2xl  font-semibold text-center text-[#6e4d41] ">Login</h2>
 
             <!-- Login Form -->
-            <!-- Login Form -->
             <form method="POST" action="{{ route('login') }}" class="mt-4">
                 @csrf
                 <div>
@@ -163,12 +162,7 @@
                         <li class="my-2 text-red-500">{{ $error }}</li>
                     @endforeach                
             @endif
-
-            <!-- Register Link -->
-            <p class="text-center text-gray-600 text-[13px] mt-4">
-                Don't have an account? <a href="{{ route('register') }}" class="text-[#A99476] hover:underline">Sign up</a>
-            </p>
-
+            
         <!-- Your Form or Other Content Here -->
         </div>
     </div>

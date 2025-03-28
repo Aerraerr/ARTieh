@@ -126,7 +126,6 @@
             <!-- Modal Title -->
             <h2 class="text-2xl font-semibold text-center text-[#6e4d41]">Create Account</h2>
 
-            <!-- Login Form -->
             <!-- Register Form  -->
             <form method="POST" action="{{ route('register') }}" class="mt-4">
                 @csrf
@@ -168,11 +167,6 @@
                         <li class="my-2 text-red-500">{{ $error }}</li>
                     @endforeach                
             @endif
-
-            <!-- Register Link -->
-            <p class="text-center text-gray-600 text-[13px] mt-4">
-                Already have an account? <a href="{{ route('login') }}" class="text-[#A99476] hover:underline">Login</a>
-            </p>
 
         <!-- Your Form or Other Content Here -->
         </div>

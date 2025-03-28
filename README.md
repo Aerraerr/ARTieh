@@ -1,7 +1,7 @@
 <<<<<<< HEAD
-=======
 ![Project Logo](resources/images/ARTiehlogo.png)
->>>>>>> ed5edf706ac196f80b7eacad99f86f2298395afa
+=======
+>>>>>>> ARTiehMain
 # 🎨ARTieh: AN INTEGRATED E-COMMERCE PLATFORM FOR LOCAL ARTISTS AND ART ENTHUSIASTS IN ALBAY
 
 ## DESCRIPTION
@@ -27,7 +27,6 @@ This project aims to empower local artists by providing them with a dedicated pl
 5. Individuals seeking meaningful, one-of-a-kind pieces for their homes or businesses.
 6. Tourists and visitors to Albay who are interested in purchasing local artwork as souvenirs or to support the local art scene.
 <<<<<<< HEAD
-=======
 
 
 ## INSTALLATION AND USAGE INSTRUCTIONS
@@ -143,4 +142,5 @@ php artisan vendor:publish --tag=datatables
 ```
 
 
->>>>>>> ed5edf706ac196f80b7eacad99f86f2298395afa
+=======
+>>>>>>> ARTiehMain

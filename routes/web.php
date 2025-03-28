@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Session;use App\Http\Controllers\AuthController;
 
 
 // REGISTRATION / LOGIN
@@ -19,19 +20,21 @@ Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users'
 
 
 
-
-
-
-
 Route::get('/', function () {
     return view('landing');
 });
+
 
 Route::get('/', function () {
     return view('landing');
 })->name('home'); 
 
 
+Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 Route::get('/paintings', function () {
@@ -105,3 +108,5 @@ Route::get('/howtoget', function () {
 Route::get('/footer', function () {
     return view('layouts.footer');
 })->name('footer');
+
+

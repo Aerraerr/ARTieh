@@ -122,6 +122,12 @@
         </a>
     @endguest
 </div>
+    <a href="{{ route('show.login') }}" class="w-28 h-10 flex items-center justify-center bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">
+        LOGIN
+    </a>
+    <a href="{{ route('show.register') }}" class="w-28 h-10 flex items-center justify-center bg-[#6e4d41] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">
+        REGISTER
+    </a>
 
     <button id="closeMenu" class="absolute top-3 right-4 text-2xl text-gray-800">
         &times;
