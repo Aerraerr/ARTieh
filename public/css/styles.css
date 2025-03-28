@@ -228,4 +228,32 @@ body{
 
 #mobileMenu{
     padding-top: 100px;
+    
+}
+#mobileMenu a{
+    text-decoration: none;
+}
+.search-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ensures filters are in one row */
+.search-bar div {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Input and Button on the next row */
+@media (min-width: 768px) { /* For larger screens */
+    .search-bar {
+        flex-wrap: nowrap;
+    }
+    .search-bar div {
+        width: auto;
+    }
 }

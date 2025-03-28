@@ -44,7 +44,7 @@ class AuthController extends Controller
         if (Auth::attempt($validated)){
             $request->session()->regenerate(); //regenerate the session id for newly authenticated user but keeps the data intack
         
-            return redirect()->route('paintings');//balik sa pag ka kupal i mean sa home page
+            return redirect()->route('paintings'); //balik sa pag ka kupal i mean sa home page
         }
 
         //error message
