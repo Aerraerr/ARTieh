@@ -1,0 +1,205 @@
+
+#forNav a {
+    position: relative;
+    text-decoration: none;
+    color: #6e4d41;
+    font-weight: 600;
+    transition: color 0.3s ease-in-out;
+}
+
+#forNav a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background-color: #6e4d41;
+    transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+
+#forNav a:hover {
+    color: #4a322a;
+}
+
+#forNav a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.logo-size {
+    width: 120px;
+}
+#ARTiehlogo{
+    width: 160px;
+    height: 55px;
+    margin-left: 35%;
+}
+#userlogo{
+    margin-top:-40px;
+    position: absolute;
+    margin-left: 300px;
+}
+.bgpaint {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Sends the blob behind */
+    overflow: hidden; /* Prevents overflow issues */
+}
+#blob1 {
+    position: absolute;
+    top: 12%;
+    left: 95%;
+    transform: translate(-50%, -50%); /* Centers the blob */
+    width: 500px; /* Adjust size as needed */
+    /*opacity: 0.3;  Adjust transparency */
+}
+
+#blob2 {
+    position: absolute;
+    left: 72%;
+    transform: translate(-50%, -50%) rotate(35deg); /* Centers the blob */
+    width: 2000px;
+    height:600px;
+    /*opacity: 0.3;  Adjust transparency */
+}
+#blob3 {
+    position: absolute;
+    top: 40%;
+    left: 93%;
+    transform: translate(-50%, -50%) rotate(-40deg); /* Centers the blob */
+    width: 2500px;
+    height: 750px;
+    rotate: 45; /* Adjust size as needed */
+    /*opacity: 0.3;  Adjust transparency */
+}
+#blob4 {
+    position: absolute;
+    top: 52%;
+    left: 95%;
+    transform: translate(-50%, -50%) rotate(45deg); /* Centers the blob */
+    width: 300px; /* Adjust size as needed */
+    /*opacity: 0.3;  Adjust transparency */
+}
+#blob5 {
+    position: absolute;
+    top: 75%;
+    left: 70%;
+    transform: translate(-50%, -50%) rotate(5deg); /* Centers the blob */
+    width: 500px; /* Adjust size as needed */
+    /*opacity: 0.3;  Adjust transparency */
+}
+#blob6{
+    position: absolute;
+    top: 82%;
+    left: 80%;
+    transform: translate(-50%, -50%) rotate(5deg); /* Centers the blob */
+    width: 600px; /* Adjust size as needed */
+    /*opacity: 0.3;  Adjust transparency */
+}
+#blob7{
+    position: absolute;
+    top: 97%;
+    left: 75%;
+    transform: translate(-50%, -50%) rotate(55deg); /* Centers the blob */
+    width: 600px; /* Adjust size as needed */
+    /*opacity: 0.3;  Adjust transparency */
+}
+#blob8{
+    position: absolute;
+    top: 100%;
+    left: 90%;
+    transform: translate(-50%, -50%) rotate(10deg); /* Centers the blob */
+    width: 900px; /* Adjust size as needed */
+    /*opacity: 0.3;  Adjust transparency */
+}
+#blobout5{
+    position: absolute;
+    top: 100%;
+    left: 95%;
+    transform: translate(-50%, -50%) rotate(10deg); /* Centers the blob */
+    width: 900px; /* Adjust size as needed */
+    /*opacity: 0.3;  Adjust transparency */
+}
+#blobout4{
+    position: absolute;
+    top: 82%;
+    left: 78%;
+    transform: translate(-50%, -50%) rotate(5deg); /* Centers the blob */
+    width: 600px; /* Adjust size as needed */
+    /*opacity: 0.3;  Adjust transparency */
+}
+
+#blobout3 {
+    position: absolute;
+    top: 52%;
+    left: 97%;
+    transform: translate(-50%, -50%) rotate(45deg); /* Centers the blob */
+    width: 350px; /* Adjust size as needed */
+    /*opacity: 0.3;  Adjust transparency */
+}
+#blobout2 {
+    position: absolute;
+    top: 42%;
+    left: 90%;
+    transform: translate(-50%, -50%) rotate(-40deg); /* Centers the blob */
+    width: 2500px;
+    height: 800px;
+    rotate: 45; /* Adjust size as needed */
+    /*opacity: 0.3;  Adjust transparency */
+}
+#blobout1 {
+    position: absolute;
+    top: 1%;
+    left: 68%;
+    transform: translate(-50%, -50%) rotate(40deg); /* Centers the blob */
+    width: 2000px;
+    height:600px;
+    rotate: 45; /* Adjust size as needed */
+    /*opacity: 0.3;  Adjust transparency */
+}
+
+.bgpaint{
+    width: 100%;
+}
+.section2{
+    background-color: #F6EBDA;
+    width: 800px;
+    height: 500px;
+}
+
+
+#paintbrush{
+    position: absolute;
+    top: 60%;
+    left: 95%;
+    transform: translate(-50%, -50%) rotate(95deg);
+}
+#paint2{
+    position: absolute;
+    top: 75%;
+    left: 90%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+}
+
+
+
+
+/* LOGIN*/
+
+.modal-overlay {
+    position: fixed; /* Covers entire screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+    backdrop-filter: blur(2px); /* Optional: Adds slight blur */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50; /* Ensures it's above other elements */
+}

@@ -1,0 +1,185 @@
+
+.search-bar {
+    display: flex;
+    justify-content: flex-end; /* Moves it to the right */
+    gap: 10px; /* Adds spacing between elements */
+    max-width: 60%; /* Adjusts the width */
+    margin-left: auto; /* Ensures it aligns to the right */
+}
+
+.search-bar input,
+.search-bar select {
+    width: 40%; /* Adjusts size */
+    color: #6E4D41; /* Text color */
+    border: 1px solid #6E4D41; /* Border color */
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.search-bar input::placeholder {
+    color: #8B6F5A; /* Lighter brown for placeholder text */
+}
+
+.search-bar .btn {
+    background-color: #6E4D41; /* Button background */
+    color: white; /* Button text */
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar .btn:hover {
+    background-color: #5A3D32; /* Darker brown on hover */
+}
+.line {
+    width: 92%;  /* Adjust width relative to parent */
+    margin: 20px auto;  /* Center the line */
+    border: none;  /* Remove default border */
+    height: 2px;  /* Adjust thickness */
+    background-color: #6e4d41;  /* Match color theme */
+}
+
+/* Ensures all cards are uniform */
+
+
+
+/* Pagination container - Aligns it to the right */
+.pagination {
+    display: flex;
+    justify-content: flex-end; 
+    padding: 10px 20px; 
+    font-size: 14px; 
+    align-items: center;
+    margin-top: 20px;
+    margin-right: 22px;
+}
+/* Style for pagination links */
+.pagination .page-link {
+    color: #6E4D41; 
+    padding: 5px 10px; 
+}
+
+/* Remove default button styles */
+.pagination .page-item {
+    margin: 0 3px; /* Adds small spacing between buttons */
+}
+
+/* Hover effect */
+.pagination .page-link:hover {
+    background-color: #E0D6CD;
+    border-radius: 5px;
+}
+ #priceFilter option:first-child {
+        display: none; 
+}
+
+
+
+
+
+
+
+
+
+/* IMAGES INI */
+/* CARD GRID CONTAINER */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns per row */
+    gap: 10px; /* Space between cards */
+    max-width: 1200px; /* Adjust layout */
+    margin: 20px auto 10px auto; /* Center the section */
+    justify-content: center; /* Ensures proper centering */
+    
+
+}
+
+/* CARD STYLE */
+.card {
+    width: 100%;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
+/* CARD IMAGE */
+.card-image {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Adjust height as needed */
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* OVERLAY DETAILS */
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* HOVER EFFECTS */
+.card:hover .card-overlay {
+    opacity: 1;
+}
+
+.card:hover img {
+    transform: scale(1.05);
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+    .card-container {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    .card-container {
+        grid-template-columns: repeat(1, 1fr); /* 1 column on mobile */
+    }
+}
+
+
+
+/* HOVER EFFECTS */
+.card:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover .card-overlay {
+    opacity: 1;
+}
+
+.card:hover img {
+    transform: scale(1.1); /* Image zoom effect */
+}
