@@ -26,14 +26,13 @@
     </div>
 
 
-    <!-- Login/Register Buttons -->
-    <div class="mt-auto mb-6 flex flex-col space-y-3 w-full text-center">
-        <a id="loginbtn" href="{{ route('login') }}" class="ml-4 mr-4 px-5 py-2 bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-white transition">LOGIN</a>
-        <a href="{{ route('register') }}" class="ml-4 mr-4 px-5 py-2 bg-[#A99476] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
+<!-- Login/Register Buttons -->
+<div class="mt-auto mb-6 flex flex-col space-y-3 w-full text-center">
+        <a id="loginbtn" href="{{ route('show.login') }}" class="ml-4 mr-4 px-5 py-2 bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-white transition">LOGIN</a>
+        <a href="{{ route('show.register') }}" class="ml-4 mr-4 px-5 py-2 bg-[#A99476] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
     </div>
 </nav>
-
-<!-- Content Wrapper -->
+</div>
 
 <div id="mobileMenu" class="hidden fixed inset-0 bg-white flex flex-col items-center justify-top space-y-7  shadow-md z-40">
             <a id="navmobi" href="{{ route('paintings') }}" class="menu-link">PAINTINGS</a>
@@ -41,8 +40,8 @@
             <a id="navmobi" href="{{ route('sculptures') }}" class="menu-link">SCULPTURE</a>
             <a id="navmobi" href="{{ route('artists') }}" class="menu-link">ARTISTS</a>
 
-            <a href="{{ route('login') }}" class="w-28 h-10 flex items-center justify-center bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">LOGIN</a>
-            <a href="{{ route('register') }}" class="w-28 h-10 flex items-center justify-center bg-[#6e4d41] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
+            <a href="{{ route('show.login') }}" class="w-28 h-10 flex items-center justify-center bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">LOGIN</a>
+            <a href="{{ route('show.register') }}" class="w-28 h-10 flex items-center justify-center bg-[#6e4d41] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
             <button id="closeMenu" class="absolute top-3 right-4 text-2xl text-gray-800">
                 &times;
             </button>

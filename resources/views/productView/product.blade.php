@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artwork Details</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/mods/paintings.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -12,7 +13,7 @@
 <body style="font-family:rubik;" class="bg-[#EEEEEE] text-gray-900">
     <div class="flex justify-center items-center">
         <a href="{{ route('home') }}">
-            <img src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh" class="mt-2 h-10 sm:h-12 max-w-[120px]">
+            <img src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh" class="mt-2 h-12 sm:h-15 max-w-[150px]">
         </a>
     </div>
 

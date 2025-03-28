@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARTieh - Login</title>
+    <title>ARTieg - Registration</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/registration.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -109,7 +109,7 @@
     </div>
 
     <div class="modal-overlay" x-show="open">
-        <div class="ml-2 mr-2 modal-content bg-white rounded-lg shadow-lg w-96 p-6 relative">
+        <div class="ml-1 mr-1 modal-content bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 relative">
         <!-- Close Button -->
         <button onclick="window.location.href='{{ route('home') }}'" 
             class="absolute top-1 right-2 text-gray-300 hover:text-gray-800 text-2xl">
@@ -117,41 +117,61 @@
         </button>
 
 
+
         <!-- Modal Content -->
-        <div id="ARTIEHlogo" class="flex justify-center">
-                <img src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh Logo" class="h-7 mb-5  ">
+        <div class="flex justify-center">
+                <img src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh Logo" class="h-8 mb-4">
             </div>
 
             <!-- Modal Title -->
-            <h2 class="text-2xl  font-semibold text-center text-[#6e4d41] ">Login</h2>
+            <h2 class="text-2xl font-semibold text-center text-[#6e4d41]">Create Account</h2>
 
             <!-- Login Form -->
-            <form class="mt-4">
+            <!-- Register Form  -->
+            <form method="POST" action="{{ route('register') }}" class="mt-4">
+                @csrf
                 <div>
                     <label for="email" class="block text-gray-600 text-sm">Email Address</label>
-                    <input type="email" id="email" placeholder="Enter your email" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
+                    <input type="email" name="email" id="email" placeholder="Enter your email" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
                 </div>
 
                 <div class="mt-4">
                     <label for="password" class="block text-gray-600 text-sm">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
+                    <input type="password" name="password" id="password" placeholder="Enter password" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
+                </div>
+                <div class="mt-4">
+                    <label for="password" class="block text-gray-600 text-sm">Confirm Password</label>
+                    <input type="password" name="password_confirmation" id="password" placeholder="Confirm password" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
                 </div>
 
-                <div class="flex justify-between items-center mt-3">
+                <div class="flex justify-between items-center mt-3 ">
                     <label class="ml-1 flex items-center text-[12px] text-gray-600">
-                        <input type="checkbox" class="mr-2 w-3 h-3"> Remember me
+                        <input type="checkbox" class="mr-2 w-3 h-3"> I agree <a href="#" class="ml-1 mr-1 text-[12px] text-[#A99476] hover:underline"> Terms of Service</a>
+                         and <a href="#" class="ml-1 text-[12px] text-[#A99476] hover:underline"> Privacy Policy</a>
                     </label>
-                    <a href="#" class="text-[12px] text-[#A99476] hover:underline">Forgot password?</a>
                 </div>
 
-                <button type="submit" class="w-full bg-[#6E4D41] tracking-widest text-white py-2 rounded-lg mt-4 hover:bg-[#5a3d33] transition">
-                    Login
+                <button style="font-family:rubik;" type="submit" class="w-full bg-[#6E4D41] tracking-widest text-white py-2 rounded-lg mt-4 hover:bg-[#5a3d33] transition">
+                    Register
                 </button>
             </form>
 
             <!-- Register Link -->
             <p class="text-center text-gray-600 text-[13px] mt-4">
-                Don't have an account? <a href="{{ route('register') }}" class="text-[#A99476] hover:underline">Sign up</a>
+                Already have an account? <a href="{{ route('login') }}" class="text-[#A99476] hover:underline">Login</a>
+            </p>
+
+            <!-- validation errors (check kung may errors mga boa) -->
+            @if($errors->any())
+                <ul class="px-4 py-2 bg-red-100">
+                    @foreach($errors->all() as $error)
+                        <li class="my-2 text-red-500">{{ $error }}</li>
+                    @endforeach                
+            @endif
+
+            <!-- Register Link -->
+            <p class="text-center text-gray-600 text-[13px] mt-4">
+                Already have an account? <a href="{{ route('login') }}" class="text-[#A99476] hover:underline">Login</a>
             </p>
 
         <!-- Your Form or Other Content Here -->
