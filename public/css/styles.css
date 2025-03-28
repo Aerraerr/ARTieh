@@ -228,4 +228,69 @@ body{
 
 #mobileMenu{
     padding-top: 100px;
+    
+}
+#mobileMenu a{
+    text-decoration: none;
+}
+.search-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ensures filters are in one row */
+.search-bar div {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Input and Button on the next row */
+@media (min-width: 768px) { /* For larger screens */
+    .search-bar {
+        flex-wrap: nowrap;
+    }
+    .search-bar div {
+        width: auto;
+    }
+}
+/* General Mobile Optimization */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 15px; /* Less padding for small screens */
+    }
+
+    .bg-white {
+        width: 100%; /* Full width on mobile */
+    }
+
+    .search-bar {
+        display: flex;
+        flex-direction: column;
+        gap: 10px; /* Adds spacing between search elements */
+        align-items: stretch; /* Ensures full width */
+    }
+
+    .search-bar select,
+    .search-bar input,
+    .search-bar button {
+        width: 100% !important; /* Full width for mobile */
+        height: 45px; /* Consistent height */
+    }
+
+    .line {
+        margin-left: 0 !important; /* Remove extra spacing */
+    }
+
+    .pagination {
+        justify-content: center; /* Center pagination */
+        flex-wrap: wrap; /* Allows wrapping for small screens */
+    }
+
+    .page-item {
+        margin: 5px; /* Adds spacing between page numbers */
+    }
 }

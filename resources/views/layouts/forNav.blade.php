@@ -16,7 +16,7 @@
 <nav style="max-width: 100%; height: 60px;" class="flex justify-between items-center px-10 py-6 shadow-sm bg-transparent">
     <div>
         <a href="{{ route('home') }}">
-            <img style="max-width: 120px;" src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh" class="mt-2 sm:ml-2 ml-[-30px] h-10 sm:h-12">
+            <img style="max-width: 130px;" src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh" class="mt-2 sm:ml-2 ml-[-30px] h-10 sm:h-12">
         </a>
     </div>
     <!-- Navigation Links -->
@@ -48,9 +48,25 @@
 
     <!-- Login/Register Buttons -->
     <div class="hidden md:flex space-x-4">
-        <a style="text-decoration:none;" id="loginbtn" href="{{ route('login') }}" class="px-7 py-1 bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">LOGIN</a>
-        <a style="text-decoration:none;" href="{{ route('register') }}" class="px-7 py-1 bg-[#A99476] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
-    </div>
+            @auth
+                    <!-- User is logged in: buttons hidden -->
+                    <span   class="px-7 py-3 text-lighbrown"> {{ explode('@', Auth::user()->email)[0] }} </span><!-- so inot na name lang tigdisplay ko sa email -->
+                    
+                    <form action="{{ route('logout') }}" method="POST" class="px-7 py-1 bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">
+                        @csrf
+                        <button class="btn">LOGOUT</button>
+                    </form>
+            @endauth
+
+            @guest
+                <!-- User is not logged in: show Login/Register buttons -->
+                <a id="loginbtn" href="{{ route('show.login') }}" class="px-7 py-1 bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">LOGIN</a>
+                <a href="{{ route('show.register') }}" class="px-7 py-1 bg-[#A99476] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
+            @endguest
+        </div>
+
+
+
 
     <!-- Mobile Menu Button -->
     <button id="menuBtn" class="md:hidden mr-[-25px] block text-[#6e4d41] focus:outline-none text-2xl">☰</button>
@@ -82,12 +98,30 @@
         ANNOUNCEMENTS
     </a>
 
-    <a href="{{ route('login') }}" class="w-28 h-10 flex items-center justify-center bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">
-        LOGIN
-    </a>
-    <a href="{{ route('register') }}" class="w-28 h-10 flex items-center justify-center bg-[#6e4d41] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">
-        REGISTER
-    </a>
+    <div class="flex flex-col items-center space-y-2 md:hidden">
+    @auth
+        <!-- Display user email or name -->
+        <span class="px-7 py-3 text-lighbrown"> {{ explode('@', Auth::user()->email)[0] }} </span>
+
+        <!-- Logout Button -->
+        <form action="{{ route('logout') }}" method="POST" class="w-28 h-10 flex items-center justify-center bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">
+            @csrf
+            <button class="btn">LOGOUT</button>
+        </form>
+    @endauth
+
+    @guest
+        <!-- Login Button -->
+        <a href="{{ route('show.login') }}" class="w-28 h-10 flex items-center justify-center bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">
+            LOGIN
+        </a>
+        
+        <!-- Register Button -->
+        <a href="{{ route('show.register') }}" class="w-28 h-10 flex items-center justify-center bg-[#A99476] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">
+            REGISTER
+        </a>
+    @endguest
+</div>
 
     <button id="closeMenu" class="absolute top-3 right-4 text-2xl text-gray-800">
         &times;
