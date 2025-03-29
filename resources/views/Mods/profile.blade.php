@@ -62,7 +62,7 @@
 
     <section>    
     <div class="container-fluid py-5 px-4">
-        <div class="bg-white pt-4 pb-4  rounded-lg shadow-lg border mx-auto max-w-[90%] relative">
+        <div class="bg-white pt-[80px] pb-4  rounded-md shadow-lg border mx-auto max-w-[90%] relative">
         
             <div class="max-w-full bg-[#F6EBDA] h-[500px]  flex items-center p-[150px]">
                 <div class="bg-[#CDCDCD] rounded-[3px] w-[220px] h-[300px] flex items-center justify-center shadow-[0px_4px_8px_rgba(0,0,0,0.3)] p-3">
@@ -91,8 +91,9 @@
 
                 <div class="flex flex-col gap-3 mb-[60px] ml-[100px] items-center">
                     <div class="flex gap-3 items-center ">
-                    <a href="#" class="border !border-[#6e4d41] border-1 px-3 py-1 rounded text-[#6e4d41] transition duration-300 hover:text-gray-500">
-                     Edit Profile</a>
+                    <button type="button" class="border !border-[#6e4d41] border-1 px-3 py-1 rounded text-[#6e4d41] transition duration-300 hover:text-gray-500"
+                      data-bs-toggle="modal" data-bs-target="#profileModal">Edit Profile</button> 
+
                      <a href="#" class="border !border-[#6e4d41] border-1 px-3 py-1 rounded text-[#6e4d41] transition duration-300 hover:text-gray-500">
                     Share</a>
                     </div>
@@ -412,10 +413,78 @@
 
         </div>
     </div>
+
+  
+
 </section>
 
 
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered ">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title font-semibold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl pl-[20px]">My Profile</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      
+      <div class="modal-body mx-auto max-w-[100%] sm:max-w-[100%]">
+        <div class="flex flex-col lg:flex-row gap-8 items-stretch">
+          
+          <!-- Profile Image Section -->
+          <div class="flex flex-col items-center lg:w-1/3">
+            <div class="w-[120px] h-[120px] rounded-full overflow-hidden">
+              <img id="profileImage" src="images/artist.jpg" alt="Profile Photo" class="object-cover w-full h-full" />
+            </div>
+            <input type="file" id="fileInput" accept="image/*" class="hidden"/>
+            <button id="uploadButton" class="mt-4 px-4 py-2 text-[#6E4D41] border border-[#6E4D41] rounded hover:bg-[#6E4D41] hover:text-white transition duration-300">
+              Select Image
+            </button>
+          </div>
 
+          <div class="hidden lg:block border-l  h-auto min-h-[100px] mx-4"></div>
+
+          <!-- Profile Form Section -->
+          <div class="lg:w-2/3">
+            <div class="mb-4 flex items-center gap-6">
+              <label class="block font-semibold text-gray-700 w-[100px]">First Name</label>
+              <input type="text" placeholder="First Name" class="border border-gray-300 rounded w-[350px] p-2 focus:outline-none focus:ring-1 focus:ring-[#6E4D41]" />
+            </div>
+
+            <div class="mb-4 flex items-center gap-4">
+              <label class="block font-semibold text-gray-700 w-[100px]">Last Name</label>
+              <input type="text" placeholder="Last Name" class="border border-gray-300 rounded w-[350px] p-2 focus:outline-none focus:ring-1 focus:ring-[#6E4D41]" />
+            </div>
+
+            <div class="mb-4 flex items-center gap-4">
+              <label class="font-semibold text-gray-700 w-[100px]">Email</label>
+              <div class="flex items-center gap-2">
+                <span class="p-2">Yahoo@gmail.com</span>
+                <a href="#" class="text-[#6E4D41] hover:text-[#48332B] transition">Edit</a>
+              </div>
+            </div>
+
+            <div class="mb-4 flex items-center gap-4">
+              <label class="font-semibold text-gray-700 w-[100px]">Gender</label>
+              <div class="flex items-center gap-2">
+                <label class="flex items-center"><input type="radio" name="gender" class="mr-1" /> Male</label>
+                <label class="flex items-center"><input type="radio" name="gender" class="mr-1" /> Female</label>
+                <label class="flex items-center"><input type="radio" name="gender" class="mr-1" /> Vaklesh</label>
+              </div>
+            </div>
+
+            <button class="ml-[120px] bg-[#6E4D41] text-white px-4 py-2 rounded hover:bg-[#48332B] transition">
+              Save
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
     
 
 
@@ -482,4 +551,30 @@
     closeMenu.addEventListener('click', () => {
         mobileMenu.classList.add('hidden');
     });
+</script>
+
+<!-- Upload Image -->
+<script>
+  document.getElementById("uploadButton").addEventListener("click", function() {
+    document.getElementById("fileInput").click();
+  });
+
+  document.getElementById("fileInput").addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById("profileImage").src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Load saved image on page refresh
+  window.addEventListener("load", function() {
+    const savedImage = localStorage.getItem("profileImage");
+    if (savedImage) {
+      document.getElementById("profileImage").src = savedImage;
+    }
+  });
 </script>

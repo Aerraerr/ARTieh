@@ -113,3 +113,6 @@ Route::get('/footer', function () {
 Route::get('/profile', function () {
     return view('Mods.profile');
 })->name('profile');
+Route::get('/editProfile', function () {
+    return view('Mods.editProfile');
+})->name('editProfile');
