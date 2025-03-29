@@ -62,7 +62,7 @@
 
     <section>    
     <div class="container-fluid py-5 px-4">
-        <div class="bg-white pt-4 pb-4  rounded-lg shadow-lg border mx-auto max-w-[90%]">
+        <div class="bg-white pt-4 pb-4  rounded-lg shadow-lg border mx-auto max-w-[90%] relative">
         
             <div class="max-w-full bg-[#F6EBDA] h-[500px]  flex items-center p-[150px]">
                 <div class="bg-[#CDCDCD] rounded-[3px] w-[220px] h-[300px] flex items-center justify-center shadow-[0px_4px_8px_rgba(0,0,0,0.3)] p-3">
@@ -120,8 +120,10 @@
 
     <div class="container d-flex justify-content-center ml-[150px]">
 
-     <div id="artworks" class="tab-content">
-        <div class="d-flex align-items-center gap-3">
+        
+
+     <div id="artworks" class="tab-content ">
+        <div class="d-flex align-items-center gap-3 w-full bg-white pt-4 ml-4">
             
         
             <input class="form-control w-[400px] !border-[#6e4d41] border-1 px-3" type="search" placeholder="Search" aria-label="Search">
@@ -131,12 +133,10 @@
             <button class="form-control dropdown-toggle w-[150px] !border-[#6e4d41] border-1 px-3" type="button" id="Latest first" data-bs-toggle="dropdown" aria-expanded="false">
                 Latest first
              </button>
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-             <li><a class="dropdown-item active" href="#">Action</a></li>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+             <li><a class="dropdown-item" href="#">Action</a></li>
              <li><a class="dropdown-item" href="#">Another action</a></li>
              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Separated link</a></li>
          </ul>
         </div>
 
@@ -177,7 +177,7 @@
         </div>
 
          <div class="bg-white w-[150px] h-[150px] border-1 mb-3 ">
-            <img src="images/meow.jpg" class="w-full h-[150px] object-cover">
+            <img src="images/tuxedo cat.jpg" class="w-full h-[150px] object-cover">
             <div class="p-2 items-center justify-between flex items-center">
             <h3 class="font-bold text-sm">Artwork Title</h3>
             <button onclick="window.location.href='/edit-page'" class="border-2 border-[#6e4d41] hover:bg-gray-200 transition flex items-center">
@@ -187,7 +187,7 @@
         </div>
 
         <div class="bg-white w-[150px] h-[150px] border-1 mb-3 ">
-            <img src="images/meow.jpg" class="w-full h-[150px] object-cover">
+            <img src="images/painting4.png" class="w-full h-[150px] object-cover">
             <div class="p-2 items-center justify-between flex items-center">
             <h3 class="font-bold text-sm">Artwork Title</h3>
             <button onclick="window.location.href='/edit-page'" class="border-2 border-[#6e4d41] hover:bg-gray-200 transition flex items-center">
@@ -197,7 +197,7 @@
         </div>
 
         <div class="bg-white w-[150px] h-[150px] border-1 mb-3 ">
-            <img src="images/meow.jpg" class="w-full h-[150px] object-cover">
+            <img src="images/painting3.png" class="w-full h-[150px] object-cover">
             <div class="p-2 items-center justify-between flex items-center">
             <h3 class="font-bold text-sm">Artwork Title</h3>
             <button onclick="window.location.href='/edit-page'" class="border-2 border-[#6e4d41] hover:bg-gray-200 transition flex items-center">
@@ -211,8 +211,200 @@
 
     </div>
 
-    <div id="orders" class="tab-content hidden">Orders Section</div>
-    <div id="purchases" class="tab-content hidden">Purchases Section</div>
+
+
+    <!-- ORDERS -->
+    <div id="orders" class="tab-content hidden">
+        
+
+    <div class="d-flex align-items-center gap-3 w-full bg-white py-4 pl-1">
+            
+        
+            <input class="form-control w-[400px] !border-[#6e4d41] border-1 px-3" type="search" placeholder="Search" aria-label="Search">
+      
+
+        <div class="dropdown">
+            <button class="form-control dropdown-toggle w-[150px] !border-[#6e4d41] border-1 px-3" type="button" id="Latest first" data-bs-toggle="dropdown" aria-expanded="false">
+                Latest first
+             </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+             <li><a class="dropdown-item" href="#">Action</a></li>
+             <li><a class="dropdown-item" href="#">Another action</a></li>
+             <li><a class="dropdown-item" href="#">Something else here</a></li>
+         </ul>
+        </div>
+
+        </div>
+        <hr class="bg-[#6e4d41]">
+
+        <table class="table table-striped">
+  <thead>
+    <tr class="text-center">
+      <th scope="col">Order No.</th>
+      <th scope="col">Price</th>
+      <th scope="col">Date</th>
+      <th scope="col">Status</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="text-center">
+      <th scope="row">1</th>
+      <td>$250000000</td>
+      <td>21/06/2019</td>
+      <td>pending</td>
+      <td>
+        <button id="" class=" text-[#6e4d41] font-bold transition duration-300 hover:text-[#5a3c32] ">Edit</button>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th scope="row">2</th>
+      <td>$250000000</td>
+      <td>21/06/2019</td>
+      <td>pending</td>
+      <td>
+        <button id="" class=" text-[#6e4d41] font-bold transition duration-300 hover:text-[#5a3c32] ">Edit</button>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th scope="row">3</th>
+      <td>$250000000</td>
+      <td>21/06/2019</td>
+      <td>pending</td>
+      <td>
+        <button id="" class=" text-[#6e4d41] font-bold transition duration-300 hover:text-[#5a3c32] ">Edit</button>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th scope="row">4</th>
+      <td>$250000000</td>
+      <td>21/06/2019</td>
+      <td>pending</td>
+      <td>
+        <button id="" class=" text-[#6e4d41] font-bold transition duration-300 hover:text-[#5a3c32] ">Edit</button>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th scope="row">5</th>
+      <td>$250000000</td>
+      <td>21/06/2019</td>
+      <td>pending</td>
+      <td>
+        <button id="" class=" text-[#6e4d41] font-bold transition duration-300 hover:text-[#5a3c32] ">Edit</button>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th scope="row">6</th>
+      <td>$250000000</td>
+      <td>21/06/2019</td>
+      <td>pending</td>
+      <td>
+        <button id="" class=" text-[#6e4d41] font-bold transition duration-300 hover:text-[#5a3c32] ">Edit</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+        
+
+    
+    </div>
+
+    <!-- PURCHASES firee fireee brrrttt-->
+    <div id="purchases" class="tab-content hidden">
+        
+    <div class="d-flex align-items-center gap-3 w-full bg-white py-4 pl-1">
+            
+        
+            <input class="form-control w-[400px] !border-[#6e4d41] border-1 px-3" type="search" placeholder="Search" aria-label="Search">
+      
+
+        <div class="dropdown">
+            <button class="form-control dropdown-toggle w-[150px] !border-[#6e4d41] border-1 px-3" type="button" id="Latest first" data-bs-toggle="dropdown" aria-expanded="false">
+                Latest first
+             </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+             <li><a class="dropdown-item" href="#">Action</a></li>
+             <li><a class="dropdown-item" href="#">Another action</a></li>
+             <li><a class="dropdown-item" href="#">Something else here</a></li>
+         </ul>
+        </div>
+
+        </div>
+        <hr class="bg-[#6e4d41]">
+
+        <table class="table table-striped">
+  <thead>
+    <tr class="text-center">
+      <th scope="col">Order No.</th>
+      <th scope="col">Price</th>
+      <th scope="col">Date</th>
+      <th scope="col">Status</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="text-center">
+      <th scope="row">1</th>
+      <td>$250000000</td>
+      <td>21/06/2019</td>
+      <td>pending</td>
+      <td>
+        <button id="" class=" text-[#6e4d41] font-bold transition duration-300 hover:text-[#5a3c32] ">Edit</button>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th scope="row">2</th>
+      <td>$250000000</td>
+      <td>21/06/2019</td>
+      <td>pending</td>
+      <td>
+        <button id="" class=" text-[#6e4d41] font-bold transition duration-300 hover:text-[#5a3c32] ">Edit</button>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th scope="row">3</th>
+      <td>$250000000</td>
+      <td>21/06/2019</td>
+      <td>pending</td>
+      <td>
+        <button id="" class=" text-[#6e4d41] font-bold transition duration-300 hover:text-[#5a3c32] ">Edit</button>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th scope="row">4</th>
+      <td>$250000000</td>
+      <td>21/06/2019</td>
+      <td>pending</td>
+      <td>
+        <button id="" class=" text-[#6e4d41] font-bold transition duration-300 hover:text-[#5a3c32] ">Edit</button>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th scope="row">5</th>
+      <td>$250000000</td>
+      <td>21/06/2019</td>
+      <td>pending</td>
+      <td>
+        <button id="" class=" text-[#6e4d41] font-bold transition duration-300 hover:text-[#5a3c32] ">Edit</button>
+      </td>
+    </tr>
+    <tr class="text-center">
+      <th scope="row">6</th>
+      <td>$250000000</td>
+      <td>21/06/2019</td>
+      <td>pending</td>
+      <td>
+        <button id="" class=" text-[#6e4d41] font-bold transition duration-300 hover:text-[#5a3c32] ">Edit</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+    </div>
+
+
     <div id="dashboard" class="tab-content hidden">Seller Dashboard Section</div>
 </div>
 
@@ -256,15 +448,22 @@
             button.addEventListener("click", function () {
                 let targetTab = this.getAttribute("data-tab");
 
+                // Remove active class from all buttons
+                buttons.forEach(btn => btn.classList.remove("bg-[#48332B]"));
+
                 // Hide all tabs
                 tabs.forEach(tab => tab.classList.add("hidden"));
 
                 // Show the selected tab
                 document.getElementById(targetTab).classList.remove("hidden");
+
+                // Add active class to the clicked button
+                this.classList.add("bg-[#48332B]", "text-white");
             });
         });
     });
 </script>
+
 
 <script>
     document.getElementById("menuBtn").addEventListener("click", function () {
