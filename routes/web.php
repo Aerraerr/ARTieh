@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Session;use App\Http\Controllers\AuthController;
@@ -109,4 +109,7 @@ Route::get('/footer', function () {
     return view('layouts.footer');
 })->name('footer');
 
-
+//PROFILE
+Route::get('/profile', function () {
+    return view('Mods.profile');
+})->name('profile');
