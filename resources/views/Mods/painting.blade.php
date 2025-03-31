@@ -43,264 +43,32 @@
         </div>
 
 
-        <div class="line ml-20"><hr></div>
-
-        <div class="card-container">
-        <a href="{{ route('product-details') }}" class="block">
-            <div class="card">
+          <div class="line ml-10 mr-10"><hr></div>
+    
+    <div class="card-container grid grid-cols-3 gap-6 p-6">
+        @forelse($artworks as $artwork)
+        <a href="{{ route('product-details', ['id' => $artwork->id]) }}" class="block">
+        <div class="card bg-white border rounded-lg shadow-md">
                 <div class="card-image">
-                    <img src="images/painting2.png" alt="Artwork">
-                    <div class="card-overlay">
-                        <h5 class="card-title">Tuxedo Cat - Painting</h5>
-                        <h6 class="artist">By Artist</h6>
-                        <p class="card-text">Lorem Ipsum</p>
-                        <p class="card-text">50” x 50”</p>
-                        <h5 class="price">P 30,000</h5>
+                    <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="w-full h-60 object-cover rounded-t-lg">
+                    <div class="card-overlay p-4">
+                        <h5 class="card-title text-lg font-bold">{{ $artwork->artwork_title }}</h5>
+                        <h6 class="artist text-sm">By {{ $artwork->user_id ?? 'Unknown Artist' }}</h6>
+                        <p class="card-text text-sm">{{ $artwork->description }}</p>
+                        <p class="card-text text-sm">Size: {{ $artwork->dimensions ?? 'N/A' }}</p>
+                        <h5 class="price text-md font-semibold">₱{{ number_format($artwork->price, 2) }}</h5>
                     </div>
                 </div>
-            </div>
-        </a>
-
-        <div class="card">
-            <div class="card-image">
-                <img src="images/painting1.png" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/painting3.png" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/painting4.png" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
+            </div> 
+            </a>
+        @empty
+            <p class="text-center col-span-3">No artworks found in this category.</p>
+        @endforelse
     </div>
 
-    <div class="card-container">
-        <div class="card">
-            <div class="card-image">
-                <img src="images/meow.jpg" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/meow.jpg" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/meow.jpg" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/meow.jpg" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="card-container">
-        <div class="card">
-            <div class="card-image">
-                <img src="images/painting1.png" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/painting2.png" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/meow.jpg" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/meow.jpg" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card-container">
-        <div class="card">
-            <div class="card-image">
-                <img src="images/painting1.png" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/painting2.png" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/painting3.png" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/painting4.png" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-    </div>
+       
 
-    <div class="card-container">
-        <div class="card">
-            <div class="card-image">
-                <img src="images/painting1.png" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/painting2.png" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/painting3.png" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/painting4.png" alt="Artwork">
-                <div class="card-overlay">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <h6 class="artist">By Artist</h6>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <p class="card-text">50” x 50”</p>
-                    <h5 class="price">P 000.00</h5>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 

@@ -20,8 +20,10 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-
+        'first_name', 
+        'last_name',
         'email',
+        'phone',
         'password',
     ];
 
@@ -46,5 +48,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function artworks()
+    {
+        return $this->hasMany(Artworks::class, 'user_id');
     }
 }

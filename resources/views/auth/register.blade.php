@@ -129,11 +129,35 @@
             <!-- Register Form  -->
             <form method="POST" action="{{ route('register') }}" class="mt-4">
                 @csrf
-                <div>
-                    <label for="email" class="block text-gray-600 text-sm">Email Address</label>
-                    <input type="email" name="email" id="email" placeholder="Enter your email" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
-                </div>
+                <div class="flex gap-4">
+                    <!-- First Name -->
+                    <div class="w-1/2">
+                        <label for="first_name" class="block text-gray-600 text-sm">First Name</label>
+                        <input type="text" name="first_name" id="first_name" placeholder="Enter your first name"
+                            class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
+                    </div>
 
+                    <!-- Last Name -->
+                    <div class="w-1/2">
+                        <label for="last_name" class="block text-gray-600 text-sm">Last Name</label>
+                        <input type="text" name="last_name" id="last_name" placeholder="Enter your last name"
+                            class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
+                    </div>
+                </div>
+                <!-- email -->
+                <div class="flex space-x-4 mt-4">
+                    <div class="w-1/2">
+                        <label for="email" class="block text-gray-600 text-sm">Email Address</label>
+                        <input type="email" name="email" id="email" placeholder="Enter your email" 
+                        class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1" required>
+                    </div>
+                     <div class="w-1/2">
+                        <label for="phone" class="block text-gray-600 text-sm">Phone Number</label>
+                        <input type="text" name="phone" id="phone" placeholder="Enter your phone number"
+                            class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1" required>
+                    </div>
+                </div>
+                <!-- password -->
                 <div class="mt-4">
                     <label for="password" class="block text-gray-600 text-sm">Password</label>
                     <input type="password" name="password" id="password" placeholder="Enter password" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
