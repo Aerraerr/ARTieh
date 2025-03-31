@@ -27,10 +27,30 @@
 
 
 <!-- Login/Register Buttons -->
-<div class="mt-auto mb-6 flex flex-col space-y-3 w-full text-center">
-        <a id="loginbtn" href="{{ route('show.login') }}" class="ml-4 mr-4 px-5 py-2 bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-white transition">LOGIN</a>
-        <a href="{{ route('show.register') }}" class="ml-4 mr-4 px-5 py-2 bg-[#A99476] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
-    </div>
+<div class="mt-auto mb-6 flex flex-col items-center space-y-3 w-full text-center">
+    @auth
+        <!-- Display user email or name -->
+        <span class="px-5 py-2 text-[#6e4d41]"> {{ explode('@', Auth::user()->email)[0] }} </span>
+
+        <!-- Logout Button -->
+        <form action="{{ route('logout') }}" method="POST" class="w-28 h-10 flex items-center justify-center bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-white transition">
+            @csrf
+            <button class="btn">LOGOUT</button>
+        </form>
+    @endauth
+
+    @guest
+        <!-- Login Button -->
+        <a id="loginbtn" href="{{ route('show.login') }}" class="px-5 py-2 bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-white transition">
+            LOGIN
+        </a>
+
+        <!-- Register Button -->
+        <a href="{{ route('show.register') }}" class="px-5 py-2 bg-[#A99476] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">
+            REGISTER
+        </a>
+    @endguest
+</div>
 </nav>
 </div>
 

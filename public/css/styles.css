@@ -294,3 +294,12 @@ body{
         margin: 5px; /* Adds spacing between page numbers */
     }
 }
+
+
+#navusername {
+    color: black; /* Default text color */
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8), -1px -1px 3px rgba(255, 255, 255, 0.8); /* White shadow for dark backgrounds */
+}
+

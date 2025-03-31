@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 
+use App\Http\Controllers\AdminController;
+
 
 // REGISTRATION / LOGIN
 Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
@@ -12,16 +14,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
-Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
-
-
-
-
-
-
-
-
+ 
 
 Route::get('/', function () {
     return view('landing');
@@ -50,6 +43,12 @@ Route::get('/artists', function () {
     return view('Mods.artists');
 })->name('artists');
 
+Route::get('/announcements', function () {
+    return view('Mods.announcements');
+})->name('announcements');
+
+
+
 
 
 
@@ -59,16 +58,39 @@ Route::get('/product-details', function () {
 })->name('product-details');
 
 
+
+// ========================================
+//=========================================
+
 //  FOR ADMIN
 Route::get('/admin', function () {
     return view('Admin.admin');
 })->name('admin');
+
 Route::get('/management', function () {
     return view('Admin.management');
 })->name('management');
 
+Route::get('/forAdmin', function () {
+    return view('layouts.forAdmin');
+})->name('forAdmin');
+
+Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
+Route::get('/management', [AdminController::class, 'index'])->name('management');
+
+
+
 
 //LAYOUTS
+
+
+// FOR VIEWPROFILE
+Route::get('/forViewProfile', function () {
+    return view('layouts.forViewProfile');
+})->name('forViewProfile');
+
+
+
 // FOR BG EXTEND
 Route::get('/forbg', function () {
     return view('Mods.painting');

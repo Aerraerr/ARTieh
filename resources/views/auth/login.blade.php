@@ -136,9 +136,15 @@
 
                 <div class="mt-4">
                     <label for="password" class="block text-gray-600 text-sm">Password</label>
-                    <input type="password" name="password" id="password" placeholder="Enter your password" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
+                    <div class="relative">
+                        <input type="password" name="password" id="password" placeholder="Enter your password" 
+                            class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
+                        <button type="button" id="togglePassword" 
+                                class="absolute inset-y-0 right-3 flex items-center ">
+                            <img src="{{ asset('iconused/showpass.png') }}" id="toggleIcon" class="mt-1 w-5 h-5">
+                        </button>
+                    </div>
                 </div>
-
                 <div class="flex justify-between items-center mt-3">
                     <label class="ml-1 flex items-center text-[12px] text-gray-600">
                         <input type="checkbox" class="mr-2 w-3 h-3"> Remember me
@@ -164,11 +170,6 @@
                     @endforeach                
             @endif
 
-            <!-- Register Link -->
-            <p class="text-center text-gray-600 text-[13px] mt-4">
-                Don't have an account? <a href="{{ route('register') }}" class="text-[#A99476] hover:underline">Sign up</a>
-            </p>
-
         <!-- Your Form or Other Content Here -->
         </div>
     </div>
@@ -177,3 +178,17 @@
    
 </body>
 </html>
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        let passwordField = document.getElementById('password');
+        let toggleIcon = document.getElementById('toggleIcon');
+        
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            toggleIcon.src = "{{ asset('iconused/hidepass.png') }}"; // Change to hide icon
+        } else {
+            passwordField.type = 'password';
+            toggleIcon.src = "{{ asset('iconused/showpass.png') }}"; // Change to show icon
+        }
+    });
+</script>

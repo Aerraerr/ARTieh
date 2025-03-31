@@ -21,7 +21,10 @@ class AuthController extends Controller
 
         //check the post form data for validations mga boa
         $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
+            'phone' => 'required|string|max:20',
             'password' => 'required|string|min:8|confirmed'
         ]);
 
@@ -43,8 +46,11 @@ class AuthController extends Controller
 
         if (Auth::attempt($validated)){
             $request->session()->regenerate(); //regenerate the session id for newly authenticated user but keeps the data intack
-        
-            return redirect()->route('paintings'); //balik sa pag ka kupal i mean sa home page
+            
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin'); // Redirect admin to admin dashboard
+            }
+            return redirect('/'); //balik sa pag ka kupal i mean sa home page
         }
 
         //error message
@@ -63,4 +69,5 @@ class AuthController extends Controller
 
         return redirect()->route('show.login');
     }
+    
 }
