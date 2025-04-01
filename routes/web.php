@@ -116,3 +116,7 @@ Route::get('/profile', function () {
 Route::get('/editProfile', function () {
     return view('Mods.editProfile');
 })->name('editProfile');
+
+Route::get('/UploadArtwork', function () {
+    return view('Mods.UploadArtwork');
+})->name('UploadArtwork');

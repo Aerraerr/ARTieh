@@ -6,7 +6,7 @@
     <title>ARTieh - Where Creativity Finds Its Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <link rel="stylesheet" href="{{ asset('css/mods/profile.css') }}">
+    
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -61,24 +61,25 @@
 
 
     <section>    
-    <div class="container-fluid py-5 px-4">
-        <div class="bg-white pt-[80px] pb-4  rounded-md shadow-lg border mx-auto max-w-[90%] relative">
+    <div class="container-fluid py-0 px-0">
+        <div class="bg-white pb-4  rounded-md shadow-lg border mx-auto max-w-[100%]   relative">
         
-            <div class="max-w-full bg-[#F6EBDA] h-[500px]  flex items-center p-[150px]">
-                <div class="bg-[#CDCDCD] rounded-[3px] w-[220px] h-[300px] flex items-center justify-center shadow-[0px_4px_8px_rgba(0,0,0,0.3)] p-3">
-                    <div class="flex flex-col gap-5 bg-transparent w-full h-full">
-                        <img src="images/artist.jpg" alt="Artwork" class="w-full h-full object-cover">
+            <div class="w-full bg-[#F6EBDA] min-h-[500px]  flex flex-col md:flex-row items-center px-6 md:px-20 lg:px-32 xl:px-40 gap-6">
+                <div class="bg-[#CDCDCD] rounded-[3px] max-w-[80%] min-w-[150px] max-h-[350px] min-h-[150px]  flex items-center justify-center shadow-[0px_4px_8px_rgba(0,0,0,0.3)] p-3 ">
+                    <div class="flex flex-col gap-5 bg-transparent w-full  max-h-[250px]">
+                        <img src="images/artist.jpg" alt="Artwork" class="w-full  max-h-[250px] object-cover">
                     </div>
                 </div>
 
-                <div class="flex-1 pl-10 mb-[10px]">
-                    <h1 class=" mb-2 font-extrabold">Van Gogh</h1>
-                    <hr class="w-[100%] h-[5px] my-3 bg-black">
+                <div class="flex-1 pl-10 mb-[10px] min-h-[150px] min-w-[150px] text-start">
+                    <h1 class=" md:text-3xl sm:text-2xl mb-2 font-extrabold text-[#6e4d41]">Van Gogh</h1>
+                    <hr class="w-full h-[5px] my-3 bg-black border-none rounded">
                     <h2 class="my-3 font-medium">Biography</h2>
                     <p class="leading-[1.6] mb-3">
                         Lorem Ipsum bla bla bla bla bla bla bla ! text a postcard sent to you Did it go through? 
                         Sendin’ all my love to you You are the moonlight of my life Every night Givin’ all my love to you.
                     </p>
+                    
                     
                     <div class="flex gap-4">
                         <a href="{{ route('paintings') }}" class="text-[#6e4d41] font-medium transition duration-300 hover:underline hover:underline-offset-[6px] hover:decoration-2 hover:text-gray-500">
@@ -89,25 +90,29 @@
 
                 </div>
 
-                <div class="flex flex-col gap-3 mb-[60px] ml-[100px] items-center">
-                    <div class="flex gap-3 items-center ">
-                    <button type="button" class="border !border-[#6e4d41] border-1 px-3 py-1 rounded text-[#6e4d41] transition duration-300 hover:text-gray-500"
+                <div class="flex flex-col gap-3 mb-6 md:mb-0 items-center md:items-start md:pl-[90px] sm:pl-0">
+                    
+                    <button type="button" class=" w-full bg-[#6e4d41] text-white px-4 py-3 rounded font-medium transition duration-300 hover:bg-[#5a3c32]"
                       data-bs-toggle="modal" data-bs-target="#profileModal">Edit Profile</button> 
 
-                     <a href="#" class="border !border-[#6e4d41] border-1 px-3 py-1 rounded text-[#6e4d41] transition duration-300 hover:text-gray-500">
+                     <a href="#" class=" text-center w-full bg-[#6e4d41] text-white px-4 py-3 rounded font-medium transition duration-300 hover:bg-[#5a3c32]">
                     Share</a>
-                    </div>
-                    <a href="#" class="bg-[#6e4d41] text-white px-4 py-3 rounded-lg font-medium transition duration-300 hover:bg-[#5a3c32]">
-                        UPLOAD ARTWORK
-                    </a>
+                    
+                    <a href="{{ route('UploadArtwork') }}" class=" w-full bg-[#6e4d41] text-white px-4 py-3 rounded font-medium transition duration-300 hover:bg-[#5a3c32]">
+                      UPLOAD ARTWORK
+                        </a>
+
+                        <button type="button" class=" w-full bg-[#6e4d41] text-white px-4 py-3 rounded font-medium transition duration-300 hover:bg-[#5a3c32]"
+                        data-bs-toggle="modal" data-bs-target="#addeventModal">Add Event</button> 
                 </div>
             </div>
 
     <!-- Sa ilalim ng profile -->
-     <div class="flex py-5 ml-[150px]">
+    <div class="flex flex-col lg:flex-row gap-8 items-stretch">
           
      <!--Buttons na pa vertical -->
-    <div class="flex flex-col gap-4 w-[300px]">  
+     <div class="flex flex-col items-center lg:w-2/3"> 
+    <div class="flex flex-col pt-5 gap-4  w-[250px]">
         <button class="tab-btn whitespace-nowrap px-4 py-3 text-white rounded text-left bg-[#6e4d41] font-medium hover:bg-[#5a3c32] transition duration-300" data-tab="artworks">
         ARTWORKS</button>
         <button class="tab-btn whitespace-nowrap px-4 py-3 text-white rounded text-left bg-[#6e4d41] font-medium hover:bg-[#5a3c32] transition duration-300" data-tab="orders">
@@ -118,46 +123,46 @@
         SELLER DASHBOARD</button>
 
     </div>
+     </div>
 
-    <div class="container d-flex justify-content-center ml-[150px]">
+     <div class="container d-flex justify-content-center ml-0 sm:ml-[50px] md:ml-[100px]">
 
-        
 
      <div id="artworks" class="tab-content ">
-        <div class="d-flex align-items-center gap-3 w-full bg-white pt-4 ml-4">
-            
         
-            <input class="form-control w-[400px] !border-[#6e4d41] border-1 px-3" type="search" placeholder="Search" aria-label="Search">
-      
+     <div class="flex flex-wrap items-center gap-3 w-full max-w-full bg-white pb-4 pt-4 px-4 md:px-6">
+    <!-- Search Bar -->
+    <input class="form-control w-full sm:w-[400px] max-w-full !border-[#6e4d41] border-1 px-3" type="search" placeholder="Search" aria-label="Search">
 
-        <div class="dropdown">
-            <button class="form-control dropdown-toggle w-[150px] !border-[#6e4d41] border-1 px-3" type="button" id="Latest first" data-bs-toggle="dropdown" aria-expanded="false">
-                Latest first
-             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-             <li><a class="dropdown-item" href="#">Action</a></li>
-             <li><a class="dropdown-item" href="#">Another action</a></li>
-             <li><a class="dropdown-item" href="#">Something else here</a></li>
-         </ul>
-        </div>
+    <!-- Dropdown -->
+    <div class="dropdown w-full sm:w-[150px] max-w-full">
+        <button class="form-control dropdown-toggle w-full !border-[#6e4d41] border-1 px-3" type="button" id="Latest first" data-bs-toggle="dropdown" aria-expanded="false">
+            Latest first
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+    </div>
+</div>
 
-        </div>
 
         <!-- CARDS -->
-        <div class="grid grid-cols-3 gap-6 mt-3 mx-5">
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-3 p-0 justify-items-center">
         
-        <div class="bg-white w-[150px] h-[150px] border-1 ">
-            <img src="images/drawing3.jpg" class="w-full h-[150px] object-cover">
-            <div class="p-2 items-center justify-between flex items-center">
-            <h3 class="font-bold text-sm">Artwork Title</h3>
-            <button onclick="window.location.href='/edit-page'" class="border-2 border-[#6e4d41] hover:bg-gray-200 transition flex items-center">
-            <img src="images/edit.svg" class="w-4 h-4">
-            </button>
+        <div class="bg-white w-full max-w-xs border border-[#6e4d41] shadow-sm">
+            <img src="images/drawing3.jpg" class="w-full h-[150px] object-cover ">
+            <div class="p-2 flex justify-between items-center">
+                <h3 class="font-bold text-sm">Artwork Title</h3>
+                <button onclick="window.location.href='/edit-page'" class="border-2 border-[#6e4d41] hover:bg-gray-200 transition flex items-center p-1 rounded">
+                    <img src="images/edit.svg" class="w-4 h-4">
+                </button>
             </div>
         </div>
 
        
-        <div class="bg-white w-[150px] h-[150px] border-1 mb-3 ">
+        <div class="bg-white w-full max-w-xs border border-[#6e4d41] shadow-sm">
             <img src="images/BekiBoxer.jpg" class="w-full h-[150px] object-cover">
             <div class="p-2 items-center justify-between flex items-center">
             <h3 class="font-bold text-sm">Artwork Title</h3>
@@ -167,7 +172,7 @@
             </div>
         </div>
 
-        <div class="bg-white w-[150px] h-[150px] border-1 mb-3 ">
+        <div class="bg-white w-full max-w-xs border border-[#6e4d41] shadow-sm">
             <img src="images/meow.jpg" class="w-full h-[150px] object-cover">
             <div class="p-2 items-center justify-between flex items-center">
             <h3 class="font-bold text-sm">Artwork Title</h3>
@@ -177,7 +182,7 @@
             </div>
         </div>
 
-         <div class="bg-white w-[150px] h-[150px] border-1 mb-3 ">
+        <div class="bg-white w-full max-w-xs border border-[#6e4d41] shadow-sm">
             <img src="images/tuxedo cat.jpg" class="w-full h-[150px] object-cover">
             <div class="p-2 items-center justify-between flex items-center">
             <h3 class="font-bold text-sm">Artwork Title</h3>
@@ -187,7 +192,7 @@
             </div>
         </div>
 
-        <div class="bg-white w-[150px] h-[150px] border-1 mb-3 ">
+        <div class="bg-white w-full max-w-xs border border-[#6e4d41] shadow-sm ">
             <img src="images/painting4.png" class="w-full h-[150px] object-cover">
             <div class="p-2 items-center justify-between flex items-center">
             <h3 class="font-bold text-sm">Artwork Title</h3>
@@ -197,7 +202,7 @@
             </div>
         </div>
 
-        <div class="bg-white w-[150px] h-[150px] border-1 mb-3 ">
+        <div class="bg-white w-full max-w-xs border border-[#6e4d41] shadow-sm">
             <img src="images/painting3.png" class="w-full h-[150px] object-cover">
             <div class="p-2 items-center justify-between flex items-center">
             <h3 class="font-bold text-sm">Artwork Title</h3>
@@ -217,25 +222,23 @@
     <!-- ORDERS -->
     <div id="orders" class="tab-content hidden">
         
+    <div class="flex flex-wrap items-center gap-3 w-full bg-white pb-4 pt-4 pl-1">
+    <!-- Search Bar -->
+    <input class="form-control w-full sm:w-[400px] !border-[#6e4d41] border-1 px-3" type="search" placeholder="Search" aria-label="Search">
 
-    <div class="d-flex align-items-center gap-3 w-full bg-white py-4 pl-1">
-            
-        
-            <input class="form-control w-[400px] !border-[#6e4d41] border-1 px-3" type="search" placeholder="Search" aria-label="Search">
-      
+    <!-- Dropdown -->
+    <div class="dropdown w-full sm:w-[150px] max-w-full">
+        <button class="form-control dropdown-toggle w-full !border-[#6e4d41] border-1 px-3" type="button" id="Latest first" data-bs-toggle="dropdown" aria-expanded="false">
+            Latest first
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+    </div>
+</div>
 
-        <div class="dropdown">
-            <button class="form-control dropdown-toggle w-[150px] !border-[#6e4d41] border-1 px-3" type="button" id="Latest first" data-bs-toggle="dropdown" aria-expanded="false">
-                Latest first
-             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-             <li><a class="dropdown-item" href="#">Action</a></li>
-             <li><a class="dropdown-item" href="#">Another action</a></li>
-             <li><a class="dropdown-item" href="#">Something else here</a></li>
-         </ul>
-        </div>
-
-        </div>
         <hr class="bg-[#6e4d41]">
 
         <table class="table table-striped">
@@ -314,24 +317,23 @@
     <!-- PURCHASES firee fireee brrrttt-->
     <div id="purchases" class="tab-content hidden">
         
-    <div class="d-flex align-items-center gap-3 w-full bg-white py-4 pl-1">
-            
-        
-            <input class="form-control w-[400px] !border-[#6e4d41] border-1 px-3" type="search" placeholder="Search" aria-label="Search">
-      
+    <div class="flex flex-wrap items-center gap-3 w-full max-w-full bg-white pb-4 pt-4 py-4 pl-1">
+    <!-- Search Bar -->
+    <input class="form-control w-full sm:w-[400px] max-w-full !border-[#6e4d41] border-1 px-3" type="search" placeholder="Search" aria-label="Search">
 
-        <div class="dropdown">
-            <button class="form-control dropdown-toggle w-[150px] !border-[#6e4d41] border-1 px-3" type="button" id="Latest first" data-bs-toggle="dropdown" aria-expanded="false">
-                Latest first
-             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-             <li><a class="dropdown-item" href="#">Action</a></li>
-             <li><a class="dropdown-item" href="#">Another action</a></li>
-             <li><a class="dropdown-item" href="#">Something else here</a></li>
-         </ul>
-        </div>
+    <!-- Dropdown -->
+    <div class="dropdown w-full sm:w-[150px] max-w-full">
+        <button class="form-control dropdown-toggle w-full !border-[#6e4d41] border-1 px-3" type="button" id="Latest first" data-bs-toggle="dropdown" aria-expanded="false">
+            Latest first
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+    </div>
+</div>
 
-        </div>
         <hr class="bg-[#6e4d41]">
 
         <table class="table table-striped">
@@ -418,7 +420,7 @@
 
 </section>
 
-
+<!-- EDIT PROFILE MODAL -->
 <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered ">
     <div class="modal-content">
@@ -485,6 +487,78 @@
     </div>
   </div>
 </div>
+
+<!-- ADD EVENT -->
+
+<div class="modal fade" id="addeventModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-fullscreen-md-down modal-fullscreen-sm-down modal-dialog-centered">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title font-semibold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl pl-[20px]">ADD EVENT</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      
+      <div class="modal-body mx-auto max-w-[100%] sm:max-w-[100%]">
+        <div class="flex flex-col lg:flex-row gap-8 items-stretch">
+          
+          <!-- Profile Image Section -->
+          <div class="flex flex-col items-center lg:w-1/3">
+            <div class="w-[120px] h-[120px] rounded-full overflow-hidden">
+              <img id="profileImage" src="images/REOW.jpg" alt="Profile Photo" class="object-cover w-full h-full" />
+            </div>     
+            <label class="mt-4 px-4 py-2 text-[#6E4D41] font-bold">Bonak Kid</label>
+          </div>
+
+          <div class="hidden lg:block border-l  h-auto min-h-[100px] mx-4"></div>
+
+          <!-- Event Form Section -->
+          <div class="lg:w-2/3">
+
+          <div class="mb-4 flex items-center gap-4">
+             <label class="block font-semibold text-gray-700 w-[100px]">Add Photo</label>
+               <label for="imageUpload" class="cursor-pointer">
+                   <img src="images/UploadImage1.svg" alt="Upload Image" class="w-40 h-40 border-2 border-dashed border-gray-300 p-2">
+                        </label>
+                      <input id="imageUpload" name="image" type="file" class="hidden">
+                                
+                       </label>
+              </div>
+
+            <div class="mb-4 flex items-center gap-6">
+              <label class="block font-semibold text-gray-700 w-[100px]">Event Name</label>
+              <input type="text" placeholder="" class="border border-gray-300 rounded w-[350px] p-2 focus:outline-none focus:ring-1 focus:ring-[#6E4D41]" />
+            </div>
+
+            <div class="mb-4 flex items-center gap-4">
+              <label class="block font-semibold text-gray-700 w-[100px]">Location</label>
+              <input type="text" placeholder="" class="border border-gray-300 rounded w-[350px] p-2 focus:outline-none focus:ring-1 focus:ring-[#6E4D41]" />
+            </div>
+
+
+            <div class="mb-4 flex items-center gap-4">
+                    <label for="description" class="block font-semibold text-gray-700 w-[100px]" required>Description:</label>
+                        <textarea name="description" placeholder="Enter product description" rows="4" 
+                    class="w-[350px] px-4 py-2 border focus:ring focus:ring-[#6E4D41] outline-none mt-1"></textarea>
+                </div>
+                
+
+
+                <div class="flex justify-end space-x-4">
+                    <button type="button" class="px-6 py-2 rounded text-gray-600 border  hover:bg-gray-100">Cancel</button>
+                    <button type="submit" class="px-6 py-2 rounded text-white bg-[#6E4D41]  hover:bg-[#5a3d33] transition">Save</button>
+                </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+    
     
 
 
