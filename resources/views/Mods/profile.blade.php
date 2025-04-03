@@ -9,7 +9,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+      
 </head>
 <body  class="bg-white text-gray-900">
 
@@ -490,7 +490,7 @@
 
 <!-- ADD EVENT -->
 
-<div class="modal fade" id="addeventModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+<div class="modal fade" id="addeventModal" tabindex="-1" aria-labelledby="addeventModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-fullscreen-md-down modal-fullscreen-sm-down modal-dialog-centered">
     <div class="modal-content">
       
