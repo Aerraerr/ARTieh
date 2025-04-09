@@ -34,10 +34,11 @@
 }
 
 .line {
-    width: 93%;
+
     margin: 20px auto;
     height: 1px;
     background-color: #6e4d41;
+    opacity: 0.6;
 }
 
 /* PAGINATION */
@@ -177,3 +178,23 @@ hr {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Smaller cards on small screens */
     }
 }
+
+#filterDiv {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: none;
+}
+
+#filterDiv.show {
+    opacity: 1;
+    transform: translateY(1) ;
+    transition: opacity 1s ease, transform 1s ease;
+    display: flex;
+}
+
+
+
+
+
+

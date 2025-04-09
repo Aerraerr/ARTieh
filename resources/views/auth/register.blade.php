@@ -159,6 +159,7 @@
                     </div>
                 </div>
 
+                
                 <div class="mt-4">
                     <label for="password" class="block text-gray-600 text-sm">Password</label>
                     <input type="password" name="password" id="password" placeholder="Enter password" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
@@ -178,9 +179,7 @@
                 <button style="font-family:rubik;" type="submit" class="w-full bg-[#6E4D41] tracking-widest text-white py-2 rounded-lg mt-4 hover:bg-[#5a3d33] transition">
                     Register
                 </button>
-            </form>
-
-            <!-- Register Link -->
+                 <!-- Register Link -->
             <p class="text-center text-gray-600 text-[13px] mt-4">
                 Already have an account? <a href="{{ route('login') }}" class="text-[#A99476] hover:underline">Login</a>
             </p>
@@ -190,14 +189,17 @@
                 <ul class="px-4 py-2 bg-red-100">
                     @foreach($errors->all() as $error)
                         <li class="my-2 text-red-500">{{ $error }}</li>
-                    @endforeach                
+                    @endforeach  
+                    </ul>              
             @endif
 
+            </form>
+
+           
         <!-- Your Form or Other Content Here -->
         </div>
+
     </div>
-
-
    
 </body>
 </html>

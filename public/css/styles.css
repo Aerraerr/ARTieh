@@ -1,4 +1,6 @@
-
+body {
+    zoom: 100%;  /* Scales the page content to 90% */
+}
 #forNav a {
     position: relative;
     text-decoration: none;
@@ -240,6 +242,17 @@ body{
     justify-content: center;
     align-items: center;
 }
+#toggleFilterBtn{
+    color: #6e4d41;
+}
+
+#toggleFilterBtn.active {
+    border: none !important;
+    outline: none !important;
+}
+
+
+
 
 /* Ensures filters are in one row */
 .search-bar div {
@@ -256,6 +269,12 @@ body{
     .search-bar div {
         width: auto;
     }
+}
+/* Hide filter bar by default on mobile */
+@media (max-width: 640px) {
+        #filterDiv {
+            display: none;
+        }
 }
 /* General Mobile Optimization */
 @media (max-width: 768px) {
@@ -283,6 +302,7 @@ body{
 
     .line {
         margin-left: 0 !important; /* Remove extra spacing */
+        opacity: 50%;
     }
 
     .pagination {

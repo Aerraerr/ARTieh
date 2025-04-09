@@ -144,6 +144,7 @@
                             <img src="{{ asset('iconused/showpass.png') }}" id="toggleIcon" class="mt-1 w-5 h-5">
                         </button>
                     </div>
+                    
                 </div>
                 <div class="flex justify-between items-center mt-3">
                     <label class="ml-1 flex items-center text-[12px] text-gray-600">
@@ -170,6 +171,7 @@
                     @endforeach                
             @endif
 
+            
         <!-- Your Form or Other Content Here -->
         </div>
     </div>

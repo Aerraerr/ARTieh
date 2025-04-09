@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\ArtworksController;
+use App\Http\Controllers\ProfileArtwork;
+use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 
 
@@ -16,13 +19,35 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
  
 
+
+Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
+
+
+
+
+
 Route::get('/', function () {
     return view('landing');
 });
 
+
 Route::get('/', function () {
     return view('landing');
 })->name('home'); 
+
+
+
+// Artwork Upload Routes
+Route::post('/storeUpload', [ArtworksController::class, 'storeUpload'])->name('storeUpload');
+// update artwork route
+Route::put('/artworks/{id}', [ArtworksController::class, 'editArtwork'])->name('artworks.update');
+//Route::get('/get-artwork/{id}', [ArtworksController::class, 'getArtwork'])->name('artworks.get');
+
+// tigsaro ko na so pag show kang profile with modals yes
+Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile'); 
+//edit/update user info
+Route::put('/profile/{id}', [ProfileController::class, 'editProfile'])->name('profile.update');
+
 
 
 
@@ -39,6 +64,8 @@ Route::get('/sculptures', function () {
     return view('Mods.sculptures');
 })->name('sculptures');
 
+// STATIC PAGES
+//artist view
 Route::get('/artists', function () {
     return view('Mods.artists');
 })->name('artists');
@@ -57,6 +84,10 @@ Route::get('/product-details', function () {
     return view('productView.product');
 })->name('product-details');
 
+//announcements page view
+Route::get('/announcements', function () {
+    return view('Mods.announcements');
+})->name('announcements');
 
 
 // ========================================
@@ -85,9 +116,13 @@ Route::get('/management', [AdminController::class, 'index'])->name('management')
 
 
 // FOR VIEWPROFILE
+
 Route::get('/forViewProfile', function () {
     return view('layouts.forViewProfile');
 })->name('forViewProfile');
+// update artwork route
+Route::put('/artworks/{id}', [ArtworksController::class, 'editArtwork'])->name('artworks.update');
+
 
 
 
@@ -127,3 +162,7 @@ Route::get('/howtoget', function () {
 Route::get('/footer', function () {
     return view('layouts.footer');
 })->name('footer');
+
+//Route::get('/artwork/{id}', [ArtworksController::class, 'showDetails'])->name('artwork');
+Route::get('/product-details/{id}', [ArtworksController::class, 'showDetails'])->name('product-details');
+Route::get('/category/{category}', [ArtworksController::class, 'showByCategory'])->name('category');
