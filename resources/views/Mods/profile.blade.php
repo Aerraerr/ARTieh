@@ -64,7 +64,7 @@
     <div class="container-fluid py-0 px-0">
         <div class="bg-white pb-4  rounded-md shadow-lg border mx-auto max-w-[100%]   relative">
         
-            <div class="w-full bg-[#F6EBDA] min-h-[500px]  flex flex-col md:flex-row items-center px-6 md:px-20 lg:px-32 xl:px-40 gap-6">
+            <div class="w-full bg-[#F6EBDA] min-h-[500px]  flex flex-col md:flex-row items-center px-3 md:px-3 lg:px-32 xl:px-40 gap-6">
                 <div class="bg-[#CDCDCD] rounded-[3px] max-w-[80%] min-w-[150px] max-h-[350px] min-h-[150px]  flex items-center justify-center shadow-[0px_4px_8px_rgba(0,0,0,0.3)] p-3 ">
                     <div class="flex flex-col gap-5 bg-transparent w-full  max-h-[250px]">
                         <img src="images/artist.jpg" alt="Artwork" class="w-full  max-h-[250px] object-cover">

@@ -124,3 +124,9 @@ Route::get('/UploadArtwork', function () {
 Route::get('editAddress', function () {
     return view('Mods.editAddress');
 })->name('editAddress');
+
+
+// VIEW PROFILE 
+Route::get('Viewprofile', function () {
+    return view('Mods.Viewprofile');
+})->name('Viewprofile');
