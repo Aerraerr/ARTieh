@@ -27,7 +27,7 @@
     </div>
     @endif
     <section class="w-full">
-    <div class=" bg-[#F6EBDA] pb-4  border max-w-full relative">
+    <div class=" bg-[#F6EBDA] pb-4  border  relative">
         <div class=" md:ml-[100px] ml-[-10px] max-w-full  bg-[#F6EBDA] h-[400px] md:h-[350px] sm:mt-[-200px] md:mt-0 flex flex-col md:flex-row items-center justify-center p-6 md:p-[150px]">
             
             <button onclick="history.back()" style="font-family: Rubik;" class="text-[#6e4d41] opacity-60 ml-2 md:ml-12 mt-2 absolute top-2 left-2 md:top-5 md:left-10 md:-translate-x-10 no-underline text-inherit"> < BACK
@@ -153,7 +153,7 @@
 
 
         <!-- artworks -->
-        <div class="container w-full d-flex justify-content-center px-2 sm:px-4">
+        <div class="container d-flex justify-content-center px-2 sm:px-4">
         <div id="artworks" class="profilemobile1 tab-content  w-full">
 
             <!-- Search + Filter -->
@@ -285,7 +285,7 @@
      
      
          <!-- ORDERS -->
-         <div id="orders" class="tab-content hidden">
+         <div id="orders" class="tab-content mr-[1000px] hidden">
          <div class="d-flex align-items-center gap-3 w-full bg-white py-4 pl-1">
                  <input class="form-control w-[400px] !border-[#6e4d41] border-1 px-3" type="search" placeholder="Search" aria-label="Search">
              <div class="dropdown">

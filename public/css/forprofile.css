@@ -99,6 +99,9 @@ body {
 }
 
 @media (min-width: 768px) { 
+    body{
+        width: 100%;
+    }
     .parasaprofileini {
         text-align: left;
     }
