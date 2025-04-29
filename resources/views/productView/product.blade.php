@@ -8,13 +8,25 @@
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/mods/paintings.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body style="font-family:rubik;" class="bg-[#EEEEEE] text-gray-900">
+@extends('layouts.forbg')
     <div class="flex justify-center items-center">
         <a href="{{ route('home') }}">
             <img src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh" class="mt-2 h-10 sm:h-12 max-w-[120px]">
         </a>
     </div>
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                title: "{{ session('success') }}",
+                icon: "success",
+                timer: 800,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
 
 
     <div class="  max-w-6xl mx-auto p-4">
@@ -23,9 +35,9 @@
         <div class="bg-white pl-14 pr-14 p-14 rounded shadow-xl flex flex-wrap md:flex-nowrap gap-6">
             <!-- Artwork Image Section -->
             <div class="w-full md:w-3/5 relative">
-                <a href="{{ url()->previous() }}" style="font-family: Rubik;" class="text-[#6e4d41] opacity-60 ml-1 
-                mt-[-45px] absolute left-0 -translate-x-10 hover:bg-gray-400 p-2 rounded-full"> &lt; BACK
-            </a>
+            <button onclick="history.back()"   style="font-family: Rubik;" class="text-[#6e4d41] opacity-60 ml-1 mt-[-45px]
+                absolute top-0 left-0 -translate-x-10 no-underline text-inherit"> &larr; BACK
+              </button>
 
             <!-- Main Image -->
             <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="w-full rounded-lg object-cover">
@@ -50,7 +62,7 @@
                     &#9654;
                 </button>
             </div>
-    </div>
+        </div>
 
 
 
@@ -61,22 +73,42 @@
 
                 <!-- Buttons -->
                 <div class="flex justify-end gap-4 mt-20">
-                <button class="px-6 py-2 bg-[#6e4d41] text-white rounded hover:bg-[#FFE0B2] transition duration-300">
-                    Buy Now
-                </button>
-                <button class="px-6 py-2 border border-[#6e4d41] text-[#6e4d41] rounded hover:bg-[#FFE0B2] hover:border-[#FFE0B2] transition duration-200">
-                    Add to Cart
-                </button>
-            </div>
+                    @auth
+                        <a href="{{ route('checkout', $artwork->id) }}" class="px-6 py-2 bg-[#6e4d41] text-white rounded hover:bg-[#A99476] transition duration-300">
+                            Buy Now
+                        </a>
+
+                        <form action="{{ route('cart.add', $artwork->id) }}" method="POST">
+                        @csrf
+                            <button type="submit" class="px-6 py-2 border border-[#6e4d41] text-[#6e4d41] rounded hover:bg-[#A99476] hover:border-[#A99476] transition duration-200">
+                                Add to Cart
+                            </button>
+                        </form>
+                    @endauth
+
+                    @guest
+                         <a href="{{ route('show.login') }}" class="px-6 py-2 bg-[#6e4d41] text-white rounded hover:bg-[#A99476] transition duration-300">
+                            Buy Now
+                        </a>
+
+                        <a href="{{ route('show.login') }}" class="px-6 py-2 border border-[#6e4d41] text-[#6e4d41] rounded hover:bg-[#A99476] hover:border-[#A99476] transition duration-200">
+                            Add to Cart
+                        </a>
+                    @endguest   
+                        
+
+                    
+                        
+                    
+                </div>
 
 
                 <hr class="">
                 <!-- Artwork Details -->
                 <div style="color:#6e4d41;" class=" grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-                    <strong>Dimension:</strong> <span>1 METER</span>
-                    <strong>Medium:</strong> <span>Oil on Canvas</span>
+                    <strong>Dimension:</strong> <span>{{ $artwork->dimension ?? 'No Dimension Set'}}</span>
                     <strong>Category:</strong> <span>{{ $artwork->category->category_name ?? 'Uncategorized' }}</span>
-                    <strong>Artist:</strong> <span>{{ $artwork->user->name ?? 'Unknown Artist' }}</span> <!-- palitan nalang yan na email pag may name na ok? ok-->
+                    <strong>Artist:</strong> <span>{{ $artwork->user?->full_name ?? 'Unknown Artist' }}</span> <!-- palitan nalang yan na email pag may name na ok? ok-->
                 </div>
 
                 <hr class="">
@@ -87,7 +119,8 @@
 
         <!-- More Works Section -->
         <div class="mt-8 flex justify-between items-center">
-            <h3 class="text-[#6e4d41] text-lg font-semibold">More Works by {{ $artwork->user->email ?? 'Unknown Artist' }}</h3>
+            <h3 class="text-[#6e4d41] text-lg font-semibold">More Works by {{ $artwork->user?->first_name ?? 'Unknown' }} 
+                        {{ $artwork->user?->last_name ?? 'Artist' }}</h3>
             <!-- dgd so sa profile na kang seller/artist-->           
             <a href="{{ route('profile') }}" class="border border-[#6e4d41] text-[#6e4d41] rounded hover:bg-[#FFE0B2] hover:border-[#FFE0B2]  px-3 py-2 rounded ">View All</a>
         </div>
@@ -106,6 +139,26 @@
             @empty
                 <p class="text-center col-span-4">No other works by this artist.</p>
             @endforelse    
+        </div>
+
+        <!-- More Works Section -->
+        <div class="mt-8 flex justify-between items-center">
+            <h3 class="text-[#6e4d41] text-lg font-semibold">Explore More </h3>        
+        </div>
+
+        <!-- More Works Grid -->
+        <div class="card-container flex flex-wrap gap-3 p-6">
+            @foreach($otherArtworks as $other)
+                <div class="card bg-white border rounded-lg shadow-md w-[250px]">
+                    <a href="{{ route('product-details', ['id' => $other->id]) }}" class="block">
+                        <img src="{{ asset($other->image_path) }}" alt="{{ $other->artwork_title }}" class="w-full h-60 object-cover rounded-t-lg">
+                        <div class="card-overlay p-4">
+                            <h4 class="card-title text-lg font-bold">{{ $other->artwork_title }}</h4>
+                            <p class="card-text text-sm">{{ Str::limit($other->description, 50) }}</p>
+                        </div>
+                    </a> 
+                </div>
+            @endforeach
         </div>
     </div>
 </body>

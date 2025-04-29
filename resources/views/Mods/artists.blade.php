@@ -43,46 +43,18 @@
         <div class="line ml-10 mr-10"><hr></div>
 
         <div class="card-container">
-        <div class="card">
-            <div class="card-image">
-                <img src="images/user.png" alt="Artwork">
+        @foreach ($creator as $artist)
+            <div class="card">
+                <div class="card-image">
+                    <img src="{{ $artist->profile_pic ? asset('storage/' . $artist->profile_pic) : asset('storage/profile_pic/user.png') }}" alt="Artist">
+                </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $artist->first_name }} {{ $artist->last_name }}</h5>
+                        <p class="card-text">{{ $artist->biography ?? 'No bio available.' }}</p>
+                        <a href="{{ route('view_artist', ['id' => $artist->id]) }}" id="viewartistbtn" class="bg-[#6e4d41] sm:bg-[#6e4d41] btn btn-primary" role="button">View Artist</a>
+                    </div>   
             </div>
-                <div class="card-body">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <a id="viewartistbtn" class="bg-[#6e4d41] sm:bg-[#6e4d41] btn btn-primary" href="#" role="button">View Artist</a>
-                </div>   
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/user.png" alt="Artwork">
-            </div>
-                <div class="card-body">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <a class="bg-[#6e4d41] sm:bg-[#6e4d41] btn btn-primary" href="#" role="button">View Artist</a>
-                </div>   
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/user.png" alt="Artwork">
-            </div>
-                <div class="card-body">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <a class="bg-[#6e4d41] sm:bg-[#6e4d41] btn btn-primary" href="#" role="button">View Artist</a>
-                </div>   
-        </div>
-        <div class="card">
-            <div class="card-image">
-                <img src="images/user.png" alt="Artwork">
-            </div>
-                <div class="card-body">
-                    <h5 class="card-title">LOREM IPSUM</h5>
-                    <p class="card-text">Lorem Ipsum</p>
-                    <a class="bg-[#6e4d41] sm:bg-[#6e4d41] btn btn-primary" href="#" role="button">View Artist</a>
-                </div>   
-        </div>
+        @endforeach
     </div>
 
   <nav aria-label="Page navigation example">

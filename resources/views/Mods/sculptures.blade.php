@@ -42,26 +42,7 @@
 
         <div class="line ml-20"><hr></div>
 
-        <div class="card-container grid grid-cols-3 gap-6 p-6">
-        @forelse($artworks as $artwork)
-        <a href="{{ route('product-details', ['id' => $artwork->id]) }}" class="block">
-        <div class="card bg-white border rounded-lg shadow-md">
-                <div class="card-image">
-                    <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="w-full h-60 object-cover rounded-t-lg">
-                    <div class="card-overlay p-4">
-                        <h5 class="card-title text-lg font-bold">{{ $artwork->artwork_title }}</h5>
-                        <h6 class="artist text-sm">By {{ $artwork->user_id ?? 'Unknown Artist' }}</h6>
-                        <p class="card-text text-sm">{{ $artwork->description }}</p>
-                        <p class="card-text text-sm">Size: {{ $artwork->dimensions ?? 'N/A' }}</p>
-                        <h5 class="price text-md font-semibold">₱{{ number_format($artwork->price, 2) }}</h5>
-                    </div>
-                </div>
-            </div> 
-            </a>
-        @empty
-            <p class="text-center col-span-3">No artworks found in this category.</p>
-        @endforelse
-    </div>
+        @include('Example.cardscategory')
     
 
     <nav aria-label="Page navigation example">

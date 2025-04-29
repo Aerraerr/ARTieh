@@ -15,10 +15,13 @@ class Artworks extends Model
         'category_id',
         'artwork_title',
         'description',
+        'dimension',
         'price',
         'image_path',
     ];
 
+
+    
     // Relationship with the User model
     public function user()
     {
@@ -29,5 +32,15 @@ class Artworks extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function orderItems()
+    {
+        return $this->hasMany(Order_Items::class, 'artwork_id');
+    }
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
     }
 }
