@@ -5,16 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artwork Details</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/mods/paintings.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body style="font-family:rubik;" class="bg-[#EEEEEE] text-gray-900">
+<body style="font-family:rubik;" class="h-[600px] bg-[#EEEEEE] text-gray-900">
 @extends('layouts.forbg')
     <div class="flex justify-center items-center">
         <a href="{{ route('home') }}">
-            <img src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh" class="mt-2 h-10 sm:h-12 max-w-[120px]">
+            <img src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh" class="mt-2 h-12 sm:h-15 max-w-[150px]">
         </a>
     </div>
     @if(session('success'))
@@ -95,14 +96,8 @@
                             Add to Cart
                         </a>
                     @endguest   
-                        
-
-                    
-                        
-                    
                 </div>
-
-
+                
                 <hr class="">
                 <!-- Artwork Details -->
                 <div style="color:#6e4d41;" class=" grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
@@ -119,27 +114,29 @@
 
         <!-- More Works Section -->
         <div class="mt-8 flex justify-between items-center">
-            <h3 class="text-[#6e4d41] text-lg font-semibold">More Works by {{ $artwork->user?->first_name ?? 'Unknown' }} 
-                        {{ $artwork->user?->last_name ?? 'Artist' }}</h3>
+            <h3 class="text-[#6e4d41] text-lg font-semibold">More Works by {{ $artwork->user->full_name ?? 'Unknown Artist' }}</h3>
             <!-- dgd so sa profile na kang seller/artist-->           
             <a href="{{ route('profile') }}" class="border border-[#6e4d41] text-[#6e4d41] rounded hover:bg-[#FFE0B2] hover:border-[#FFE0B2]  px-3 py-2 rounded ">View All</a>
         </div>
 
-        <!-- More Works Grid -->
+        <!-- More Works by Seleer -->
         <div class="card-container flex flex-wrap gap-3 p-6">
-            @forelse($moreWorks as $work)
-                <div class="card bg-white border rounded-lg shadow-md w-[250px]">
-                    <a href="{{ route('product-details', ['id' => $work->id]) }}" class="block">
-                    <img src="{{ asset($work->image_path) }}" alt="{{ $work->artwork_title }}" class="w-full h-60 object-cover rounded-t-lg">
-                    <div class="card-overlay p-4">
-                        <h4 class="card-title text-lg font-bold">{{ $work->artwork_title }}</h4>
-                        <p class="card-text text-sm">{{ Str::limit($work->description, 50) }}</p>
+        @forelse($moreWorks as $work)
+            <div class="card group relative bg-white border rounded-lg shadow-md w-[250px] overflow-hidden">
+                <a href="{{ route('product-details', ['id' => $work->id]) }}" class="block relative">
+                    <img src="{{ asset($work->image_path) }}" alt="{{ $work->artwork_title }}" class="w-full h-60 object-cover rounded-t-lg transition-transform duration-300 group-hover:scale-105">
+
+                    <!-- FULL Overlay -->
+                    <div class="absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-center items-center text-center text-white opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out rounded-t-lg">
+                        <h4 class="text-lg font-bold mb-2">{{ $work->artwork_title }}</h4>
+                        <p class="text-sm px-4">{{ Str::limit($work->description, 50) }}</p>
                     </div>
-                </div>
-            @empty
-                <p class="text-center col-span-4">No other works by this artist.</p>
-            @endforelse    
-        </div>
+                </a>
+            </div>
+        @empty
+            <p class="text-center col-span-4">No other works by this artist.</p>
+        @endforelse    
+    </div>
 
         <!-- More Works Section -->
         <div class="mt-8 flex justify-between items-center">
@@ -149,14 +146,16 @@
         <!-- More Works Grid -->
         <div class="card-container flex flex-wrap gap-3 p-6">
             @foreach($otherArtworks as $other)
-                <div class="card bg-white border rounded-lg shadow-md w-[250px]">
-                    <a href="{{ route('product-details', ['id' => $other->id]) }}" class="block">
-                        <img src="{{ asset($other->image_path) }}" alt="{{ $other->artwork_title }}" class="w-full h-60 object-cover rounded-t-lg">
-                        <div class="card-overlay p-4">
-                            <h4 class="card-title text-lg font-bold">{{ $other->artwork_title }}</h4>
-                            <p class="card-text text-sm">{{ Str::limit($other->description, 50) }}</p>
+                <div class="card group relative bg-white border rounded-lg shadow-md w-[250px] overflow-hidden">
+                    <a href="{{ route('product-details', ['id' => $other->id]) }}" class="block relative">
+                        <img src="{{ asset($other->image_path) }}" alt="{{ $other->artwork_title }}" class="w-full h-60 object-cover rounded-t-lg transition-transform duration-300 group-hover:scale-105">
+
+                        <!-- FULL Overlay -->
+                        <div class="absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-center items-center text-center text-white opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out rounded-t-lg">
+                            <h4 class="text-lg font-bold mb-2">{{ $other->artwork_title }}</h4>
+                            <p class="text-sm px-4">{{ Str::limit($other->description, 50) }}</p>
                         </div>
-                    </a> 
+                    </a>
                 </div>
             @endforeach
         </div>

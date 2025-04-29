@@ -78,6 +78,6 @@ class CheckoutController extends Controller
             'amount' => $totalAmount,
             'payment_date' => null
         ]);
-        return redirect()->route('profile')->with('success', 'Your order has been placed successfully!');
+        return redirect()->route('purchases')->with('success', 'Your order has been placed successfully!');
     }
 }

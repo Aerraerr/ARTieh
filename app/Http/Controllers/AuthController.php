@@ -50,6 +50,9 @@ class AuthController extends Controller
             if (Auth::user()->role === 'seller') {
                 return redirect()->route('SellerDashboard'); // make sure this route exists
             }
+            elseif (Auth::user()->role === 'admin') {
+                return redirect()->route('admin'); // Redirect admin to admin dashboard
+            }
 
             return redirect()->route('home'); //balik sa pag ka kupal i mean sa home page
         }
@@ -70,4 +73,5 @@ class AuthController extends Controller
 
         return redirect()->route('show.login');
     }
+    
 }

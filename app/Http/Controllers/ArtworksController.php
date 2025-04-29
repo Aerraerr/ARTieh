@@ -81,6 +81,16 @@ class ArtworksController extends Controller
     
         return view($view, compact('artworks'));
     }
+    public function showAllArtworks()
+    {
+        $artworks = Artworks::with('user')
+            ->whereDoesntHave('orderItems.order', function($query){
+                $query->where('status_id', '!=', 5); // pagnacancel order, luwas giray sa display
+            }) //pag so artwork nasa order_item, ekis na siya
+            ->get();
+
+        return view('Mods.artworks', compact('artworks'));
+    }
 
     //function to display the details of the clicked cards/item and the more works by artist
     public function showDetails($id)
@@ -112,39 +122,5 @@ class ArtworksController extends Controller
     }
 
 
-    // update the new edited user info
-    public function editArtwork(Request $request, $id){
-        $editArt = Artworks::find($id);
-        
-        // Validate the request
-        $request->validate([
-            'artwork_title' => 'required|string|max:255',
-            'description'   => 'required|string',
-            'category_id'   => 'required|exists:category,id',
-            'dimension'     =>  'required|string',
-            'price'         => 'required|numeric|min:0',
-            'image'         => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
-
-        //update artwork yes
-        $editArt->artwork_title = $request->artwork_title;
-        $editArt->description = $request->description;
-        $editArt->category_id = $request->category_id;
-        $editArt->dimension = $request->dimension;
-        $editArt->price = $request->price;
-
-        // If a new image is uploaded, update the image path
-        if ($request->hasFile('image')) {
-            $category = $request->category_id;
-            $imagePath = $request->file('image')->store("artworks/{$category}", 'public');
-            $editArt->image_path = 'storage/' .$imagePath;
-        }
-
-        if($editArt->save()){
-            return redirect()->route('profile')->with('success', 'Profile updated successfully');
-        }else{
-            return redirect()->back()->with('error', 'Profile update failed');
-        }
-    }
 
 }

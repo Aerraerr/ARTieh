@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Artworks;
 use App\Models\Category;
 use App\Models\Orders;
-
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -15,6 +15,7 @@ class SellerDashboardController extends Controller
         $user = Auth::user();
         $artworks = collect();
         $ordered = collect();
+        
 
         // Fetch artworks only if the user is a seller
         $artworks = collect();
@@ -39,11 +40,10 @@ class SellerDashboardController extends Controller
                 return $order->ordered_at && \Carbon\Carbon::parse($order->ordered_at)->isCurrentYear();
             })->sum('total_amount');
             
-
-        }
-       
+        } 
         return view('Mods.sellerdashboard', compact('user', 'ordered', 'artworks', 'totalsale', 'totalorders', 'monthlysale', 'yearlysale'));
     }
+
     function SellerArtworkDisplay(){
         $categories = Category::all();
         $user = Auth::user();
@@ -57,11 +57,15 @@ class SellerDashboardController extends Controller
         return view('Seller.artworks', compact('user', 'categories', 'artworks'));
     }
 
-    function SellerDashboard(){
+    public function SellerDashboard(){
 
         $user = Auth::user();
         $artworks = collect();
         $ordered = collect();
+        $monthlySales = [];
+        $monthlyItems = [];
+        $categoryLabels = [];
+        $categoryValues = [];
         // Fetch artworks only if the user is a seller
         $artworks = collect();
         if ($user->role === 'seller') {
@@ -85,10 +89,33 @@ class SellerDashboardController extends Controller
                 return $order->ordered_at && \Carbon\Carbon::parse($order->ordered_at)->isCurrentYear();
             })->sum('total_amount');
             
- 
+            // Monthly Sales and Items Sold for the past 6 months
+            $months = collect();
+            for ($i = 5; $i >= 0; $i--) {
+                $months->push(Carbon::now()->startOfMonth()->subMonths($i));
+            }
+
+            foreach ($months as $month) {
+                $monthlyOrders = $ordered->filter(function ($order) use ($month) {
+                    return $order->ordered_at && Carbon::parse($order->ordered_at)->format('Y-m') === $month->format('Y-m');
+                });
+
+                $monthlySales[] = $monthlyOrders->sum('total_amount');
+                $monthlyItems[] = $monthlyOrders->flatMap->items->count();
+            }
+
+            // Group ordered items by category where seller is the artwork owner and order is completed
+            $categoryData = $ordered->flatMap->items->filter(function ($item) use ($user) {
+                return $item->artwork && $item->artwork->user_id === $user->id && $item->order->status_id === 4;
+            })->groupBy(function ($item) {
+                return $item->artwork->category->category_name ?? 'Uncategorized';
+            })->map->count();
+
+            $categoryLabels = $categoryData->keys()->toArray();   // Example: ['Painting', 'Digital', 'Sketch']
+            $categoryValues = $categoryData->values()->toArray();
         }
        
-        return view('Seller.dashboard', compact('ordered', 'artworks', 'totalsale', 'totalorders', 'monthlysale', 'yearlysale'));
+        return view('Seller.dashboard', compact('ordered', 'artworks', 'totalsale', 'totalorders', 'monthlysale', 'yearlysale', 'monthlySales', 'monthlyItems', 'categoryLabels', 'categoryValues'));
     }
 
     function SellerOrder(){
@@ -120,9 +147,6 @@ class SellerDashboardController extends Controller
             'status_id' => 'required|integer|exists:status,id',
         ]);
 
-        if($validated['status_id'] == 5){
-            //
-        }
         $order->status_id = $validated['status_id'];
         $order->save();
 
@@ -158,7 +182,7 @@ class SellerDashboardController extends Controller
         }
 
         if($editArt->save()){
-            return redirect()->route('Seller.artworks')->with('success', 'Artwork updated successfully!');
+            return redirect()->back()->with('success', 'Artwork updated successfully!');
         }else{
             return redirect()->back()->with('error', 'Artwork update failed');
         }

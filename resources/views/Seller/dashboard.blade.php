@@ -153,129 +153,140 @@
 
 <script>
     const salesData = {
-      items: [45, 62, 28, 51, 37, 43],
-      currency: [125000, 185000, 89000, 154000, 110000, 143000]
+        items: @json($monthlyItems),
+        currency: @json($monthlySales)
     };
+
+    const categoryLabels = @json($categoryLabels);
+    const categoryValues = @json($categoryValues);
+
+    const monthLabels = @json(
+        collect(range(5, 0))->map(function($i) {
+            return \Carbon\Carbon::now()->startOfMonth()->subMonths($i)->format('F');
+        })
+    );
 
     let currentView = 'items';
     let chartInstance = null;
 
     function updateChart(viewType) {
-      const isCurrency = viewType === 'currency';
-      
-      chartInstance.data.datasets[0].data = salesData[viewType];
-      chartInstance.data.datasets[0].label = isCurrency ? 
-        'Monthly Total Sales' : 'Monthly Items Sold';
+        const isCurrency = viewType === 'currency';
 
-      chartInstance.options.scales.y.ticks.callback = isCurrency ? 
-        value => '₱' + value.toLocaleString() : 
-        value => value.toLocaleString();
+        chartInstance.data.datasets[0].data = salesData[viewType];
+        chartInstance.data.datasets[0].label = isCurrency ?
+            'Monthly Total Sales' : 'Monthly Items Sold';
 
-      chartInstance.options.scales.y.title.text = isCurrency ? 
-        'Total Sales (PHP)' : 'Number of Items Sold';
+        chartInstance.options.scales.y.ticks.callback = isCurrency ?
+            value => '₱' + value.toLocaleString() :
+            value => value.toLocaleString();
 
-      chartInstance.options.plugins.tooltip.callbacks.label = function(context) {
-        return isCurrency ? 
-          '₱' + context.parsed.y.toLocaleString() : 
-          context.parsed.y + ' items sold';
-      };
+        chartInstance.options.scales.y.title.text = isCurrency ?
+            'Total Sales (PHP)' : 'Number of Items Sold';
 
-      chartInstance.update();
-      
-      document.querySelectorAll('button[id^="toggle"]').forEach(btn => {
-        const isActive = btn.id === `toggle${viewType.charAt(0).toUpperCase() + viewType.slice(1)}`;
-        btn.classList.toggle('bg-[#3A2E2A]', isActive);
-        btn.classList.toggle('text-white', isActive);
-        btn.classList.toggle('border', !isActive);
-        btn.classList.toggle('bg-white', !isActive);
-      });
+        chartInstance.options.plugins.tooltip.callbacks.label = function(context) {
+            return isCurrency ?
+                '₱' + context.parsed.y.toLocaleString() :
+                context.parsed.y + ' items sold';
+        };
+
+        chartInstance.update();
+
+        document.querySelectorAll('button[id^="toggle"]').forEach(btn => {
+            const isActive = btn.id === `toggle${viewType.charAt(0).toUpperCase() + viewType.slice(1)}`;
+            btn.classList.toggle('bg-[#3A2E2A]', isActive);
+            btn.classList.toggle('text-white', isActive);
+            btn.classList.toggle('border', !isActive);
+            btn.classList.toggle('bg-white', !isActive);
+        });
     }
 
     // Initialize chart
     chartInstance = new Chart(document.getElementById('salesChart'), {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        datasets: [{
-          label: 'Monthly Items Sold',
-          data: salesData.items,
-          borderColor: '#3A2E2A',
-          tension: 0.4,
-          backgroundColor: 'rgba(58, 46, 42, 0.1)'
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { 
-            position: 'top',
-            labels: {
-              boxWidth: 0,
-              padding: 16
-            }
-          },
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                return `${context.parsed.y} items sold`;
-              }
-            }
-          }
+        type: 'line',
+        data: {
+            labels: monthLabels,
+            datasets: [{
+                label: 'Monthly Items Sold',
+                data: salesData.items,
+                borderColor: '#3A2E2A',
+                tension: 0.4,
+                backgroundColor: 'rgba(58, 46, 42, 0.1)'
+            }]
         },
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: 'Number of Items Sold'
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        boxWidth: 0,
+                        padding: 16
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.parsed.y} items sold`;
+                        }
+                    }
+                }
             },
-            ticks: {
-              callback: function(value) {
-                return value.toLocaleString();
-              }
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Items Sold'
+                    },
+                    ticks: {
+                        callback: function(value) {
+                            return value.toLocaleString();
+                        }
+                    }
+                }
             }
-          }
         }
-      }
     });
 
     // Event listeners
     document.getElementById('toggleItems').addEventListener('click', () => {
-      currentView = 'items';
-      updateChart(currentView);
+        currentView = 'items';
+        updateChart(currentView);
     });
 
     document.getElementById('toggleSales').addEventListener('click', () => {
-      currentView = 'currency';
-      updateChart(currentView);
+        currentView = 'currency';
+        updateChart(currentView);
     });
 
     // Category chart
     new Chart(document.getElementById('categoryChart'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Drawings', 'Sculpture', 'Paintings', 'Digital Art', 'Commissions'],
+    type: 'doughnut',
+    data: {
+        labels: @json($categoryLabels),
         datasets: [{
-          data: [35, 25, 20, 15, 5],
-          backgroundColor: ['#3A2E2A', '#6E4D41', '#FEE29C', '#D4C1A7', '#F8F7F4'],
-          borderWidth: 0
+            data: @json($categoryValues),
+            backgroundColor: ['#3A2E2A', '#6E4D41', '#FEE29C', '#D4C1A7', '#F8F7F4'],
+            borderWidth: 0
         }]
-      },
-      options: {
+    },
+    options: {
         responsive: true,
         plugins: {
-          legend: { position: 'bottom' },
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                return context.label + ': ' + context.parsed + '%';
-              }
+            legend: { position: 'bottom' },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return context.label + ': ' + context.parsed + ' sold';
+                    }
+                }
             }
-          }
         }
-      }
-    });
+    }
+});
+
 </script>
+
 
 <script>
 const ctx2 = document.getElementById('artworksSoldChart').getContext('2d');

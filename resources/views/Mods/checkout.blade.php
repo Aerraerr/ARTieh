@@ -21,7 +21,8 @@
 @include('layouts.forNav')
 @extends('layouts.forbg')
 
-<section class="max-w-4xl mx-auto py-8 px-4">
+
+<section class="max-w-7xl mx-auto py-8 px-4">
     <div class="bg-white p-6 rounded-lg shadow-lg border">
 
         <!-- Back Button & Title -->
@@ -39,27 +40,46 @@
         <input type="hidden" name="artwork_id" value="{{ $artwork->id }}">
         <input type="hidden" name="item_total" value="{{ $artwork->price }}">
         <!-- Delivery Address -->
-        <div class="mt-4 p-3 border rounded-lg bg-[#FAF5E4]">
+        <div class="mt-4 p-3 border ">
             <p class="text-sm text-gray-700">
                 <strong>📍Delivery Address</strong>
             </p>
-            <p> <strong>{{ $user->full_name }}</strong>  {{ $user->phone }} - {{ $user->address }}
-            <a href="#">change</a></p>
+            <div>
+                <span class="ml-4"><strong>{{ $user->full_name }} </strong></span>
+                <span class="mr-4"><strong>{{ $user->phone }}</strong></span>
+                <span>{{ $user->address }}</span>
+                <span class="ml-2"><a href="#">change</a></span>
+            </div>
         </div>
 
         <!-- Product Ordered -->
-        <div class="mt-4 p-4 border rounded-lg bg-[#FAF5E4]">
-            <div class="flex items-center space-x-2 text-gray-700 text-lg mb-2 justify-between">
-                <h4 class="text-gray-800">Products Ordered</h4>
+        <div class="mt-6 p-6 border border-gray-200 rounded-lg shadow-sm bg-white w-full">
+            <div class="flex items-center justify-between mb-4">
+                <h4 class="text-xl font-semibold text-[#6E4D41]">Products Ordered</h4>
+
+                <!-- Header Labels -->
+                <div class="flex items-center gap-8 pr-6 text-sm text-gray-500 font-medium">
+                    <span class="w-40">Dimension</span>
+                    <span class="w-1/3 text-center">Category</span>
+                    <span class="w-28 text-right">Price</span>
+                </div>
             </div>
+
             @if(isset($artwork))
-                {{-- sarong aytem checkout--}}
-                <div class="flex flex-col md:flex-row items-start md:items-center mt-3">
-                    <img src="{{ asset($artwork->image_path) }}" alt="ARCANE Anomaly Painting" class="w-20 h-20 object-cover rounded">
-                    <div class="ml-0 md:ml-4 mt-2 md:mt-0">
-                        <h3 class="font-semibold text-lg text-gray-900">{{ $artwork->artwork_title }}</h3>
-                        <p class="text-gray-600">Seller: {{ $artwork->user->full_name }}</p>
-                        <p class="text-[#F59E0B] font-bold">Price: {{ $artwork->price}}</p>
+                <div class="ml-3 w-full">
+                    <!-- Seller Info -->
+                    <div class="flex items-center space-x-4 mb-2">
+                        <img src="{{ $artwork->user->profile_pic ? asset('storage/' . $artwork->user->profile_pic) : asset('images/user.png') }}" class="w-8 h-8 rounded-full">
+                        <h4 class="font-medium text-lg text-gray-900">{{ $artwork->user->full_name }}</h4>
+                    </div>
+
+                    <!-- Artwork Info -->
+                    <div class="flex items-center p-3 rounded-lg">
+                        <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="w-20 h-20 object-cover rounded-lg">
+                        <span class="flex-1 ml-4 text-gray-800">{{ $artwork->artwork_title }}</span>
+                        <span class="w-1/3 text-right mr-24 text-gray-800">{{ $artwork->dimension }}</span>
+                        <span class=" text-right mr-12 ml-8 text-gray-600">{{ $artwork->category->category_name ?? 'Uncategorized' }}</span>
+                        <span class="text-right text-gray-600 w-28">₱{{ number_format($artwork->price, 2) }}</span>
                     </div>
                 </div>
             @endif
@@ -67,8 +87,8 @@
 
         <!-- Message & Total -->
         <div class="mt-4 flex flex-col md:flex-row justify-between">
+            <span class="flex-1 mt-2 text-gray-800">Message for Seller:</span>
             <input type="text" placeholder="Dili na dali dali tabi" class="w-full md:w-3/4 p-2 border rounded focus:outline-none">
-            <p id="orderTotal" class="text-lg font-semibold text-[#F59E0B] mt-2 md:mt-0">₱ {{ $artwork->price}}</p>
         </div>
 
         <!-- Payment Method -->

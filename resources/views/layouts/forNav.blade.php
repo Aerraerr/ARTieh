@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/mods/paintings.css') }}">
+    <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
@@ -17,7 +18,7 @@
 <nav style="max-width: 100%; height: 60px;" class="flex justify-between items-center px-10 py-6 shadow-sm bg-transparent">
     <div>
         <a href="{{ route('home') }}">
-            <img style="max-width: 120px;" src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh" class="mt-2 sm:ml-2 ml-[-30px] h-10 sm:h-12">
+            <img style="max-width: 130px;" src="{{ asset('images/ARTiehlogo.png') }}" alt="ARTieh" class="mt-2 sm:ml-2 ml-[-30px] h-10 sm:h-12">
         </a>
     </div>
     
@@ -27,44 +28,52 @@
             $currentRoute = Route::currentRouteName();
             $currentCategory = request('category');
         @endphp
+        
+        <a href="{{route('artworks')}}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
+            {{ $currentRoute == 'artworks' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+            ARTWORKS
+        </a>
 
-        <a href="{{ route('category', ['category' => 'paintings']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
+        <a href="{{ route('category', ['category' => 'paintings']) }}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
             {{ $currentRoute == 'category' && $currentCategory == 'paintings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
             PAINTINGS
         </a>
 
-        <a href="{{ route('category', ['category' => 'drawings']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
+        <a href="{{ route('category', ['category' => 'drawings']) }}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
             {{ $currentRoute == 'category' && $currentCategory == 'drawings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
             DRAWINGS
         </a>
 
-        <a href="{{ route('category', ['category' => 'sculpture']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
+        <a href="{{ route('category', ['category' => 'sculpture']) }}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
             {{ $currentRoute == 'category' && $currentCategory == 'sculpture' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
             SCULPTURES
         </a>
 
-        <a href="{{ route('artists') }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
+        <a href="{{ route('artists') }}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
             {{ $currentRoute == 'artists' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
             ARTISTS
         </a>
 
-        <a href="{{ route('announcements') }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
+        <a href="{{ route('announcements') }}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
             {{ $currentRoute == 'announcements' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
             ANNOUNCEMENTS
         </a>
-        <a href="{{ route('cart') }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
-            {{ $currentRoute == 'cart' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
-            <img src="{{ asset('images/cartlogo.svg') }}" alt="cart" >
-            @if ($cartItemCount > 0)
-                <span class="absolute top-1 ml-6 bg-[#6e4d41] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                    {{ $cartItemCount }}
-                </span>
-            @endif
-        </a>
+        @auth
+            <a href="{{ route('cart') }}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
+                {{ $currentRoute == 'cart' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+                <img src="{{ asset('images/cartlogo.svg') }}" alt="cart" >
+                @if ($cartItemCount > 0)
+                    <span class="absolute top-1 ml-6 bg-[#6e4d41] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                        {{ $cartItemCount }}
+                    </span>
+                @endif
+            </a>
+        @endauth
     </div>
+    
 
     <!-- Login/Register Buttons -->
-        <div class="hidden md:flex space-x-4">
+    <div class="hidden md:flex space-x-4">
             @auth
                 <!-- User is logged in: buttons hidden -->
                 <div class="flex items-center space-x-2"> <!-- Flex container to keep elements close -->
@@ -82,7 +91,7 @@
                             x-show="open" 
                             @click.away="open = false"
                             x-transition x-cloak
-                            class="absolute right-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-200 p-4">
+                            class="fixed top-14 right-0 mt-2 w-80 bg-white shadow-lg rounded-lg border border-gray-200 p-4">
                             
                             <!-- Profile Details -->
                             <div class="flex items-center space-x-3 border-b pb-3 mb-3">
@@ -91,24 +100,31 @@
                                     <h2 class="text-sm font-semibold text-[#6e4d41]">
                                         {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
                                     </h2>
-                                    <p class="text-xs text-gray-500">{{ Auth::user()->email}}</p>
+                                    <p class="text-xs text-gray-500 mr-6">{{ Auth::user()->email}}</p>
                                 </div>
+                                @if(Auth::user()->role === 'seller')
+                                    <a href="{{route('SellerDashboard')}}"><img src="{{ asset('images/dashboard.svg') }}" ></a>
+                                @endif
                             </div>
                             <!-- View Profile Button -->
                             <div class="flex justify-center mb-3">
                                 <a href="{{ route('profile') }}" 
                                     class="w-full text-center px-4 py-2 border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-white transition no-underline">
-                                    View Profile
+                                    VIEW PROFILE
                                 </a>
                             </div>
-
-                        <!-- logout button-->
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button ctype="submit" class="w-full px-4 py-2 bg-[#6e4d41] text-white rounded-lg hover:bg-[#A99476] transition">LOGOUT</button>
-                        </form>
+                            <!-- Logout Button -->
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="w-full px-4 py-2 bg-[#6e4d41] text-white rounded-lg hover:bg-[#A99476] transition">
+                                    LOGOUT
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>      
+
+
             @endauth
 
             @guest
@@ -118,9 +134,13 @@
             @endguest
         </div>
 
+
+
+
     <!-- Mobile Menu Button -->
     <button id="menuBtn" class="md:hidden mr-[-25px] block text-[#6e4d41] focus:outline-none text-2xl">☰</button>
 </nav>
+
     @if(Session::has('error'))
         <div class="fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded shadow-lg z-50">
             {{ Session::get('error') }}
@@ -134,42 +154,78 @@
         </script>
     @endif
 
-<div  id="mobileMenu" class="hidden fixed inset-0 bg-white flex flex-col items-center justify-start space-y-5 shadow-md z-40 pt-10" style="font-family: 'Rubik', sans-serif;">
+<!-- Mobile Navigation -->
+<div  id="mobileMenu" class="hidden   fixed inset-0 bg-white flex flex-col items-center justify-start space-y-5 shadow-md z-40  h-full" style="font-family: 'Rubik', sans-serif;">
+    <div class="mt-[-50px] w-1/2" >
     @php
         $currentRoute = Route::currentRouteName();
     @endphp
-    
+    <a href="{{ route('home') }}" class="flex items-center justify-center font-medium h-[60px] px-4 transition duration-300 
+            {{ $currentRoute == 'home' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+            HOME
+        </a>
+
+
     <a href="{{ route('category', ['category' => 'paintings']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
-        {{ $currentRoute == 'paintings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+        {{ $currentRoute == 'category' && request('category') == 'paintings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
         PAINTINGS
     </a>
+
     <a href="{{ route('category', ['category' => 'drawings']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
-        {{ $currentRoute == 'drawings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+        {{ $currentRoute == 'category' && request('category') == 'drawings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
         DRAWINGS
     </a>
+
     <a href="{{ route('category', ['category' => 'sculpture']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
-        {{ $currentRoute == 'sculptures' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+        {{ $currentRoute == 'category' && request('category') == 'sculpture' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
         SCULPTURES
     </a>
-    <a href="{{ route('artists') }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
+
+    <a href="{{ route('category', ['category' => 'sculpture']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
         {{ $currentRoute == 'artists' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
         ARTISTS
     </a>
-    <a href="{{ route('announcements') }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
+
+    <a href="{{ route('announcements', ['category' => 'announcements']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
         {{ $currentRoute == 'announcements' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
         ANNOUNCEMENTS
     </a>
+    <hr class="w-3/4 border-t border-[#6e4d41] my-5 mx-auto">
 
-    <a href="{{ route('show.login') }}" class="w-28 h-10 flex items-center justify-center bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">
-        LOGIN
-    </a>
-    <a href="{{ route('show.register') }}" class="w-28 h-10 flex items-center justify-center bg-[#6e4d41] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">
-        REGISTER
-    </a>
+    <div class="flex flex-col items-center space-y-2 md:hidden w-full">
+    @auth
+        <!-- Display user email or name -->
+        <span style="color:#6e4d41;" id="navusername" class="w-full  text-sm"> {{ explode('@', Auth::user()->email)[0] }} @gmail.com </span>
+        <!-- View Profile Button -->
+        <div class="flex justify-center mb-3 w-full">
+            <a href="{{ route('profile') }}" class="w-full text-center px-4 py-2 border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#6e4d41] hover:text-white transition">
+                VIEW PROFILE
+            </a>
+        </div>
+        <!-- Logout Button -->
+        <form style="margin-top:-10px;" action="{{ route('logout') }}" method="POST" class="w-full  flex items-center justify-center bg-[#6e4d41] text-white rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">
+            @csrf
+            <button class=" btn text-white">LOGOUT</button>
+        </form>
+    @endauth
 
-    <button id="closeMenu" class="absolute top-3 right-4 text-2xl text-gray-800">
+    @guest
+        <!-- Login Button -->
+        <a href="{{ route('show.login') }}" class="w-1/2 h-10 flex items-center justify-center bg-white border border-[#6e4d41] text-[#6e4d41] rounded-lg hover:bg-[#A99476] hover:text-gray-100 transition">
+            LOGIN
+        </a>
+        
+        <!-- Register Button -->
+        <a href="{{ route('show.register') }}" class="w-full h-10 flex items-center justify-center bg-[#A99476] text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">
+            REGISTER
+        </a>
+    @endguest
+</div>
+
+    <button id="closeMenu" class="absolute top-2 right-4 text-2xl text-gray-800">
         &times;
     </button>
+    </div>
 </div>
 
 

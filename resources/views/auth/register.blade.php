@@ -126,6 +126,7 @@
             <!-- Modal Title -->
             <h2 class="text-2xl font-semibold text-center text-[#6e4d41]">Create Account</h2>
 
+            <!-- Login Form -->
             <!-- Register Form  -->
             <form method="POST" action="{{ route('register') }}" class="mt-4">
                 @csrf
@@ -144,20 +145,21 @@
                             class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
                     </div>
                 </div>
-                <!-- email -->
                 <div class="flex space-x-4 mt-4">
                     <div class="w-1/2">
                         <label for="email" class="block text-gray-600 text-sm">Email Address</label>
-                        <input type="email" name="email" id="email" placeholder="Enter your email" 
-                        class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1" required>
+                        <input type="email" name="email" id="email" placeholder="Enter your email"
+                            class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1" required>
                     </div>
-                     <div class="w-1/2">
+
+                    <div class="w-1/2">
                         <label for="phone" class="block text-gray-600 text-sm">Phone Number</label>
                         <input type="text" name="phone" id="phone" placeholder="Enter your phone number"
                             class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1" required>
                     </div>
                 </div>
-                <!-- password -->
+
+                
                 <div class="mt-4">
                     <label for="password" class="block text-gray-600 text-sm">Password</label>
                     <input type="password" name="password" id="password" placeholder="Enter password" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
@@ -177,9 +179,7 @@
                 <button style="font-family:rubik;" type="submit" class="w-full bg-[#6E4D41] tracking-widest text-white py-2 rounded-lg mt-4 hover:bg-[#5a3d33] transition">
                     Register
                 </button>
-            </form>
-
-            <!-- Register Link -->
+                 <!-- Register Link -->
             <p class="text-center text-gray-600 text-[13px] mt-4">
                 Already have an account? <a href="{{ route('login') }}" class="text-[#A99476] hover:underline">Login</a>
             </p>
@@ -189,14 +189,17 @@
                 <ul class="px-4 py-2 bg-red-100">
                     @foreach($errors->all() as $error)
                         <li class="my-2 text-red-500">{{ $error }}</li>
-                    @endforeach                
+                    @endforeach  
+                    </ul>              
             @endif
 
+            </form>
+
+           
         <!-- Your Form or Other Content Here -->
         </div>
+
     </div>
-
-
    
 </body>
 </html>

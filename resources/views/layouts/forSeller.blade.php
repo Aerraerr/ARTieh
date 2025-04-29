@@ -39,10 +39,13 @@
         <span  id="navusername" class="text-gray-800 text-sm font-semibold"> {{Auth::user()->first_name}} </span>
         </div>
 
-        <form action="{{ route('logout') }}" method="POST">
-           @csrf
-           <button ctype="submit" class="text-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-3 transition duration-300">LOGOUT</button>
-        </form>
+        <div class="flex items-center space-x-2">
+            <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button ctype="submit" class="text-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-3 transition duration-300">LOGOUT</button>
+            </form> 
+            <span class="mb-3">| </span>
+            <a href="{{route('artworks')}}" class="text-[#6e4d41] hover:text-gray-500 font-medium transition duration-300 mb-3"> BUYER</a>
         </div>
     @endauth
 </nav>

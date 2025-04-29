@@ -42,7 +42,7 @@ class ProfileController extends Controller
         $cancelledCount = Orders::where('user_id', auth::id())->where('status_id', 5)->count();
 
         return view('Mods.profile', compact('user', 'categories', 'artworks', 'ordered', 'toPayCount',
-         'toPickupCount', 'toReceiveCount', 'completedCount', 'cancelledCount',));
+         'toPickupCount', 'toReceiveCount', 'completedCount', 'cancelledCount'));
     }
 
     public function showArtistList()

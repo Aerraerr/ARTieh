@@ -28,11 +28,12 @@
             });
         </script>
     @endif
+    @include('layouts.fornav')
 @extends('layouts.forbg')
 
 
-<section class="max-w-4xl mx-auto py-8 px-4">
-    <div class="bg-white p-6 rounded-lg shadow-lg border">
+<section class="max-w-7xl mx-auto py-8 px-4">
+    <div class="bg-white p-6  rounded-lg shadow-lg border">
 
         <!-- Back Button & Title -->
         <div class="flex">
@@ -43,17 +44,15 @@
                 <h2 class="text-4xl font-bold text-[#6e4d41] ml-4">Cart</h2>
             </div>
         </div>
-        
+        <br>
 
         <!-- Product Header -->
-        <div class="flex items-center space-x-2 text-gray-700 text-lg mb-2 justify-between">
-            <div>
-                <label for="selectAll">Product</label>
-            </div>
-            <div name="header1" class="flex items-center">
-                <label class="mr-24" >Art Price</label>
-                <label class="mr-10">Action</label>
-            </div>
+        <div class="flex items-center text-gray-700 text-lg mb-2 justify-between">
+            <label for="selectAll" class="flex-1 ml-16">Product</label>
+                <label class="flex-1 ml-20" >Category</label>
+                <label class="flex-1 ml-12">Price</label>
+                <label class="flex-1 ml-12">Action</label>
+            
         </div>
 
         <hr class="mb-4">
@@ -61,34 +60,40 @@
         <!-- Cart Item -->  
         @if ($cart && count($cart->items))
             @foreach ($cart->items as $item)
-                <div class="cart-item bg-[#FAF5E4] p-4 rounded-lg flex justify-between items-center border shadow-md">
+                <div class="cart-item p-4 flex justify-between items-center border shadow-md mb-2">
                     <div class="flex items-start w-full">
                         <div class="ml-3 w-full">
-                            <div class="flex items-center bg-[#FAF5E4] p-3 rounded-lg mt-2">
-                                <img src="{{ asset($item->artwork->image_path) }}" alt="{{ $item->artwork->artwork_title }}" class="w-32 h-32 object-cover rounded-lg">
-                                <div class="ml-4 flex-1">
-                                    <h3 class="font-semibold text-lg text-gray-900">{{ $item->artwork->artwork_title }}</h3>
-                                    <span class="text-2xl text-[#F59E0B] mb-8 mr-4">₱{{ number_format($item->artwork->price, 2) }}</span>
-                                </div>
-                            </div>
+                        <div class="flex items-center space-x-4">
+                            <img src="{{ $item->artwork->user->profile_pic ? asset('storage/' . $item->artwork->user->profile_pic) : asset('images/user.png') }}" class="w-8 h-8 rounded-full">
+                            <h4 class="font-medium text-lg text-gray-900">{{ $item->artwork->user->full_name }}</h4>
                         </div>
-                    </div>
+                        <div class="flex items-center p-3 mt-2">
+                            <img src="{{ asset($item->artwork->image_path) }}" alt="{{ $item->artwork->artwork_title }}" class="w-20 h-20 object-cover rounded-lg">
+                            <span class="flex-1 ml-4 mb-8 mr-4">{{ $item->artwork->artwork_title }}</span>
+                            <span class=" mb-8 mr-4 text-center w-1/3">{{ $item->artwork->category->category_name ?? 'Uncategorized' }}</span>
+                            <span class=" mb-8 mr-20">₱{{ number_format($item->artwork->price, 2) }}</span>
+                            
                         <a href="{{ route('product-details', ['id' => $item->artwork->id]) }}">
-                            <button class=" text-white px-4 py-2 rounded-md hover:bg-[#5A3E33] transition ml-4 mt-2" >
-                            <img src="{{ asset('images/preview.svg') }}" alt="view"></button>
+                            <button class=" text-black font-light px-4 py-2 rounded-md border hover:bg-[#5A3E33] transition ml-4 mb-7" >
+                            view
+                            </button>
                         </a>
                         <a href="{{ route('checkout', $item->artwork->id) }}">
-                            <button class=" text-white px-4 py-2 rounded-md hover:bg-[#5A3E33] transition ml-4 mt-2">
-                            <img src="{{ asset('images/buy.svg') }}" alt="checkout"></button>
+                            <button class=" text-black font-light px-4 py-2 rounded-md border hover:bg-[#5A3E33] transition ml-4 mb-7">
+                            buy
+                            </button>
                         </a>
-                        <form action="{{ route('cart.remove', $item->id) }}" method="POST" class="ml-4 mt-2">
+                        <form action="{{ route('cart.remove', $item->id) }}" method="POST" class="ml-4 mb-7">
                             @csrf
                             @method('DELETE')
-                            <button class=" text-white px-4 py-2 rounded-md hover:bg-[#5A3E33] transition ml-4 mt-2">
-                                <img src="{{ asset('images/delete.svg') }}" alt="delete">
+                            <button class=" text-black font-light px-4 py-2 rounded-md border hover:bg-[#5A3E33] transition ">
+                                delete
                             </button>
                         </form>
-                    </div>
+                        </div>
+                        </div>
+                    </div>    
+                </div>
             @endforeach
         @else
             <p class="text-gray-600">Your cart is empty.</p>

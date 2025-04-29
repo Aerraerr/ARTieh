@@ -18,9 +18,7 @@
     @extends('layouts.forbg')
     
     <section>    
-        <div class="container-fluid py-5 px-4">
-
-        <div class="bg-white p-4 rounded shadow-lg border mx-auto max-w-[100%] sm:max-w-[90%]" >
+        <div class="bg-white p-4 rounded shadow-lg border mx-auto max-w-[100%] sm:max-w-[100%]" >
             <h4 class="mt-10 font-semibold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl ml-0 sm:ml-6 md:ml-10">Upcoming Fairs and Events</h4>
             <div class="mt-[-50px] line ml-20"><hr></div>
 
@@ -50,7 +48,6 @@
                 </ul>
             </nav>
         </div>
-    </div>
     </section>
 
         

@@ -16,49 +16,6 @@
     @include('layouts.forNav')
 @extends('layouts.forbg')
    
-    
-
-    {{--<section>    
-    <div class="container-fluid py-0 px-0">
-        <div class="bg-white pb-4  rounded-md shadow-lg border mx-auto max-w-[100%]   relative">
-        
-            <div class="w-full bg-[#F6EBDA] min-h-[500px]  flex flex-col md:flex-row items-center px-6 md:px-20 lg:px-32 xl:px-40 gap-6">
-                <div class="bg-[#CDCDCD] rounded-[3px] max-w-[80%] min-w-[150px] max-h-[350px] min-h-[150px]  flex items-center justify-center shadow-[0px_4px_8px_rgba(0,0,0,0.3)] p-3 ">
-                    <div class="flex flex-col gap-5 bg-transparent w-full  max-h-[250px]">
-                        <img src="{{ $artist->profile_pic ? asset('storage/' . $artist->profile_pic) : asset('storage/profile_pic/user.png') }}" alt="Artwork" class="w-full  max-h-[250px] object-cover">
-                    </div>
-                </div>
-
-                <div class="flex-1 pl-10 mb-[10px] min-h-[150px] min-w-[150px] text-start">
-                    <h1 class=" md:text-3xl sm:text-2xl mb-2 font-extrabold text-[#6e4d41]">{{ $artist->first_name }} {{ $artist->last_name }}</h1>
-                    <hr class="w-full h-[5px] my-3 bg-black border-none rounded">
-                    <h2 class="my-3 font-medium">Biography</h2>
-                    <p class="leading-[1.6] mb-3">
-                        {{ $artist->biography ?? 'No bio available.' }}
-                    </p>
-                    
-                    
-                    <div class="flex gap-4 flex-wrap">
-                        @php
-                            $categories = $artist->artworks->pluck('category')->unique('id')->filter();
-                        @endphp
-
-                        @foreach ($categories as $category)
-                            <p class="text-[#6e4d41] font-medium transition duration-300 hover:underline hover:underline-offset-[6px] hover:decoration-2 hover:text-gray-500">
-                                {{ $category->category_name }}
-                            </p>
-                        @endforeach
-                    </div>
-
-                </div>
-
-                <div class="flex flex-col gap-3 mb-6 md:mb-0 items-center md:items-start md:pl-[90px] sm:pl-0">
-                    <button onclick="#" class=" text-center w-full bg-[#6e4d41] text-white px-4 py-3 rounded font-medium transition duration-300 hover:bg-[#5a3c32]">
-                    Share</button>
-                </div>
-            </div>--}}
-
-
 <section>    
     <div class="container-fluid ">
         <div class="bg-white pb-4  rounded-md shadow-lg border mx-auto max-w-[100%]   relative">
@@ -88,7 +45,7 @@
           <div class="relative mt-3 flex items-center text- gap-2">
           <div class="pr-2">
           <button>
-            <img src="{{ asset('images/SHARE.svg') }}" alt="copylink icon"  class="w-7 h-7 hover:opacity-80 transition-opacity">
+            <button onclick="toggleModal('share-modal')"><img src="{{ asset('images/SHARE.svg') }}" alt="copylink icon"  class="w-7 h-7 hover:opacity-80 transition-opacity"></button>
           </button>
           </div>
           <button class="whitespace-nowrap px-4 py-2 text-[#6E4D41] rounded-full bg-white font-medium hover:bg-[#5a3c32] transition duration-300"
@@ -101,32 +58,45 @@
           </button>
           </div>
           </div>
-
+        
           
           
             </div>
 
           </div>
 
-          <div class="relative mb-3 flex justify-center text- gap-10">
-          <h1  class="text-lg text-[#6E4D41] font-bold">ARTWORKS</h1>
+
+          <div class="relative mb-3 flex justify-center text- gap-10 mt-4">
+            <h1  class="text-lg text-[#6E4D41] font-bold">AVAILABLE ARTWORKS</h1>
           </div>
-
-
           <div id="Viewpaintings" class="tab-content">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-3 p-3">
-              @forelse($artist->artworks as $artwork)
+              @forelse($artist->artworks->filter(fn($artwork) => $artwork->orderItems->isEmpty()) as $artwork)
                 <div class="relative w-full overflow-hidden ">
                     <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl">
-                    @if($artwork->orderItems->isNotEmpty()) 
+                    <div class="mt-1 p-0 flex row items-center">
+                        <h3 class="font-bold text-sm">{{$artwork->artwork_title}}</h3>
+                    </div>
+                </div>
+              @empty
+                <p class="col-span-5 text-center text-gray-500">No artworks to display.</p>
+              @endforelse
+            </div>
+          </div>
+        
+          <div class="relative mb-3 flex justify-center text- gap-10 mt-4">
+            <h1  class="text-lg text-[#6E4D41] font-bold">SOLD ARTWORKS</h1>
+          </div>
+          <div id="Viewpaintings" class="tab-content">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 p-3">
+              @forelse($artist->artworks->filter(fn($artwork) => $artwork->orderItems->isNotEmpty()) as $artwork)
+                <div class="relative w-full overflow-hidden ">
+                    <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl">
                       <div class="absolute top-2 right-2 bg-white text-red-600 text-xs font-bold px-2 py-1 border border-red-600 rounded-lg shadow">
                       SOLD
                     </div>
-                    @endif
-                    
                     <div class="mt-1 p-0 flex row items-center">
                         <h3 class="font-bold text-sm">{{$artwork->artwork_title}}</h3>
-                        <p class="text-sm"> 1.6k likes </p>
                     </div>
                 </div>
               @empty
@@ -183,11 +153,20 @@
   </div>
 </div>
 
+<!-- share modal -->
+<div id="share-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white w-[400px] rounded-lg shadow-lg p-6">
+        <h2 class="text-lg font-bold text-[#6e4d41]">Share Profile</h2>
+        <p class="text-sm text-gray-600 mt-2">Share this artist with your friends...</p>
 
+        <!--<Modal Buttons -->
+        <div class="flex justify-end gap-3 mt-4">
+            <button onclick="toggleModal('share-modal')" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Close</button>
+            <button id="copyLinkBtn" onclick="copyLink()" class="px-4 py-2 bg-[#6e4d41] text-white rounded-lg hover:bg-[#5a3c32]">Copy Link</button>
+        </div>
+    </div>
+</div>
 
-
-    
-     
 <!-- Script for Show More -->   
 <script>
   window.addEventListener('DOMContentLoaded', () => {
@@ -296,4 +275,27 @@
       document.getElementById("profileImage").src = savedImage;
     }
   });
+</script>
+<script>
+    // Function to copy the profile link
+    function copyLink() {
+        // Assuming you have a dynamic URL for the user's profile
+        const profileUrl = window.location.href; // Get the current page URL, or set your own URL
+
+        // Create a temporary input element to use the clipboard API
+        const tempInput = document.createElement('input');
+        document.body.appendChild(tempInput);
+        tempInput.value = profileUrl;
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+
+        Swal.fire({
+                title: "Link copied!",
+                icon: "success",
+                timer: 800,
+                showConfirmButton: false
+            });
+
+    }
 </script>

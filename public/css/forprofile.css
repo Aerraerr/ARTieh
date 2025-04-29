@@ -1,0 +1,188 @@
+body {
+    zoom: 100%;  /* Scales the page content to 90% */
+}
+.parasaprofileini {
+    text-align: center; 
+}
+.parasaprofileini2 {
+    text-align: center;
+}
+.parasaprofileini3 {
+    text-align: center;
+}
+.profilemenu{
+    top:-365px;
+    margin-right: -80px;
+}
+.profilemenu2{
+    background-color: white;
+    border-radius: 50px;
+    top: -50px;
+    margin-right:24px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+.parasaprofileiniuser {
+    text-align: center;
+
+}
+.profilemenu2btns button {
+    height: 40px;
+    padding: 0 12px; /* horizontal padding */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.profilemenu2btns  {
+    margin-top: 0px;
+}
+.parasaprofileiniuser1 {
+    text-align: center;
+    background-color: white;
+    width: 40%;
+    margin: 0 auto;
+    border-radius: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+.forcurve {
+    position: relative; /* Ensure that z-index works */
+    border-radius: 40% 40% 0 0; /* Curve the top corners */
+    background-color: white; /* Background color of the div */
+    padding-top: 10px; /* Add some space inside the curve */
+    height: 70px; /* Set the height of the div */
+    margin-top: -50px; /* Pull the div upwards */
+    z-index: 50; /* Make sure it stays in front of other elements */
+    width: 100%; /* Set width to take up full space */
+    overflow: hidden; /* Ensure no content overflows outside the curve */
+}
+.sailalim{
+    margin-left: -220px;
+    margin-top: -130px;
+    position: absolute;
+}
+.sailalim:hover{
+    background-color: white;
+}
+.sailalim2{
+    margin-left: -220px;
+    position: absolute;
+    background-color: white;
+    margin-top: -80px;
+    height: 230px;
+    width: 270px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+    justify-content: center; 
+    align-items: center;
+    padding: 15px;
+    z-index: 50;
+    border-radius: 10px;
+    padding-top: 20px;
+    text-align: center;
+}
+.sailalim2btn{
+    margin-top: -12px;  
+}
+.profilemobile1{
+    width: 100%;
+    margin-left: -215px;
+}
+.profilemobile{
+    width: 100%;
+    margin-left: -215px;
+}
+
+.profilemobileini{
+    padding-left: 100px;
+    width: 90%;
+}
+
+@media (min-width: 768px) { 
+    body{
+        width: 100%;
+    }
+    .parasaprofileini {
+        text-align: left;
+    }
+    .parasaprofileini2 {
+        text-align: left;
+    }
+    .parasaprofileini3 {
+        text-align: left;
+    }
+    .parasaprofileiniuser {
+        text-align: left;
+    }
+    .profilemenu{
+        top: 0px;
+        margin-right: 0px;
+    }
+    .profilemenu2{
+        background-color: transparent;
+        box-shadow: none;
+    }
+    .profilemenu2btns button {
+        height: 35px;
+        padding: 0 15px; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .profilemenu2btns  {
+        margin-top: 50px;
+    }
+    .parasaprofileiniuser1{
+        text-align: center;
+        width: 30%;
+        margin-left: 70%; 
+
+    }
+    .forcurve {
+        display: none;
+
+    }
+    .sailalim{
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+    .sailalim2{
+        display: none;
+        margin-left: 0px;
+        position: absolute;
+        background-color: none;
+        width: 270px;
+        box-shadow: none;
+        justify-content: center; 
+        align-items: center;
+        padding: 20px;
+        z-index: 50;
+        margin-top: -10px;
+
+    }
+    .sailalim2btn{
+        margin-bottom: 0px;
+        margin-right: 70px;
+    }
+    
+    .profilemobile1{
+        margin-left: 120px;
+        margin-right: 250px;
+
+    }
+    .profilemobile2{
+        margin-right:150px ;
+
+    }
+
+    .mobilesearchunderline{
+        width: 94%;
+        margin-left: 15px;
+    }
+
+    
+    
+
+
+
+}

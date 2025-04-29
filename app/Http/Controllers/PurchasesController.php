@@ -90,4 +90,9 @@ class PurchasesController extends Controller
 
         return redirect()->back()->with('success', 'Order Received..');
     }
+
+    public function gcashpay()
+    {
+        
+    }
 }

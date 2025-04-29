@@ -1,4 +1,6 @@
-
+body {
+    zoom: 100%;  /* Scales the page content to 90% */
+}
 #forNav a {
     position: relative;
     text-decoration: none;
@@ -240,6 +242,17 @@ body{
     justify-content: center;
     align-items: center;
 }
+#toggleFilterBtn{
+    color: #6e4d41;
+}
+
+#toggleFilterBtn.active {
+    border: none !important;
+    outline: none !important;
+}
+
+
+
 
 /* Ensures filters are in one row */
 .search-bar div {
@@ -257,3 +270,56 @@ body{
         width: auto;
     }
 }
+/* Hide filter bar by default on mobile */
+@media (max-width: 640px) {
+        #filterDiv {
+            display: none;
+        }
+}
+/* General Mobile Optimization */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding: 15px; /* Less padding for small screens */
+    }
+
+    .bg-white {
+        width: 100%; /* Full width on mobile */
+    }
+
+    .search-bar {
+        display: flex;
+        flex-direction: column;
+        gap: 10px; /* Adds spacing between search elements */
+        align-items: stretch; /* Ensures full width */
+    }
+
+    .search-bar select,
+    .search-bar input,
+    .search-bar button {
+        width: 100% !important; /* Full width for mobile */
+        height: 45px; /* Consistent height */
+    }
+
+    .line {
+        margin-left: 0 !important; /* Remove extra spacing */
+        opacity: 50%;
+    }
+
+    .pagination {
+        justify-content: center; /* Center pagination */
+        flex-wrap: wrap; /* Allows wrapping for small screens */
+    }
+
+    .page-item {
+        margin: 5px; /* Adds spacing between page numbers */
+    }
+}
+
+
+#navusername {
+    color: black; /* Default text color */
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8), -1px -1px 3px rgba(255, 255, 255, 0.8); /* White shadow for dark backgrounds */
+}
+

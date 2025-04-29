@@ -10,6 +10,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchasesController;
 use App\Http\Controllers\SellerDashboardController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
 
@@ -58,11 +59,9 @@ Route::middleware(['auth'])->group(function() {
 
     // Artwork Upload 
     Route::post('/storeUpload', [ArtworksController::class, 'storeUpload'])->name('storeUpload');
-    // update artwork 
-    Route::put('/artworks/{id}', [ArtworksController::class, 'editArtwork'])->name('artworks.update');
     //sellerdashboard
     Route::get('sellerdashboard', [SellerDashboardController::class, 'SellerDashDisplay'])->name('sellerdashboard');
-    Route::patch('orders/{order}', [SellerDashboardController::class, 'updateOrder'])->name('order.update');
+    Route::patch('ordersModal/{order}', [SellerDashboardController::class, 'updateOrder'])->name('order.update');
 });
 
 
@@ -76,6 +75,7 @@ Route::middleware(['guest'])->group(function() {
     Route::post('/register', [AuthController::class, 'register'])->name('register');
 });
 
+Route::get('/artworks', [ArtworksController::class, 'showAllArtworks'])->name('artworks');
 
 //Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
 Route::get('/artists', [ProfileController::class, 'showArtistList'])->name('artists');
@@ -88,7 +88,7 @@ Route::get('/announcements', [EventController::class, 'displayEvents'])->name('a
 Route::get('/Seller/dashboard', [SellerDashboardController::class, 'SellerDashboard'])->name('SellerDashboard');
 Route::get('/Seller/orders', [SellerDashboardController::class, 'SellerOrder'])->name('SellerOrders');
 Route::get('/Seller/artworks', [SellerDashboardController::class, 'SellerArtworkDisplay'])->name('SellerArtworks');
-Route::put('/Seller/artworks/{id}', [ArtworksController::class, 'SellerEditArtwork'])->name('SellerEditArtwork');
+Route::put('/Seller/artworksModal/{id}', [SellerDashboardController::class, 'SellerEditArtwork'])->name('SellerEditArtwork');
 Route::get('/Seller/chat', [SellerDashboardController::class, 'SellerChat'])->name('SellerChat');
 
 Route::get('/paintings', function () {
@@ -98,6 +98,14 @@ Route::get('/paintings', function () {
 Route::get('/beSeller', function () {
     return view('Mods.beSeller');
 })->name('beSeller');
+
+Route::get('/forChat', function () {
+    return view('layouts.forChat');
+})->name('forChat');
+
+Route::get('/forNotif', function () {
+    return view('layouts.forNotif');
+})->name('forNotif');
 
 Route::get('/drawings', function () {
     return view('Mods.drawings');
@@ -120,21 +128,66 @@ Route::get('/product-details', function () {
 Route::get('/admin', function () {
     return view('Admin.admin');
 })->name('admin');
+
 Route::get('/management', function () {
     return view('Admin.management');
 })->name('management');
 
+Route::get('/forAdmin', function () {
+    return view('layouts.forAdmin');
+})->name('forAdmin');
+
+Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
+Route::get('/management', [AdminController::class, 'index'])->name('management');
+
+
+
 
 //LAYOUTS
+
+
+// FOR VIEWPROFILE
+
+Route::get('/forViewProfile', function () {
+    return view('layouts.forViewProfile');
+})->name('forViewProfile');
+// update artwork route
+Route::put('/artworks/{id}', [ArtworksController::class, 'editArtwork'])->name('artworks.update');
+
+
+
+
 // FOR BG EXTEND
 Route::get('/forbg', function () {
     return view('Mods.painting');
-})->name('forbg');
+})->name('mainbg');
+Route::get('/forbg', function () {
+    return view('Mods.mainbg');
+})->name('mainbg');
+
+
 
 //FOR NAV EXTEND
 Route::get('/forNav', function () {
     return view('Mods.painting');
 })->name('forNav');
+
+//FOR EXAMPLES EXTEND
+Route::get('/example', function () {
+    return view('Example.paintexample');
+})->name('example');
+
+Route::get('/featuredpainting', function () {
+    return view('Example.featuredpainting');
+})->name('featuredpainting');
+Route::get('/howtoget', function () {
+    return view('Example.howtoget');
+})->name('howtoget');
+
+
+
+
+
 
 //FOR FOOTER
 Route::get('/footer', function () {
