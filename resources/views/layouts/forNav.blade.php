@@ -21,34 +21,39 @@
         </a>
     </div>
     <!-- Navigation Links -->
-    <div id="forNav" class="hidden md:flex space-x-1" style="margin-left:300px; font-family: 'Rubik', sans-serif;">
+    <div id="forNav" class="hidden md:flex space-x-1" style="margin-left:200px; font-family: 'Rubik', sans-serif;">
         @php
             $currentRoute = Route::currentRouteName();
             $currentCategory = request('category');
         @endphp
 
         <a href="{{ route('category', ['category' => 'paintings']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
-            {{ $currentRoute == 'category' && $currentCategory == 'paintings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+            {{ $currentRoute == 'category' && $currentCategory == 'paintings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-80 hover:text-gray-500' }}">
+            ARTWORKS
+        </a>
+
+        <a href="{{ route('category', ['category' => 'paintings']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
+            {{ $currentRoute == 'category' && $currentCategory == 'paintings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-80 hover:text-gray-500' }}">
             PAINTINGS
         </a>
 
         <a href="{{ route('category', ['category' => 'drawings']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
-            {{ $currentRoute == 'category' && $currentCategory == 'drawings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+            {{ $currentRoute == 'category' && $currentCategory == 'drawings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-80 hover:text-gray-500' }}">
             DRAWINGS
         </a>
 
         <a href="{{ route('category', ['category' => 'sculpture']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
-            {{ $currentRoute == 'category' && $currentCategory == 'sculpture' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+            {{ $currentRoute == 'category' && $currentCategory == 'sculpture' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-80 hover:text-gray-500' }}">
             SCULPTURES
         </a>
 
         <a href="{{ route('artists', ['category' => 'artists']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
-            {{ $currentRoute == 'artists' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+            {{ $currentRoute == 'artists' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-80 hover:text-gray-500' }}">
             ARTISTS
         </a>
 
         <a href="{{ route('announcements', ['category' => 'announcements']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
-            {{ $currentRoute == 'announcements' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+            {{ $currentRoute == 'announcements' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-80 hover:text-gray-500' }}">
             ANNOUNCEMENTS
         </a>
     </div>
