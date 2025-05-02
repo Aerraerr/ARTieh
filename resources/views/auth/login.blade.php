@@ -131,7 +131,7 @@
                 @csrf
                 <div>
                     <label for="email" class="block text-gray-600 text-sm">Email Address</label>
-                    <input type="email" name="email" id="email" placeholder="Enter your email" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1">
+                    <input type="email" name="email" id="email" placeholder="Enter your email" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-[#A99476] outline-none mt-1" required>
                 </div>
 
                 <div class="mt-4">

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Artworks;
 use App\Models\Category;
+use App\Models\Orders;
+use App\Models\Order_Items;
 use App\Models\User;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Session;
@@ -11,21 +13,56 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+    //for logged in only artworks display
     public function showProfile(){
-        
         $categories = Category::all();  // Fetch all categories
 
         $user = Auth::user();
+        $artworks = collect();
+        $ordered = collect();
 
         // Fetch artworks only if the user is a seller
         $artworks = collect();
         if ($user->role === 'seller') {
             $artworks = Artworks::where('user_id', $user->id)->get();
+
+            //display ordered artwork of user(seller)
+            $ordered = Orders::whereHas('items.artwork.user', function($query) use ($user) {
+                $query->where('id', $user->id);
+            })
+            ->with(['items.artwork.user', 'status', 'payment'])
+            ->latest('ordered_at')
+            ->get();
         }
 
-        return view('Mods.profile', compact('user', 'categories', 'artworks'));
+        return view('Mods.profile', compact('user', 'categories', 'artworks', 'ordered'));
     }
 
+    public function showArtistList()
+    {
+        $creator = User::where('role', 'seller') //pag seller ang role
+            ->whereHas('artworks') // tas may artworks
+            ->with('artworks') // pede makuwa data hali artworks
+            ->get(); // matik kuwa agad for display
+        return view('Mods.artists', compact('creator'));
+    }
+
+   //function to display the details of the clicked Artist 
+   public function AboutArtist($id)
+   {
+        $artist = User::where('role', 'seller')
+                ->where('id', $id) 
+                ->with([ // pag nasa order_item na ang artwork tas may status na except sa cancelled, kuwaon
+                    'artworks.category',
+                    'artworks.orderItems.order' => function ($query) {
+                        $query->whereIn('status_id', [1, 2, 3, 4]);
+                    }
+                ]) // pede makuwa data hali artworks and category tables
+                ->firstOrFail();
+        return view('Mods.view_artist', compact('artist'));
+   }
+
+   //sa artworks tab
     public function editProfile(Request $request, $id){
         $profile = User::find($id);
 
@@ -61,5 +98,5 @@ class ProfileController extends Controller
         }
     }
 
-    
+   
 }

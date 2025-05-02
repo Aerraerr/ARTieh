@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 use App\Models\Artworks;
 use App\Models\Category;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Order_Items;
+use GuzzleHttp\Psr7\Query;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+
 
 class ArtworksController extends Controller
 {
@@ -19,23 +24,25 @@ class ArtworksController extends Controller
             'artwork_title' => 'required|string|max:255',
             'description'   => 'required|string',
             'category_id'   => 'required|exists:category,id',
+            'dimension'     =>  'required|string',
             'price'         => 'required|numeric|min:0',
             'image'         => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        //Store the image in the appropriate category folder
+        //Store the image in the storage/public/artworks/category
         $category = $request->category_id;
         $imagePath =$request->file('image')->store("artworks/{$category}", 'public');
 
 
         //save to database
         Artworks::create([
-            'user_id'       => auth()->id(),        // Store the logged-in user's ID
+            'user_id'       => auth::id(),        
             'category_id'   => $category,
             'artwork_title' => $request->artwork_title,
             'description'   => $request->description,
+            'dimension'     => $request->dimension,
             'price'         => $request->price,
-            'image_path'    => "storage/{$imagePath}",  // Simplified for public access
+            'image_path'    => "storage/{$imagePath}",  
         ]);
 
         return redirect()->back()->with('success', 'Artwork uploaded successfully!');
@@ -51,8 +58,13 @@ class ArtworksController extends Controller
             abort(404, 'Category not found');
         }
 
-        // Filter artworks by category
-        $artworks = Artworks::where('category_id', $categoryModel->id)->get();
+        $artworks = Artworks::with('user')
+            ->where('category_id', $categoryModel->id)
+            ->whereDoesntHave('orderItems.order', function($query){
+                $query->where('status_id', '!=', 5); // pagnacancel order, luwas giray sa display
+            }) //pag so artwork nasa order_item, ekis na siya
+            ->get();
+              
 
          // Map the category name to the correct view
         $view = match($category) {
@@ -70,6 +82,44 @@ class ArtworksController extends Controller
         return view($view, compact('artworks'));
     }
 
+    private function getArtworksByCategory($category) // hiniwalay ko na, mapagalon magparaulit wahaha
+    {
+        $categoryModel = Category::where('category_name', $category)->first();
+
+        if (!$categoryModel) return [];
+
+        return Artworks::with('user')
+            ->where('category_id', $categoryModel->id)
+            ->whereDoesntHave('orderItems.order', function($query){
+                $query->where('status_id', '!=', 5);
+            })
+            ->get();
+    }
+
+    public function homeDisplay()
+    {
+        $creator = User::where('role', 'seller') 
+            ->whereHas('artworks') 
+            ->with('artworks') 
+            ->get(); 
+
+        $sculpt = $this->getArtworksByCategory('sculpture');
+        $paint = $this->getArtworksByCategory('paintings');
+
+        return view('landing', compact('sculpt', 'creator', 'paint'));
+    }
+
+    public function showAllArtworks()
+    {
+        $artworks = Artworks::with('user')
+            ->whereDoesntHave('orderItems.order', function($query){
+                $query->where('status_id', '!=', 5); // pagnacancel order, luwas giray sa display
+            }) //pag so artwork nasa order_item, ekis na siya
+            ->get();
+
+        return view('Mods.artworks', compact('artworks'));
+    }
+
     //function to display the details of the clicked cards/item and the more works by artist
     public function showDetails($id)
     {
@@ -80,14 +130,25 @@ class ArtworksController extends Controller
             return redirect()->back()->with('error', 'Artwork not found.');
         }
 
-        // Fetch more artworks by the same artist, excluding the current one
+        // kuwa random artwork sa parehas na artist
         $moreWorks = Artworks::where('user_id', $artwork->user_id)
-            ->where('id', '!=', $id) // Exclude the current artwork
-            ->take(4) // Limit to 4 works
+            ->where('id', '!=', $id) // so naka show na artwork dai na tigubay sa more works
+            ->take(4) 
+            ->get();
+        
+        
+        $excludedArtworkIds = Order_Items::whereHas('order', function ($query) {
+            $query->whereIn('status_id', [1, 2, 3, 4]); // dat wara siya sa order tables
+        })->pluck('artwork_id');
+            
+        $otherArtworks = Artworks::whereNotIn('id', $excludedArtworkIds)
+            ->where('id', '!=', $artwork->id) // exclude current artwork
+            ->where('user_id', '!=', $artwork->user_id) // exclude same artist
             ->get();
 
-        // Load the details view with the artwork data
-        return view('productView.product', compact('artwork', 'moreWorks'));
+        return view('productView.product', compact('artwork', 'moreWorks', 'otherArtworks'));
     }
-    
+
+
+
 }

@@ -51,6 +51,7 @@
             </defs>
             </svg>
         </div>
+        
 
         <div class="hidden lg:flex flex-col space-y-6 absolute right-5 top-1/2 transform -translate-y-1/2 z-50 mt-40">
         <a href="https://facebook.com" target="_blank" class="flex items-center group relative">
@@ -108,17 +109,13 @@
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
     <!-- Sculptures Example (repeat for more) -->
-    <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
-      <img src="https://source.unsplash.com/400x400/?sculpture" alt="Sculpture 1" class="w-full h-64 object-cover mb-4 rounded-lg">
-      <h5 class="font-semibold text-[#6E4D41] text-lg">The Thinker</h5>
-      <p class="text-gray-600">Auguste Rodin</p>
-    </div>
-
-    <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
-      <img src="https://source.unsplash.com/400x400/?sculpture" alt="Sculpture 2" class="w-full h-64 object-cover mb-4 rounded-lg">
-      <h5 class="font-semibold text-[#6E4D41] text-lg">David</h5>
-      <p class="text-gray-600">Michelangelo</p>
-    </div>
+    @foreach($sculpt as $artwork)
+      <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
+        <img src="{{ asset($artwork->image_path) }}" alt="Sculpture 2" class="w-full h-64 object-cover mb-4 rounded-lg">
+        <h5 class="font-semibold text-[#6E4D41] text-lg">{{$artwork->artwork_title}}</h5>
+        <p class="text-gray-600">{{$artwork->user->full_name}}</p>
+      </div>
+    @endforeach
 
     <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
       <img src="https://source.unsplash.com/400x400/?sculpture" alt="Sculpture 3" class="w-full h-64 object-cover mb-4 rounded-lg">
@@ -131,33 +128,20 @@
       <h5 class="font-semibold text-[#6E4D41] text-lg">Bust of Nefertiti</h5>
       <p class="text-gray-600">Thutmose</p>
     </div>
-
-    <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
-      <img src="https://source.unsplash.com/400x400/?sculpture" alt="Sculpture 5" class="w-full h-64 object-cover mb-4 rounded-lg">
-      <h5 class="font-semibold text-[#6E4D41] text-lg">The Pietà</h5>
-      <p class="text-gray-600">Michelangelo</p>
-    </div>
-
-    <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
-      <img src="https://source.unsplash.com/400x400/?sculpture" alt="Sculpture 6" class="w-full h-64 object-cover mb-4 rounded-lg">
-      <h5 class="font-semibold text-[#6E4D41] text-lg">The Discus Thrower</h5>
-      <p class="text-gray-600">Myron</p>
-    </div>
-
     <!-- Add more sculpture items here if needed -->
   </div>
   <div class="flex justify-center mt-10">
-  <a href="{{ route('category', ['category' => 'sculpture']) }}" style="text-decoration:none;" class="blob-btn h-[50px] sm:w-1/4 w-[70%] px-6 flex items-center justify-center">
-                See more masterpieces
-                <span class="blob-btn__inner">
-                    <span class="blob-btn__blobs">
-                        <span class="blob-btn__blob"></span>
-                        <span class="blob-btn__blob"></span>
-                        <span class="blob-btn__blob"></span>
-                        <span class="blob-btn__blob"></span>
-                    </span>
-                </span>
-                </a>
+    <a href="{{ route('category', ['category' => 'sculpture']) }}" style="border-radius:10px;" class="no-underline blob-btn h-[50px] px-6 flex items-center justify-center">
+      See More Masterpieces
+      <span class="blob-btn__inner">
+        <span class="blob-btn__blobs">
+          <span class="blob-btn__blob"></span>
+          <span class="blob-btn__blob"></span>
+          <span class="blob-btn__blob"></span>
+          <span class="blob-btn__blob"></span>
+        </span>
+      </span>
+    </a>
   </div>
 </section>
 
@@ -171,7 +155,7 @@
           From contemporary styles to traditional Filipino themes, ARTIEH makes it easy for you to find wall art that reflects your taste, your story, and the unique culture of Albay.
         
         </p>
-        <button style="border-radius:10px;" class=" blob-btn h-[50px] px-6 flex items-center justify-left">
+        <a href="{{route('artworks')}}" style="border-radius:10px;" class="no-underline blob-btn h-[50px] px-6 flex items-center justify-left">
         Find Art That Reflects Your Story
         <span class="blob-btn__inner">
             <span class="blob-btn__blobs">
@@ -181,7 +165,7 @@
             <span class="blob-btn__blob"></span>
             </span>
         </span>
-        </button>
+        </a>
       </div>
       <img src="{{ asset('images/wallart.jpg') }}" alt="Wall art example" class="rounded-xl shadow-lg">
     </div>
@@ -197,20 +181,19 @@
       <img src="{{ asset('images/handc.jpg') }}" alt="Handcrafted Frames" class="mx-auto rounded-lg shadow">
     </div>
     <div class="flex justify-center mt-10">
-    <a href="{{ route('category', ['category' => 'sculpture']) }}" style="text-decoration:none;" class="blob-btn h-[50px] sm:w-1/4 w-[70%] px-6 flex items-center justify-center">
-                Find  what  crafts  your  heart
-                <span class="blob-btn__inner">
-                    <span class="blob-btn__blobs">
-                        <span class="blob-btn__blob"></span>
-                        <span class="blob-btn__blob"></span>
-                        <span class="blob-btn__blob"></span>
-                        <span class="blob-btn__blob"></span>
-                    </span>
-                </span>
-      </a>
+    <a href="{{route('artworks')}}" style="border-radius:10px;" class="no-underline blob-btn h-[50px] px-6 flex items-center justify-center">
+    Find what crafts your heart
+      <span class="blob-btn__inner">
+        <span class="blob-btn__blobs">
+          <span class="blob-btn__blob"></span>
+          <span class="blob-btn__blob"></span>
+          <span class="blob-btn__blob"></span>
+          <span class="blob-btn__blob"></span>
+        </span>
+      </span>
+    </a>
   </div>
   </section>
-  
 
   <!-- Section: Final Message -->
   <section class="py-16 px-6 max-w-4xl mx-auto text-center opacity-0 translate-y-12 transition-all duration-1000 ease-out" id="final-message-section">
@@ -218,10 +201,9 @@
     <p class="text-[#6E4D41] text-base">
       At ARTIEH, we believe that when you bring meaningful art into your space, you bring it to life. Let your walls tell your story—with heart, with heritage, with ARTIEH from Albay.
     </p>
-    @include('Example.howtoget')
-
   </section>
 
+    @include('Example.howtoget')
 
 
 

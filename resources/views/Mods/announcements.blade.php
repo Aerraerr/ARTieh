@@ -27,51 +27,17 @@
             <!-- Event List -->
             <div class="ml-10 mr-10 grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                 <!-- Event 1 -->
-                <div class="p-4 border rounded-lg shadow-md">
-                    <h5 class="text-xl font-semibold text-[#6E4D41]">Local Art & Culture Fair</h5>
-                    <p class="text-[#6E4D41]">📅 April 20, 2025 | 📍 Albay Art Center</p>
-                    <p class="mt-2 text-[#6E4D41]">A gathering of local artists showcasing paintings, sculptures, and performances. Live art demonstrations and interactive booths await!</p>
-                </div>
-                
-                <!-- Event 2 -->
-                <div class="p-4 border rounded-lg shadow-md">
-                    <h5 class="text-xl font-semibold text-[#6E4D41]">Albay Food & Craft Expo</h5>
-                    <p class="text-[#6E4D41]">📅 May 15, 2025 | 📍 Legazpi Convention Hall</p>
-                    <p class="mt-2 text-[#6E4D41]">A celebration of Albay’s craftsmanship and culinary excellence. Featuring food tastings, handmade products, and local artisanal goods.</p>
-                </div>
-                
-                <!-- Event 3 -->
-                <div class="p-4 border rounded-lg shadow-md">
-                    <h5 class="text-xl font-semibold text-[#6E4D41]">Digital Art Exhibition</h5>
-                    <p class="text-[#6E4D41]">📅 June 5, 2025 | 📍 Virtual (Online Gallery)</p>
-                    <p class="mt-2 text-[#6E4D41]">A digital showcase of modern and futuristic artworks, including 3D modeling, concept art, and AI-generated pieces. Virtual gallery tour available.</p>
-                </div>
-                
-                <!-- Event 4 -->
-                <div class="p-4 border rounded-lg shadow-md">
-                    <h5 class="text-xl font-semibold text-[#6E4D41]">Street Mural Festival</h5>
-                    <p class="text-[#6E4D41]">📅 July 10, 2025 | 📍 Daraga, Albay</p>
-                    <p class="mt-2 text-[#6E4D41]">Watch artists transform blank walls into colorful storytelling murals. Live music, poetry readings, and street performances will also be featured.</p>
-                </div>
-                <div class="p-4 border rounded-lg shadow-md">
-                    <h5 class="text-xl font-semibold text-[#6E4D41]">Digital Art Exhibition</h5>
-                    <p class="text-[#6E4D41]">📅 June 5, 2025 | 📍 Virtual (Online Gallery)</p>
-                    <p class="mt-2 text-[#6E4D41]">A digital showcase of modern and futuristic artworks, including 3D modeling, concept art, and AI-generated pieces. Virtual gallery tour available.</p>
-                </div>
-                
-                <!-- Event 4 -->
-                <div class="p-4 border rounded-lg shadow-md">
-                    <h5 class="text-xl font-semibold text-[#6E4D41]">Street Mural Festival</h5>
-                    <p class="text-[#6E4D41]">📅 July 10, 2025 | 📍 Daraga, Albay</p>
-                    <p class="mt-2 text-[#6E4D41]">Watch artists transform blank walls into colorful storytelling murals. Live music, poetry readings, and street performances will also be featured.</p>
-                </div>
+                @forelse($events as $event)
+                    <div class="p-4 border rounded-lg shadow-md">
+                        <img src="{{asset('storage/' . $event->event_img)}}" alt="{{ $event->event_name }}" class="w-full h-60 rounded mb-2" />
+                        <h5 class="text-xl font-semibold text-[#6E4D41]">{{$event->event_name}} </h5>
+                        <p class="text-[#6E4D41]">🧑‍🎨 {{$event->organizer_name}} | 📅 {{$event->event_date}} | 📍 {{$event->location}}</p>
+                        <p class="mt-2 text-[#6E4D41]">{{$event->event_description}}</p>
+                    </div>
+                @empty
+                        <p class="text-center text-gray-500 col-span-2">No events found.</p>
+                @endforelse
             </div>
-        
-
-
-
-
-
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item"><a class="page-link" href="#"><</a></li>
@@ -109,14 +75,99 @@
                     <p class="text-[#6E4D41] text-sm">Connect with artists, visitors, and enthusiasts across Albay.</p>
                 </div>
             </div>
-            <div class="mt-6">
-                <a href="#" class="bg-[#6E4D41] text-white py-2 px-6 rounded-lg hover:bg-[#594639] transition">Submit Your Event</a>
-            </div>
+            @auth
+                <div class="mt-6">
+                    <button onclick="toggleModal('addevent-modal')" class="bg-[#6E4D41] text-white py-2 px-6 rounded-lg hover:bg-[#594639] transition">Submit Your Event</button>
+                </div>
+            @endauth
+            @guest
+                <div class="mt-6">
+                    <button onclick="window.location.href='{{ route('show.login') }}'" class="bg-[#6E4D41] text-white py-2 px-6 rounded-lg hover:bg-[#594639] transition">Submit Your Event</button>
+                </div>
+            @endguest
         </div>
     </div>
+<!-- Include the event modals -->
+
+    <!-- add event modal -->
+    @auth
+    <div id="addevent-modal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="modal-dialog modal-lg modal-fullscreen-md-down modal-fullscreen-sm-down modal-dialog-centered">
+            <div class="modal-content">
+        
+                <div class="modal-header">
+                    <h5 class="modal-title font-semibold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl pl-[20px]">ADD EVENT</h5>
+                    <button onclick="toggleModal('addevent-modal')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+        
+                <div class="modal-body mx-auto max-w-[100%] sm:max-w-[100%]">
+                    <div class="flex flex-col lg:flex-row gap-8 items-stretch">
+                    <div class="hidden lg:block border-l  h-auto min-h-[100px] mx-4"></div>
+            
+                <form action="{{ route('events.add', auth()->id()) }}" method="POST" enctype="multipart/form-data">
+                @csrf  
+                <!-- Event Form Section -->
+                <div class="lg:w-2/3">
+
+                    <div class="mb-4 flex items-center gap-4">
+                        <label class="block font-semibold text-gray-700 w-[100px]">Add Event Photo</label>
+                        <label for="event_img" class="cursor-pointer">
+                            <img src="images/add_photo.svg" alt="Upload Image" class="w-20 h-10 border-2 border-dashed border-gray-300 p-2">
+                                </label>
+                                <input id="event_img" name="event_img" type="file" class="hidden">     
+                                </label>
+                    </div>
+
+                    <div class="mb-4 flex items-center gap-6">
+                    <label class="block font-semibold text-gray-700 w-[100px]">Event Name</label>
+                    <input type="text" name="event_name" placeholder="Event name" class="border border-gray-300 rounded w-[350px] p-2 focus:outline-none focus:ring-1 focus:ring-[#6E4D41]" required />
+                    </div>
+
+                    <div class="mb-4 flex items-center gap-6">
+                    <label class="block font-semibold text-gray-700 w-[100px]">Organizer name</label>
+                    <input type="text" name="organizer_name" placeholder="Organizer name" class="border border-gray-300 rounded w-[350px] p-2 focus:outline-none focus:ring-1 focus:ring-[#6E4D41]" required />
+                    </div>
+
+                    <div class="mb-4 flex items-center gap-6">
+                    <label class="block font-semibold text-gray-700 w-[100px]">Event Date</label>
+                    <input type="date" name="event_date" class="border border-gray-300 rounded w-[350px] p-2 focus:outline-none focus:ring-1 focus:ring-[#6E4D41]" required />
+                    </div>
+
+                    <div class="mb-4 flex items-center gap-4">
+                    <label class="block font-semibold text-gray-700 w-[100px]">Location</label>
+                    <input type="text" name="location" placeholder="zone/barangay/municipality/district" class="border border-gray-300 rounded w-[350px] p-2 focus:outline-none focus:ring-1 focus:ring-[#6E4D41]" required />
+                    </div>
+
+                    <div class="mb-4 flex items-center gap-4">
+                            <label for="description" class="block font-semibold text-gray-700 w-[100px]" required>Description:</label>
+                                <textarea name="event_description" placeholder="Event description" rows="4" 
+                            class="w-[350px] px-4 py-2 border focus:ring focus:ring-[#6E4D41] outline-none mt-1" required></textarea>
+                        </div>
+                        
+                        <div class="flex justify-end space-x-4">
+                            <button onclick="toggleModal('addevent-modal')" class="px-6 py-2 rounded text-gray-600 border  hover:bg-gray-100">Cancel</button>
+                            <button type="submit" class="px-6 py-2 rounded text-white bg-[#6E4D41]  hover:bg-[#5a3d33] transition">Save</button>
+                        </div>
+                </div>
+                </form>  
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    @endauth
+
+
 @include('layouts.footer')
 </html>
 </body>
+<!-- JavaScript for Modal Functionality -->
+<script>
+    function toggleModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.toggle('hidden');
+    }
+</script>
 <script>
     document.getElementById("menuBtn").addEventListener("click", function () {
         let mobileMenu = document.getElementById("mobileMenu");

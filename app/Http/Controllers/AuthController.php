@@ -47,10 +47,14 @@ class AuthController extends Controller
         if (Auth::attempt($validated)){
             $request->session()->regenerate(); //regenerate the session id for newly authenticated user but keeps the data intack
             
-            if (Auth::user()->role === 'admin') {
+            if (Auth::user()->role === 'seller') {
+                return redirect()->route('SellerDashboard'); // make sure this route exists
+            }
+            elseif (Auth::user()->role === 'admin') {
                 return redirect()->route('admin'); // Redirect admin to admin dashboard
             }
-            return redirect('/'); //balik sa pag ka kupal i mean sa home page
+
+            return redirect()->route('home'); //balik sa pag ka kupal i mean sa home page
         }
 
         //error message

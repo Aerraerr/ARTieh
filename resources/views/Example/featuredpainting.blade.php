@@ -69,13 +69,15 @@
     <div class="artistCarousel gap-10 whitespace-nowrap transition-transform duration-500 ease-in-out px-2 w-max">
       
       <!-- Artist Card (repeat as needed) -->
-      <div class="artistCarousel2 flex-shrink-0 sm:w-[260px] w-[20px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
-        <img src="{{ asset('images/profileused/lbj.jpg') }}" alt="Artist 1" class="w-16 h-16 rounded-full object-cover">
-        <div>
-          <h3 class="artistCarousel2 text-lg font-semibold text-[#6E4D41]">Lebron James</h3>
-          <p class="text-sm text-gray-600">15 artworks</p>
+      @foreach ($creator as $artist)
+        <div class="flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
+          <img src="{{ $artist->profile_pic ? asset('storage/' . $artist->profile_pic) : asset('storage/profile_pic/user.png') }}" alt="Artist" class="w-16 h-16 rounded-full object-cover">
+          <div>
+            <h3 class="text-lg font-semibold text-[#6E4D41]">{{$artist->full_name }}</h3>
+            <p class="text-sm text-gray-600">{{ $artist->artworks->count() ?? 'artwork count.' }} artworks</p>
+          </div>
         </div>
-      </div>
+       @endforeach
 
       <div class="artistCarousel2 flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
         <img src="{{ asset('images/profileused/bob.jpg') }}" alt="Artist 2" class="w-16 h-16 rounded-full object-cover">
@@ -177,110 +179,8 @@
 
   <!-- Button -->
   <div class="flex justify-center mt-10">
-  <a href="{{ route('artists', ['category' => 'artists']) }}" style="text-decoration:none;" class="blob-btn h-[50px] w-1/2 px-6 flex items-center justify-center">
-                FIND MORE ARTIST
-                <span class="blob-btn__inner">
-                    <span class="blob-btn__blobs">
-                        <span class="blob-btn__blob"></span>
-                        <span class="blob-btn__blob"></span>
-                        <span class="blob-btn__blob"></span>
-                        <span class="blob-btn__blob"></span>
-                    </span>
-                </span>
-                </a>
-  </div>
-</section>
-
-
-<section class="p-6 sm:p-6 mt-5">
-  <h2 class="text-2xl text-center font-bold mb-4 text-[#6E4D41]">Featured Artists</h2>
-
-  <div class="overflow-x-hidden relative">
-    <!-- Carousel wrapper -->
-    <div class="artistCarousel gap-10 whitespace-nowrap transition-transform duration-500 ease-in-out px-2 w-max">
-      
-      <!-- Artist Card (repeat as needed) -->
-      <div class="artistCarousel2 flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
-        <img src="{{ asset('images/profileused/lbj.jpg') }}" alt="Artist 1" class="w-16 h-16 rounded-full object-cover">
-        <div>
-          <h3 class="text-lg font-semibold text-[#6E4D41]">Lebron James</h3>
-          <p class="text-sm text-gray-600">15 artworks</p>
-        </div>
-      </div>
-
-      <div class="artistCarousel2 flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
-        <img src="{{ asset('images/profileused/bob.jpg') }}" alt="Artist 2" class="w-16 h-16 rounded-full object-cover">
-        <div>
-          <h3 class="text-lg font-semibold text-[#6E4D41]">Bob Ross</h3>
-          <p class="text-sm text-gray-600">8 artworks</p>
-        </div>
-      </div>
-
-      <div class="artistCarousel2 flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
-        <img src="{{ asset('images/profileused/lbj.jpg') }}" alt="Artist 3" class="w-16 h-16 rounded-full object-cover">
-        <div>
-          <h3 class="text-lg font-semibold text-[#6E4D41]">Lebron James</h3>
-          <p class="text-sm text-gray-600">13 artworks</p>
-        </div>
-      </div>
-
-      <div class="artistCarousel2 flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
-        <img src="{{ asset('images/profileused/bronny.jpg') }}" alt="Bronny James" class="w-16 h-16 rounded-full object-cover">
-        <div>
-          <h3 class="text-lg font-semibold text-[#6E4D41]">Bronny James</h3>
-          <p class="text-sm text-gray-600">3 artworks</p>
-        </div>
-      </div>
-
-      <div class="artistCarousel2 flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
-        <img src="{{ asset('images/profileused/ad.jpg') }}" alt="Anthony Davis" class="w-16 h-16 rounded-full object-cover">
-        <div>
-          <h3 class="text-lg font-semibold text-[#6E4D41]">Anthony Davis</h3>
-          <p class="text-sm text-gray-600">10 artworks</p>
-        </div>
-      </div>
-
-      <div class="artistCarousel2 flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
-        <img src="{{ asset('images/profileused/luka.jpg') }}" alt="Luka Doncic" class="w-16 h-16 rounded-full object-cover">
-        <div>
-          <h3 class="text-lg font-semibold text-[#6E4D41]">Luka Doncic</h3>
-          <p class="text-sm text-gray-600">9 artworks</p>
-        </div>
-      </div>
-
-      <div class="artistCarousel2 flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
-        <img src="{{ asset('images/profileused/rui.jpg') }}" alt="Rui Hachimura" class="w-16 h-16 rounded-full object-cover">
-        <div>
-          <h3 class="text-lg font-semibold text-[#6E4D41]">Rui Hachimura</h3>
-          <p class="text-sm text-gray-600">7 artworks</p>
-        </div>
-      </div>
-
-      <div class="artistCarousel2 flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
-        <img src="{{ asset('images/profileused/ar.jpg') }}" alt="Austin Reaves" class="w-16 h-16 rounded-full object-cover">
-        <div>
-          <h3 class="text-lg font-semibold text-[#6E4D41]">Austin Reaves</h3>
-          <p class="text-sm text-gray-600">6 artworks</p>
-        </div>
-      </div>
-
-      <div class="artistCarousel2 flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
-        <img src="{{ asset('images/profileused/lbj.jpg') }}" alt="Artist 1" class="w-16 h-16 rounded-full object-cover">
-        <div>
-          <h3 class="text-lg font-semibold text-[#6E4D41]">Aeron Jead Marquez</h3>
-          <p class="text-sm text-gray-600">15 artworks</p>
-        </div>
-      </div>
-
-      <!-- Repeat other artist cards as needed -->
-
-    </div>
-  </div>
-
-  <!-- Button -->
-  <div class="flex justify-center mt-10">
-    <a href="{{ route('artists', ['category' => 'artists']) }}" style="text-decoration:none;" class="blob-btn h-[50px] w-1/2 px-6 flex items-center justify-center">
-      FIND MORE ARTIST
+    <a href="{{route('artists')}}" style="border-radius:10px;" class="no-underline blob-btn h-[50px] px-6 flex items-center justify-center">
+      Find more artist
       <span class="blob-btn__inner">
         <span class="blob-btn__blobs">
           <span class="blob-btn__blob"></span>
@@ -301,16 +201,18 @@
             <div  class="col-md-5 mx-auto ">
                 <div id="paintingsCarousel" class="carousel slide " data-bs-ride="carousel">
                     <div style="border-radius:10px;" class="carousel-inner ">
+                      @foreach($paint as $artwork)
                         <div class="carousel-item active">
                             <div class="card border-0 shadow-lg">
-                                <img src="{{ asset('images/painting1.png') }}" class="card-img-top" alt="Wallowing Breeze">
+                                <img src="{{ asset($artwork->image_path) }}" class="card-img-top" alt="Wallowing Breeze">
                                 <div class="card-body text-center">
-                                    <h5 class="fw-bold">Flora Flore Nomi</h5>
-                                    <p class="text-muted">Aeron Jead Marquez</p>
-                                    <p class="text-muted fst-italic">Oil on canvas, 2008</p>
+                                    <h5 class="fw-bold">{{$artwork->artwork_title}}</h5>
+                                    <p class="text-muted">{{$artwork->user->full_name}}</p>
+                                    <p class="text-muted fst-italic">{{$artwork->dimension}}</p>
                                 </div>
                             </div>
                         </div>
+                      @endforeach
                         <div class="carousel-item">
                             <div class="card border-0 shadow-lg">
                                 <img src="{{ asset('images/painting2.png') }}" class="card-img-top" alt="Wallowing Breeze">

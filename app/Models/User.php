@@ -25,6 +25,9 @@ class User extends Authenticatable
         'email',
         'phone',
         'password',
+        'address',
+        'profile_pic',
+        'biography'
     ];
 
     /**
@@ -50,12 +53,25 @@ class User extends Authenticatable
         ];
     }
 
-    public function artworks()
-    {
-        return $this->hasMany(Artworks::class, 'user_id');
-    }
+    //para sa full name call nalang ining function --full_name--
     public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
     }
+
+    //Eloquent ORMs
+    public function artworks()
+    {
+        return $this->hasMany(Artworks::class, 'user_id');
+    }
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
+    }
+    
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+    
 }
