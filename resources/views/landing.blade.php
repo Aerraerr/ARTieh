@@ -28,7 +28,7 @@
                 Discover unique artworks, connect with Albay's local artists, 
                 and bring creativity into your space.
             </p>
-            <div class="buttons ml-[-300px]">
+            <div class="buttons sm:ml-[-300px] ml-[-100px]">
             <button class="blob-btn">
                 Explore Now
                 <span class="blob-btn__inner">
@@ -147,17 +147,17 @@
     <!-- Add more sculpture items here if needed -->
   </div>
   <div class="flex justify-center mt-10">
-    <button style="border-radius:10px;" class="blob-btn h-[50px] px-6 flex items-center justify-center">
-    See More Masterpieces
-      <span class="blob-btn__inner">
-        <span class="blob-btn__blobs">
-          <span class="blob-btn__blob"></span>
-          <span class="blob-btn__blob"></span>
-          <span class="blob-btn__blob"></span>
-          <span class="blob-btn__blob"></span>
-        </span>
-      </span>
-    </button>
+  <a href="{{ route('category', ['category' => 'sculpture']) }}" style="text-decoration:none;" class="blob-btn h-[50px] sm:w-1/4 w-[70%] px-6 flex items-center justify-center">
+                See more masterpieces
+                <span class="blob-btn__inner">
+                    <span class="blob-btn__blobs">
+                        <span class="blob-btn__blob"></span>
+                        <span class="blob-btn__blob"></span>
+                        <span class="blob-btn__blob"></span>
+                        <span class="blob-btn__blob"></span>
+                    </span>
+                </span>
+                </a>
   </div>
 </section>
 
@@ -197,19 +197,20 @@
       <img src="{{ asset('images/handc.jpg') }}" alt="Handcrafted Frames" class="mx-auto rounded-lg shadow">
     </div>
     <div class="flex justify-center mt-10">
-    <button style="border-radius:10px;" class="blob-btn h-[50px] px-6 flex items-center justify-center">
-    Find what crafts your heart
-      <span class="blob-btn__inner">
-        <span class="blob-btn__blobs">
-          <span class="blob-btn__blob"></span>
-          <span class="blob-btn__blob"></span>
-          <span class="blob-btn__blob"></span>
-          <span class="blob-btn__blob"></span>
-        </span>
-      </span>
-    </button>
+    <a href="{{ route('category', ['category' => 'sculpture']) }}" style="text-decoration:none;" class="blob-btn h-[50px] sm:w-1/4 w-[70%] px-6 flex items-center justify-center">
+                Find  what  crafts  your  heart
+                <span class="blob-btn__inner">
+                    <span class="blob-btn__blobs">
+                        <span class="blob-btn__blob"></span>
+                        <span class="blob-btn__blob"></span>
+                        <span class="blob-btn__blob"></span>
+                        <span class="blob-btn__blob"></span>
+                    </span>
+                </span>
+      </a>
   </div>
   </section>
+  
 
   <!-- Section: Final Message -->
   <section class="py-16 px-6 max-w-4xl mx-auto text-center opacity-0 translate-y-12 transition-all duration-1000 ease-out" id="final-message-section">
@@ -217,9 +218,10 @@
     <p class="text-[#6E4D41] text-base">
       At ARTIEH, we believe that when you bring meaningful art into your space, you bring it to life. Let your walls tell your story—with heart, with heritage, with ARTIEH from Albay.
     </p>
+    @include('Example.howtoget')
+
   </section>
 
-    @include('Example.howtoget')
 
 
 

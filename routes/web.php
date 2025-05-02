@@ -8,6 +8,9 @@ use App\Http\Controllers\ProfileArtwork;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Mail\VerificationCodeMail;
+
+
 
 
 // REGISTRATION / LOGIN
@@ -17,7 +20,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
- 
+
 
 
 Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');

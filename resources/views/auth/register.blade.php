@@ -198,6 +198,15 @@
            
         <!-- Your Form or Other Content Here -->
         </div>
+        @if (session('verification_required'))
+        <script>
+            window.addEventListener('DOMContentLoaded', function () {
+                const modal = new bootstrap.Modal(document.getElementById('verificationModal'));
+                modal.show();
+            });
+        </script>
+        @endif
+
 
     </div>
    
