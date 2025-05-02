@@ -6,6 +6,7 @@
     <title>Cart</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -64,8 +65,8 @@
                     <div class="flex items-start w-full">
                         <div class="ml-3 w-full">
                         <div class="flex items-center space-x-4">
-                            <img src="{{ $item->artwork->user->profile_pic ? asset('storage/' . $item->artwork->user->profile_pic) : asset('images/user.png') }}" class="w-8 h-8 rounded-full">
-                            <h4 class="font-medium text-lg text-gray-900">{{ $item->artwork->user->full_name }}</h4>
+                            <img src="{{ $item->artwork->user->profile_pic ? asset('storage/' . $item->artwork->user->profile_pic) : asset('images/user.png') }}" class="w-6 h-6 rounded-full">
+                            <span class="font-light text-lg text-gray-800">{{ $item->artwork->user->full_name }}</span>
                         </div>
                         <div class="flex items-center p-3 mt-2">
                             <img src="{{ asset($item->artwork->image_path) }}" alt="{{ $item->artwork->artwork_title }}" class="w-20 h-20 object-cover rounded-lg">

@@ -60,7 +60,7 @@
                         <img src="{{ $artist->profile_pic ? asset('storage/' . $artist->profile_pic) : asset('storage/profile_pic/user.png') }}" alt="Artist">
                     </div>
                         <div class="card-body">
-                            <h5 class="card-title">Artist: {{ $artist->first_name }} {{ $artist->last_name }}</h5>
+                            <h5 class="card-title">Artist: {{ $artist->full_name }}</h5>
                             <div>
                                 <!--revise this part i want this to show the artist artwork count-->
                                 <p class="card-text">Artworks: {{ $artist->artworks->count() ?? 'artwork count.' }}</p>
@@ -89,6 +89,8 @@
 
 </section>
 
+@include('Example.howtoget')
+@include('layouts.footer')
 
     
 

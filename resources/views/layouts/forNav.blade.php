@@ -23,7 +23,7 @@
     </div>
     
     <!-- Navigation Links -->
-    <div id="forNav" class="hidden md:flex space-x-1" style="margin-left:300px; font-family: 'Rubik', sans-serif;">
+    <div id="forNav" class="hidden md:flex space-x-1" style="margin-left:200px; font-family: 'Rubik', sans-serif;">
         @php
             $currentRoute = Route::currentRouteName();
             $currentCategory = request('category');
@@ -63,7 +63,7 @@
                 {{ $currentRoute == 'cart' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
                 <img src="{{ asset('images/cartlogo.svg') }}" alt="cart" >
                 @if ($cartItemCount > 0)
-                    <span class="absolute top-1 ml-6 bg-[#6e4d41] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                    <span class="absolute top-1 ml-6 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                         {{ $cartItemCount }}
                     </span>
                 @endif
@@ -133,7 +133,6 @@
                 <a href="{{ route('show.register') }}" class="px-3 py-1 bg-[#A99476] no-underline text-white rounded-lg hover:bg-gray-200 hover:text-[#6e4d41] transition">REGISTER</a>
             @endguest
         </div>
-
 
 
 

@@ -22,10 +22,10 @@ Route::get('/', function () {
     return view('landing');
 });
 
-
-Route::get('/', function () {
+Route::get('/', [ArtworksController::class, 'homeDisplay'])->name('home'); 
+/*Route::get('/', function () {
     return view('landing');
-})->name('home'); 
+})->name('home'); */
 
 // authenticated onli access
 Route::middleware(['auth'])->group(function() {

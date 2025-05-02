@@ -35,14 +35,7 @@ class ProfileController extends Controller
             ->get();
         }
 
-        $toPayCount = Orders::where('user_id', auth::id())->where('status_id', 1)->count();
-        $toPickupCount = Orders::where('user_id', auth::id())->where('status_id', 2)->count();
-        $toReceiveCount = Orders::where('user_id', auth::id())->where('status_id', 3)->count();
-        $completedCount = Orders::where('user_id', auth::id())->where('status_id', 4)->count();
-        $cancelledCount = Orders::where('user_id', auth::id())->where('status_id', 5)->count();
-
-        return view('Mods.profile', compact('user', 'categories', 'artworks', 'ordered', 'toPayCount',
-         'toPickupCount', 'toReceiveCount', 'completedCount', 'cancelledCount'));
+        return view('Mods.profile', compact('user', 'categories', 'artworks', 'ordered'));
     }
 
     public function showArtistList()

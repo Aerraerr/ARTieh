@@ -1,22 +1,22 @@
 @extends('layouts.forSeller')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 <section>
     <div class="ml-[15%] mr-3 mt-10 p-6 bg-white shadow-lg rounded-lg">
         <h1 style="font-family:rubik;" class="text-[#6e4d41] ml-5 text-3xl font-bold mb-4">Artwork Management</h1>
-        <div class="flex justify-between mb-4">
-            <select id="roleFilter" style="padding-left:10px; height:40px; width:10%; margin-left:53%;" class="border border-[#A99476]  border rounded-lg">
+        <div class="flex justify-between mb-2">
+            <button class="border-[#A99476]  w-[40px] border rounded-lg ml-[50%] p-2">&#43;</button>
+            <select id="roleFilter" style="padding-left:10px; height:40px; width:10%;" class="border border-[#A99476]  border rounded-lg">
                 <option value="">Category</option>
                 <option value="Admin">Paintings</option>
                 <option value="">Drawings</option>
                 <option value="">Drawings</option>
                 <option value="">Sculptures</option>
             </select>
-            <input type="text" id="orderSearch" style="padding-left:10px; height:40px;" class="border border-[#A99476] mr-5 border text-[#A99476]  rounded-lg w-1/3" placeholder="Search users...">
+            <input type="text" id="orderSearch" style="padding-left:10px; height:40px;" class="border border-[#A99476] mr-8 border text-[#A99476]  rounded-lg w-1/3" placeholder="Search users...">
         </div>
-        <br>
         <div class="overflow-x-auto ml-2 mr-2 p-4  rounded-lg">
         <table id="example" class="w-full border border-gray-300 rounded-lg text-sm text-gray-700">
             <thead class="bg-[#F3EBE1]  text-gray-600 uppercase text-sm">
@@ -61,11 +61,8 @@
             </tbody>
         </table>
     </div>
-    <div class="mt-4 text-right mr-6 ">
-            <button>Add</button>
-        </div>
 </section>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#example').DataTable({

@@ -27,7 +27,7 @@
         </script>
     @endif
     <section class="w-full">
-    <div class=" bg-[#F6EBDA] pb-4  border  relative">
+    <div class=" bg-[#F6EBDA] pb-4  border max-w-full relative">
         <div class=" md:ml-[100px] ml-[-10px] max-w-full  bg-[#F6EBDA] h-[400px] md:h-[350px] sm:mt-[-200px] md:mt-0 flex flex-col md:flex-row items-center justify-center p-6 md:p-[150px]">
             
             <button onclick="history.back()" style="font-family: Rubik;" class="text-[#6e4d41] opacity-60 ml-2 md:ml-12 mt-2 absolute top-2 left-2 md:top-5 md:left-10 md:-translate-x-10 no-underline text-inherit"> < BACK
@@ -120,9 +120,33 @@
 </div>
 
 <section class="w-full">
+    <div x-data="{ open: false }" class="relative z-50">
+    <!-- Trigger Button -->
+    <button @click="open = !open" class="absolute mr-6 right-0 border p-2 bg-white rounded shadow hover:bg-gray-100">
+        ☰ Menu
+    </button>
+
+    <!-- Floating Modal -->
+    <div x-show="open" @click.away="open = false" x-transition
+         class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg p-3 border border-gray-200">
+
+        <a href="{{ route('purchases') }}"
+           class="block px-4 py-2 no-underline rounded-md text-gray-700 hover:bg-[#A99476] hover:text-white font-medium">
+            Purchases
+        </a>
+        @if(Auth::user()->role === 'seller')
+        <a href="{{ route('SellerDashboard') }}"
+           class="block px-4 py-2 no-underline rounded-md text-gray-700 hover:bg-[#A99476] hover:text-white font-medium">
+            Dashboard
+        </a>
+        @endif
+    </div>
+</div>
+
+
+
+    
 @if(Auth::user()->role === 'seller')
-
-
     <div class="relative mb-3 flex justify-center text- gap-10 mt-4">
         <h1  class="text-lg text-[#6E4D41] font-bold">AVAILABLE ARTWORKS</h1>
     </div>
@@ -163,104 +187,7 @@
           </div>
 @endif
     <!-- Sa ilalim ng profile -->
-    <div class="flex py-5 ml-[150px]">
     
-
-    <div x-data="{ open: false }" class="profilemobileini mt-[90px] w-[300px]">
-            <!-- Mobile hamburger -->
-            <button @click="open = !open" 
-                    :class="{'bg-transparent border-[#6e4d41]  text-[#6e4d41]': open, 'bg-[#6e4d41] text-white border-none': !open}" 
-                    class="sailalim md:hidden px-4 py-2 rounded font-medium focus:outline-none hover:bg-[#5a3c32] transition mb-4 border-2">
-                ☰ Menu
-            </button>
-            <!-- Buttons wrapper -->
-            <div :class="{ 'flex': open, 'hidden': !open }" class="sailalim2 flex-col gap-4 md:flex z-40">
-                @if(Auth::user()->role === 'buyer')
-                <button class="tab-btn w-full whitespace-nowrap px-4 py-3 text-white rounded text-left bg-[#6e4d41] font-medium hover:bg-[#5a3c32] transition duration-300" data-tab="purchases">
-                    MY PURCHASES
-                </button>
-                @endif
-            </div>
-        </div>
-
-        
-
-
-            @if(Auth::user()->role === 'buyer')
-            <!-- Purchases-->
-            <div id="purchases" class="tab-content hidden mx-auto container-fluid py-5 px-4" >
-                <div class="d-flex align-items-center gap-3 w-full bg-white py-4 pl-1">
-                    <input class="form-control w-[400px] !border-[#6e4d41] border-1 px-3" type="search" placeholder="Search" aria-label="Search">
-                    <div class="dropdown">
-                        <button class="form-control dropdown-toggle w-[150px] !border-[#6e4d41] border-1 px-3" type="button" id="Latest first" data-bs-toggle="dropdown" aria-expanded="false">
-                            Latest first
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="bg-white p-4 rounded shadow-lg border mx-auto" style="max-width: 80%;">
-                    <!-- Purchase Status Tabs -->
-                    <div class="flex justify-between border-b pb-2 text-gray-500">
-                        <div class="tab flex flex-col items-center cursor-pointer active" data-tab="to-pay">
-                            <img src="{{ asset('images/topay.png') }}" class="w-8 h-8" alt="To Pay">
-                            <span>To Pay</span>
-                            @if ($toPayCount > 0)
-                                <span class="absolute mb-5 ml-6 bg-[#6e4d41] bg-opacity-90 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                                    {{ $toPayCount }}
-                                </span>
-                            @endif
-                        </div>
-                        <div class="tab flex flex-col items-center cursor-pointer" data-tab="to-pickup">
-                            <img src="{{ asset('images/topickup.png') }}" class="w-8 h-8" alt="To Pickup">
-                            <span>To Pickup</span>
-                            @if ($toPickupCount > 0)
-                                <span class="absolute mb-5 ml-6 bg-[#6e4d41] bg-opacity-90 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                                    {{ $toPickupCount }}
-                                </span>
-                            @endif
-                        </div>
-                        <div class="tab flex flex-col items-center cursor-pointer" data-tab="to-receive">
-                            <img src="{{ asset('images/toreceive.png') }}" class="w-8 h-8" alt="To Receive">
-                            <span>To Receive</span>
-                            @if ($toReceiveCount > 0)
-                                <span class="absolute mb-5 ml-6 bg-[#6e4d41] bg-opacity-90 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                                    {{ $toReceiveCount }}
-                                </span>
-                            @endif
-                        </div>
-                        <div class="tab flex flex-col items-center cursor-pointer" data-tab="completed-orders">
-                            <img src="{{ asset('images/completed.png') }}" class="w-8 h-8" alt="Completed Orders">
-                            <span>Completed Orders</span>
-                            @if ($completedCount > 0)
-                                <span class="absolute mb-5 ml-6 bg-[#6e4d41] bg-opacity-90 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                                    {{ $completedCount }}
-                                </span>
-                            @endif
-                        </div>
-                        <div class="tab flex flex-col items-center cursor-pointer" data-tab="cancelled-items">
-                            <img src="{{ asset('images/cancelled.png') }}" class="w-8 h-8" alt="Cancelled Items">
-                            <span>Cancelled Items</span>
-                            @if ($cancelledCount > 0)
-                                <span class="absolute mb-5 ml-6 bg-[#6e4d41] bg-opacity-90 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                                    {{ $cancelledCount }}
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                <div class="text-right mt-4">
-                    <a href="{{route('purchases')}}"  class="btn bg-[#6e4d41] ">see more</a>
-                </div>
-            </div>
-            @endif
-
-            </div>
-
-        </div>
 
         </div>
     </div>

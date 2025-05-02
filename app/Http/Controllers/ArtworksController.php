@@ -81,6 +81,34 @@ class ArtworksController extends Controller
     
         return view($view, compact('artworks'));
     }
+
+    private function getArtworksByCategory($category) // hiniwalay ko na, mapagalon magparaulit wahaha
+    {
+        $categoryModel = Category::where('category_name', $category)->first();
+
+        if (!$categoryModel) return [];
+
+        return Artworks::with('user')
+            ->where('category_id', $categoryModel->id)
+            ->whereDoesntHave('orderItems.order', function($query){
+                $query->where('status_id', '!=', 5);
+            })
+            ->get();
+    }
+
+    public function homeDisplay()
+    {
+        $creator = User::where('role', 'seller') 
+            ->whereHas('artworks') 
+            ->with('artworks') 
+            ->get(); 
+
+        $sculpt = $this->getArtworksByCategory('sculpture');
+        $paint = $this->getArtworksByCategory('paintings');
+
+        return view('landing', compact('sculpt', 'creator', 'paint'));
+    }
+
     public function showAllArtworks()
     {
         $artworks = Artworks::with('user')

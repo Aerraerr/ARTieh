@@ -1,11 +1,16 @@
 @extends('layouts.forSeller')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 <section>
 <div class="ml-[15%] mr-3 mt-10 p-6 bg-white shadow-lg rounded-lg">
     <h1 style="font-family:rubik;" class="text-[#6e4d41] ml-5 text-3xl font-bold mb-4">Order Management</h1>
+    <div style ="margin-left:90%; ">
+        <button class="border border-[#A99476] border rounded-lg"><img src="{{ asset('images/print.svg') }}" class="opacity-70 w-10 h-9"></button>
+        <button class="border border-[#A99476] border rounded-lg"><img src="{{ asset('images/export.svg') }}" class="opacity-70 w-10 h-9"></button>
+    </div>
     <div class="flex justify-between mb-4">
         <select id="statusFilter" style="padding-left:10px; height:40px; width:10%; margin-left:53%;" class="border border-[#A99476]  border rounded-lg">
             <option value="">Status</option>
@@ -15,7 +20,7 @@
               <option value="completed">completed</option>
                <option value="cancelled">cancelled</option>
         </select>
-        <input type="text" id="orderSearch" style="padding-left:10px; height:40px;" class="border border-[#A99476] mr-5 border text-[#A99476]  rounded-lg w-1/3" placeholder="Search users...">
+        <input type="text" id="orderSearch" style="padding-left:10px; height:40px;" class="border border-[#A99476] mr-8 border text-[#A99476]  rounded-lg w-1/3" placeholder="Search users...">
 
     </div>
     <div class="overflow-x-auto ml-2 mr-2 p-4  rounded-lg">

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -69,8 +70,8 @@
                 <div class="ml-3 w-full">
                     <!-- Seller Info -->
                     <div class="flex items-center space-x-4 mb-2">
-                        <img src="{{ $artwork->user->profile_pic ? asset('storage/' . $artwork->user->profile_pic) : asset('images/user.png') }}" class="w-8 h-8 rounded-full">
-                        <h4 class="font-medium text-lg text-gray-900">{{ $artwork->user->full_name }}</h4>
+                        <img src="{{ $artwork->user->profile_pic ? asset('storage/' . $artwork->user->profile_pic) : asset('images/user.png') }}" class="w-6 h-6 rounded-full">
+                        <h4 class="font-light text-lg text-gray-900">{{ $artwork->user->full_name }}</h4>
                     </div>
 
                     <!-- Artwork Info -->

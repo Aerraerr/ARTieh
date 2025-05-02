@@ -6,7 +6,6 @@
     <title>My Purchases</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/mods/purchases.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -155,7 +154,7 @@
                             </div>
                         </div>
                     </div>
-
+                    @if($topay->isNotEmpty())
                     {{-- PAY MODAL ======== --}}
                     <div class="modal fade" id="pay{{$order->id}}" tabindex="-1" aria-labelledby="paylabel{{$order->id}}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
@@ -204,6 +203,7 @@
                                 <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                                         <form method="POST">
+                                            @csrf
                                             <input type="hidden" name="reference_number" id="hiddenRefNumber{{ $order->id }}">
                                             <input type="hidden" name="proof" id="hiddenProof{{ $order->id }}">
                                             <button type="submit" class="btn btn-primary bg-[#d4a373] hover:bg-[#c49767] text-white">Confirm Payment</button>
@@ -237,6 +237,19 @@
                             </div>
                         </div>
                     </div>
+                    <script>//para sa payment modal copy data
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const confirmBtn = document.querySelector('#pay{{ $order->id }} .btn.btn-primary');
+                            confirmBtn.addEventListener('click', function () {
+                                const refVal = document.getElementById('refNumberInput{{ $order->id }}').value;
+                                const proofVal = document.getElementById('proofInput{{ $order->id }}').value;
+
+                                document.getElementById('hiddenRefNumber{{ $order->id }}').value = refVal;
+                                document.getElementById('hiddenProof{{ $order->id }}').value = proofVal;
+                            });
+                        });
+                    </script>
+                    @endif
                     @endif
                 @endforeach
             @else
@@ -521,18 +534,7 @@
     </div>
 </section>
 
-<script>//para sa payment modal copy data
-    document.addEventListener('DOMContentLoaded', function () {
-        const confirmBtn = document.querySelector('#pay{{ $order->id }} .btn.btn-primary');
-        confirmBtn.addEventListener('click', function () {
-            const refVal = document.getElementById('refNumberInput{{ $order->id }}').value;
-            const proofVal = document.getElementById('proofInput{{ $order->id }}').value;
 
-            document.getElementById('hiddenRefNumber{{ $order->id }}').value = refVal;
-            document.getElementById('hiddenProof{{ $order->id }}').value = proofVal;
-        });
-    });
-</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Tab switching functionality

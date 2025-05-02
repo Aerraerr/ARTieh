@@ -28,26 +28,178 @@
             opacity: 1;
             background-color: #6E4D41 !important;
         }
+        .artistCarousel {
+            animation: scrollArtists 30s linear infinite;
+        }
 
-    </style>    
-    <!-- Featured Paintings--> 
-    <section class="mt-20 bg-[#F6EBDA] py-5 w-[80%] mx-auto shadow-md " style="border-radius:20px; max-width: 90%;">
+        @keyframes scrollArtists {
+            0% {
+            transform: translateX(0);
+            }
+            100% {
+            transform: translateX(-50%);
+            }
+        }
+
+    </style> 
+<section class="bg-[#F6EBDA] py-16 px-6 text-center opacity-0 translate-y-12 transition-all duration-1000 ease-out" id="art-section">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-[#6E4D41]">Discover Art with Meaning in Albay</h1>
+    <p class="text-sm fw-semibold md:text-base max-w-3xl mx-auto text-[#6E4D41]">
+      ARTIEH makes discovering art in Albay a meaningful experience. We bring together a curated collection of premium-quality artworks created by talented local and regional artists.
+    </p>
+</section>
+
+<section class="p-6 mt-5">
+  <h2 class="text-2xl text-center font-bold mb-4 text-[#6E4D41]">Featured Artists</h2>
+
+  <div class="overflow-x-hidden relative">
+    <!-- Carousel wrapper -->
+    <div class="artistCarousel gap-10 whitespace-nowrap transition-transform duration-500 ease-in-out px-2 w-max">
+      <!-- Artist Card (repeat as needed) -->
+      @foreach ($creator as $artist)
+        <div class="flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
+          <img src="{{ $artist->profile_pic ? asset('storage/' . $artist->profile_pic) : asset('storage/profile_pic/user.png') }}" alt="Artist" class="w-16 h-16 rounded-full object-cover">
+          <div>
+            <h3 class="text-lg font-semibold text-[#6E4D41]">{{$artist->full_name }}</h3>
+            <p class="text-sm text-gray-600">{{ $artist->artworks->count() ?? 'artwork count.' }} artworks</p>
+          </div>
+        </div>
+       @endforeach
+
+      <div class="flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
+        <img src="{{ asset('images/profileused/bob.jpg') }}" alt="Artist 2" class="w-16 h-16 rounded-full object-cover">
+        <div>
+          <h3 class="text-lg font-semibold text-[#6E4D41]">Bob Ross</h3>
+          <p class="text-sm text-gray-600">8 artworks</p>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
+        <img src="{{ asset('images/profileused/lbj.jpg') }}" alt="Artist 3" class="w-16 h-16 rounded-full object-cover">
+        <div>
+          <h3 class="text-lg font-semibold text-[#6E4D41]">Lebron James</h3>
+          <p class="text-sm text-gray-600">13 artworks</p>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
+        <img src="{{ asset('images/profileused/bronny.jpg') }}" alt="Bronny James" class="w-16 h-16 rounded-full object-cover">
+        <div>
+          <h3 class="text-lg font-semibold text-[#6E4D41]">Bronny James</h3>
+          <p class="text-sm text-gray-600">3 artworks</p>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
+        <img src="{{ asset('images/profileused/ad.jpg') }}" alt="Anthony Davis" class="w-16 h-16 rounded-full object-cover">
+        <div>
+          <h3 class="text-lg font-semibold text-[#6E4D41]">Anthony Davis</h3>
+          <p class="text-sm text-gray-600">10 artworks</p>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
+        <img src="{{ asset('images/profileused/luka.jpg') }}" alt="Luka Doncic" class="w-16 h-16 rounded-full object-cover">
+        <div>
+          <h3 class="text-lg font-semibold text-[#6E4D41]">Luka Doncic</h3>
+          <p class="text-sm text-gray-600">9 artworks</p>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
+        <img src="{{ asset('images/profileused/rui.jpg') }}" alt="Rui Hachimura" class="w-16 h-16 rounded-full object-cover">
+        <div>
+          <h3 class="text-lg font-semibold text-[#6E4D41]">Rui Hachimura</h3>
+          <p class="text-sm text-gray-600">7 artworks</p>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
+        <img src="{{ asset('images/profileused/ar.jpg') }}" alt="Austin Reaves" class="w-16 h-16 rounded-full object-cover">
+        <div>
+          <h3 class="text-lg font-semibold text-[#6E4D41]">Austin Reaves</h3>
+          <p class="text-sm text-gray-600">6 artworks</p>
+        </div>
+      </div>
+      <div class="flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
+        <img src="{{ asset('images/profileused/lbj.jpg') }}" alt="Artist 1" class="w-16 h-16 rounded-full object-cover">
+        <div>
+          <h3 class="text-lg font-semibold text-[#6E4D41]">Aeron Jead Marquez</h3>
+          <p class="text-sm text-gray-600">15 artworks</p>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
+        <img src="{{ asset('images/profileused/bob.jpg') }}" alt="Artist 2" class="w-16 h-16 rounded-full object-cover">
+        <div>
+          <h3 class="text-lg font-semibold text-[#6E4D41]">Bob Ross</h3>
+          <p class="text-sm text-gray-600">8 artworks</p>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
+        <img src="{{ asset('images/profileused/lbj.jpg') }}" alt="Artist 3" class="w-16 h-16 rounded-full object-cover">
+        <div>
+          <h3 class="text-lg font-semibold text-[#6E4D41]">Lebron James</h3>
+          <p class="text-sm text-gray-600">13 artworks</p>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
+        <img src="{{ asset('images/profileused/bronny.jpg') }}" alt="Bronny James" class="w-16 h-16 rounded-full object-cover">
+        <div>
+          <h3 class="text-lg font-semibold text-[#6E4D41]">Bronny James</h3>
+          <p class="text-sm text-gray-600">3 artworks</p>
+        </div>
+      </div>
+
+      <div class="flex-shrink-0 w-[260px] bg-white p-4 rounded-2xl shadow inline-flex items-center gap-4">
+        <img src="{{ asset('images/profileused/ad.jpg') }}" alt="Anthony Davis" class="w-16 h-16 rounded-full object-cover">
+        <div>
+          <h3 class="text-lg font-semibold text-[#6E4D41]">Anthony Davis</h3>
+          <p class="text-sm text-gray-600">10 artworks</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Button -->
+  <div class="flex justify-center mt-10">
+    <a href="{{route('artists')}}" style="border-radius:10px;" class="no-underline blob-btn h-[50px] px-6 flex items-center justify-center">
+      Find more artist
+      <span class="blob-btn__inner">
+        <span class="blob-btn__blobs">
+          <span class="blob-btn__blob"></span>
+          <span class="blob-btn__blob"></span>
+          <span class="blob-btn__blob"></span>
+          <span class="blob-btn__blob"></span>
+        </span>
+      </span>
+    </a>
+  </div>
+</section>
+
+<!-- Featured Paintings--> 
+<section class="mt-10 bg-[#F6EBDA] py-5 w-[80%] mx-auto shadow-md " style="border-radius:20px; max-width: 90%;">
     <div class="container">
         <div class="row align-items-center">
             <!-- Carousel Column -->
             <div  class="col-md-5 mx-auto ">
                 <div id="paintingsCarousel" class="carousel slide " data-bs-ride="carousel">
                     <div style="border-radius:10px;" class="carousel-inner ">
+                      @foreach($paint as $artwork)
                         <div class="carousel-item active">
                             <div class="card border-0 shadow-lg">
-                                <img src="{{ asset('images/painting1.png') }}" class="card-img-top" alt="Wallowing Breeze">
+                                <img src="{{ asset($artwork->image_path) }}" class="card-img-top" alt="Wallowing Breeze">
                                 <div class="card-body text-center">
-                                    <h5 class="fw-bold">Flora Flore Nomi</h5>
-                                    <p class="text-muted">Aeron Jead Marquez</p>
-                                    <p class="text-muted fst-italic">Oil on canvas, 2008</p>
+                                    <h5 class="fw-bold">{{$artwork->artwork_title}}</h5>
+                                    <p class="text-muted">{{$artwork->user->full_name}}</p>
+                                    <p class="text-muted fst-italic">{{$artwork->dimension}}</p>
                                 </div>
                             </div>
                         </div>
+                      @endforeach
                         <div class="carousel-item">
                             <div class="card border-0 shadow-lg">
                                 <img src="{{ asset('images/painting2.png') }}" class="card-img-top" alt="Wallowing Breeze">
@@ -65,6 +217,16 @@
                                     <h5 class="fw-bold">Golden Horizon</h5>
                                     <p class="text-muted">Ria Arante</p>
                                     <p class="text-muted fst-italic">Acrylic on canvas, 2015</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card border-0 shadow-lg">
+                                <img src="{{ asset('images/painting4.png') }}" class="card-img-top" alt="Serene Dusk">
+                                <div class="card-body text-center">
+                                    <h5 class="fw-bold">Serene Dusk</h5>
+                                    <p class="text-muted">Lorenzo Mendez</p>
+                                    <p class="text-muted fst-italic">Watercolor, 2020</p>
                                 </div>
                             </div>
                         </div>
@@ -109,14 +271,42 @@
                 <p class="text-[#8D6E63] text-[15px]  text-justify mb-30">
                     Immerse yourself in a world of color, emotion, and creativity with our handpicked selection of featured paintings. From stunning landscapes to expressive portraits, each piece is a testament to the talent of Albay’s local artists. Find the perfect artwork to inspire your space and be part of the growing art community.
                 </p>
-                <a href="{{ route('paintings') }}" class="btn" style="font-family:rubik; border: 2px solid #6E4D41; color: #6E4D41; background: transparent; border-radius: 10px; padding: 10px 20px; margin-top: 40px; display: inline-block;">
-                    Explore Paintings >>>
+                <a href="{{ route('category', ['category' => 'paintings']) }}" class="no-underline blob-btn h-[50px] px-6 flex items-center justify-center">
+                    Explore Now
+                    <span class="blob-btn__inner">
+                        <span class="blob-btn__blobs">
+                            <span class="blob-btn__blob"></span>
+                            <span class="blob-btn__blob"></span>
+                            <span class="blob-btn__blob"></span>
+                            <span class="blob-btn__blob"></span>
+                        </span>
+                    </span>
                 </a>
-
 
 
             </div>
 
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
+
+    <script>
+  // Intersection Observer to trigger animation when the section is in view
+  document.addEventListener('DOMContentLoaded', function () {
+    const section = document.getElementById('art-section');
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Add class to animate section when in view
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          observer.unobserve(entry.target); // Stop observing once the animation is triggered
+        }
+      });
+    }, {
+      threshold: 0.5 // Trigger animation when 50% of the section is in view
+    });
+
+    observer.observe(section);
+  });
+</script>
