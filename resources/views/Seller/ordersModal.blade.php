@@ -1,15 +1,4 @@
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  @if(session('success'))
-        <script>
-            Swal.fire({
-                title: "{{ session('success') }}",
-                icon: "success",
-                timer: 800,
-                showConfirmButton: false
-            });
-        </script>
-    @endif
-<!-- Process Order Modal --> <!-- note: dapat nasa laog kang loop para kuwa na so id-->
+  <!-- Process Order Modal --> <!-- note: dapat nasa laog kang loop para kuwa na so id-->
                         <div class="modal fade" id="ordersmodal{{$order->id}}" tabindex="-1" aria-labelledby="ordersmodal{{$order->id}}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content">

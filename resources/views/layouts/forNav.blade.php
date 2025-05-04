@@ -70,7 +70,7 @@
             </a>
         @endauth
     </div>
-    
+
 
     <!-- Login/Register Buttons -->
     <div class="hidden md:flex space-x-4">
@@ -123,8 +123,6 @@
                         </div>
                     </div>
                 </div>
-
-
             @endauth
 
             @guest
@@ -192,8 +190,19 @@
         {{ $currentRoute == 'announcements' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
         ANNOUNCEMENTS
     </a>
+     @auth
+            <a href="{{ route('cart') }}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
+                {{ $currentRoute == 'cart' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+                <img src="{{ asset('images/Cart.svg') }}" alt="cart" class="w-[30px] h-[40px]">
+                @if ($cartItemCount > 0)
+                    <span class="absolute top-[56%] ml-6 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                        {{ $cartItemCount }}
+                    </span>
+                @endif
+            </a>
+        @endauth
     <hr class="w-3/4 border-t border-[#6e4d41] my-5 mx-auto">
-
+    
     <div class="flex flex-col items-center space-y-2 md:hidden w-full">
     @auth
         <!-- Display user email or name -->

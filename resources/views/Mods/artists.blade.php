@@ -60,6 +60,8 @@
 <body style="height:auto;"  class="bg-white text-gray-900 h-auto">
 @include('layouts.forNav')
 @extends('layouts.forbg')
+@include('Mods.forNotif')
+@include('Mods.forChat')
     
     
 <section>    
@@ -75,26 +77,17 @@
         <span id="toggleFilterText" class="inline-block align-middle">Show Filters</span>
         </a>
         <!-- Search Bar -->
-        <div id="filterDiv" class="search-bar mr-[130px] mb-3 sm:w-1/2 w-full">
+        <div id="filterDiv" class="search-bar mr-[75px] mb-3 sm:w-1/2 w-full">
             <select id="priceFilter" class="form-select d-inline-block sm:h-10 sm:w-200 w-200">
                 <option selected>Price</option> 
                 <option value="low-to-high">Price: Low to High</option>
                 <option value="high-to-low">Price: High to Low</option>
             </select>
-            <select class="form-select d-inline-block sm:h-10 sm:w-25 w-200">
-                <option selected disabled>Genre / Type</option>
-                <option>Renaisance</option>
-                <option>Retro</option>
-                <option>Indie</option>
-                <option>Realism</option>
-                <option>Abstract</option>
-            </select>
+
             <input type="text" id="artistSearchInput" class="form-control d-inline-block h-10 w-50" placeholder="Search by name, artist">
             <button class="btn  h-10 w-35">Search</button>
         </div>
-
         <div class="line sm:w-[82%] w-full ml-10 mr-10"><hr></div>
-
 
         <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 px-4 sm:px-5 mt-5 sm:ml-[115px] sm:mr-[110px]" id="artistCardsContainer">
 
@@ -141,6 +134,7 @@
             @endforeach
         </div>
     </div>
+  </section>
 
 </section>
 
@@ -169,24 +163,25 @@
         mobileMenu.classList.add('hidden');
     });
     document.addEventListener("DOMContentLoaded", function () {
-    const toggleBtn = document.getElementById('toggleFilterBtn');
-    const filterDiv = document.getElementById('filterDiv');
-    const toggleText = document.getElementById('toggleFilterText');
+      const toggleBtn = document.getElementById('toggleFilterBtn');
+      const filterDiv = document.getElementById('filterDiv');
+      const toggleText = document.getElementById('toggleFilterText');
 
-    toggleBtn.addEventListener('click', function () {
+      toggleBtn.addEventListener('click', function () {
         if (!filterDiv.classList.contains('show')) {
-            filterDiv.style.display = 'flex'; // Show the filter
-            setTimeout(() => filterDiv.classList.add('show'), 20); // Animate in
-            toggleText.textContent = "Hide Filters";
-            toggleText.classList.add('font-bold');
+          filterDiv.style.display = 'flex';
+          setTimeout(() => filterDiv.classList.add('show'), 20);
+          toggleText.textContent = "Hide Filters";
+          toggleText.classList.add('font-bold');
         } else {
-            filterDiv.classList.remove('show');
-            setTimeout(() => filterDiv.style.display = 'none', 300); // Animate out
-            toggleText.textContent = "Show Filters";
-            toggleText.classList.add('font-bold');
+          filterDiv.classList.remove('show');
+          setTimeout(() => filterDiv.style.display = 'none', 300);
+          toggleText.textContent = "Show Filters";
+          toggleText.classList.add('font-bold');
         }
+      });
     });
-    });
+
 </script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {

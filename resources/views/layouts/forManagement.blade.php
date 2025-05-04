@@ -5,13 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ADMINISTRATOR</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/datatable.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 </head>
 <body  class="bg-white text-gray-900">
-
+@if(session('success'))
+        <script>
+            Swal.fire({
+                title: "{{ session('success') }}",
+                icon: "success",
+                timer: 1000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
     
 <nav class="fixed left-0 top-0 w-56 h-full bg-white shadow-md flex flex-col items-center py-6">
     <!-- Logo -->
@@ -23,6 +33,8 @@
     <div id="forNav" class="flex flex-col items-center justify-center space-y-4 w-full text-center">
         <a href="{{ route('admin') }}" class="menu-link  opacity-50 text-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-4 transition duration-300">DASHBOARD</a>
         <a href="{{ route('management') }}" class="text-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-3 transition duration-300">MANAGEMENT</a>
+        <a href="{{ route('application') }}" class="ext-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-3 transition duration-300">APPLICATION</a>
+
     </div>
 
 

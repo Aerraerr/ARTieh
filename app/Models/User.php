@@ -27,7 +27,10 @@ class User extends Authenticatable
         'password',
         'address',
         'profile_pic',
-        'biography'
+        'biography',
+        'gcash_no',
+        'sampleArt',
+        'validId'
     ];
 
     /**
@@ -64,6 +67,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Artworks::class, 'user_id');
     }
+
     public function cart()
     {
         return $this->hasOne(Cart::class);
@@ -73,5 +77,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Event::class);
     }
+
+    public function attendingEvents()
+    {
+        return $this->belongsToMany(Event::class, 'event_attendees')->withTimestamps();
+    }
+
     
 }

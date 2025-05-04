@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Models\Artworks;
+use App\Models\User;
 use App\Models\Category;
+use App\Models\Notification;
 use App\Models\Orders;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -48,13 +50,16 @@ class SellerDashboardController extends Controller
         $categories = Category::all();
         $user = Auth::user();
         $artworks = collect();
+
+        $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+
         // Fetch artworks only if the user is a seller
         $artworks = collect();
         if ($user->role === 'seller') {
             $artworks = Artworks::where('user_id', $user->id)->get();
         }
        
-        return view('Seller.artworks', compact('user', 'categories', 'artworks'));
+        return view('Seller.artworks', compact('user', 'categories', 'artworks', 'notifications'));
     }
 
     public function SellerDashboard(){
@@ -66,6 +71,8 @@ class SellerDashboardController extends Controller
         $monthlyItems = [];
         $categoryLabels = [];
         $categoryValues = [];
+        $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+
         // Fetch artworks only if the user is a seller
         $artworks = collect();
         if ($user->role === 'seller') {
@@ -115,7 +122,7 @@ class SellerDashboardController extends Controller
             $categoryValues = $categoryData->values()->toArray();
         }
        
-        return view('Seller.dashboard', compact('ordered', 'artworks', 'totalsale', 'totalorders', 'monthlysale', 'yearlysale', 'monthlySales', 'monthlyItems', 'categoryLabels', 'categoryValues'));
+        return view('Seller.dashboard', compact('ordered', 'artworks', 'notifications', 'totalsale', 'totalorders', 'monthlysale', 'yearlysale', 'monthlySales', 'monthlyItems', 'categoryLabels', 'categoryValues'));
     }
 
     function SellerOrder(){
@@ -123,6 +130,8 @@ class SellerDashboardController extends Controller
         $user = Auth::user();
         $artworks = collect();
         $ordered = collect();
+        $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+
         // Fetch artworks only if the user is a seller
         $artworks = collect();
         if ($user->role === 'seller') {
@@ -138,7 +147,7 @@ class SellerDashboardController extends Controller
  
         }
        
-        return view('Seller.orders', compact('ordered', 'artworks'));
+        return view('Seller.orders', compact('ordered', 'artworks', 'notifications'));
     }
 
     public function updateOrder(Request $request, Orders $order)
@@ -149,6 +158,17 @@ class SellerDashboardController extends Controller
 
         $order->status_id = $validated['status_id'];
         $order->save();
+
+        if ($order->status_id == 3) {
+            $item = $order->items->first();;
+            $artworkTitle = $item->artwork->artwork_title;
+            $approved = now()->format('Y-m-d');
+
+            Notification::create([ // SA USER NOTIFY
+                'user_id' => $order->user_id,
+                'message' => 'This ' .$approved. ',your order #' . $order->id . ' '. $artworkTitle . '  has been confirmed and marked as to receive.',
+            ]);
+        }
 
         return back()->with('success', 'Order status updated');
     }
@@ -191,5 +211,6 @@ class SellerDashboardController extends Controller
     {
         return view('Seller.sellerchat');
     }
+    
     
 }

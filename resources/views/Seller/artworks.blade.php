@@ -1,4 +1,6 @@
 @extends('layouts.forSeller')
+@include('Mods.forNotif')
+@include('Mods.forChat')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -7,7 +9,7 @@
     <div class="ml-[15%] mr-3 mt-10 p-6 bg-white shadow-lg rounded-lg">
         <h1 style="font-family:rubik;" class="text-[#6e4d41] ml-5 text-3xl font-bold mb-4">Artwork Management</h1>
         <div class="flex justify-between mb-2">
-            <button class="border-[#A99476]  w-[40px] border rounded-lg ml-[50%] p-2">&#43;</button>
+            <button onclick="toggleModal('upload-modal')" class="border-[#A99476]  w-[120px] border rounded-lg ml-[43%] p-1">&#43; artwork</button>
             <select id="roleFilter" style="padding-left:10px; height:40px; width:10%;" class="border border-[#A99476]  border rounded-lg">
                 <option value="">Category</option>
                 <option value="Admin">Paintings</option>
@@ -61,6 +63,7 @@
             </tbody>
         </table>
     </div>
+    @include('Mods.ProfileModals')
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>

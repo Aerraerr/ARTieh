@@ -45,6 +45,7 @@
           <option value="" disabled selected>Please set category</option>
           @foreach ($categories as $category)
             <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+            
           @endforeach
         </select>
       </div>
@@ -268,17 +269,16 @@
       <div class="p-4 sm:p-6 space-y-4">
 
         <!-- Event Photo -->
-        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-          <label class="w-full sm:w-[130px] font-semibold text-gray-700">Event Photo</label>
-          <div>
-            <label for="event_img" class="cursor-pointer inline-block">
-              <img src="images/add_photo.svg" alt="Upload Image"
-                   class="w-24 h-12 border-2 border-dashed border-gray-300 p-2">
-            </label>
-            <input id="event_img" name="event_img" type="file" class="hidden">
-          </div>
+              <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                  <label class="w-full sm:w-[130px] font-semibold text-gray-700">Event Photo</label>
+                  <div>
+          <label for="event_img" class="cursor-pointer inline-block">
+            <img id="event_preview" src="images/add_photo.svg" alt="Upload Image"
+                class="w-24 h-12 border-2 border-dashed border-gray-300 p-2">
+          </label>
+          <input id="event_img" name="event_img" type="file" class="hidden" accept="image/*" onchange="previewEventImage(event)">
         </div>
-
+          </div>
         <!-- Event Name -->
         <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
           <label class="w-full sm:w-[130px] font-semibold text-gray-700">Event Name</label>
@@ -380,4 +380,18 @@
             });
 
     }
+</script>
+<script>
+  function previewEventImage(event) {
+    const input = event.target;
+    const preview = document.getElementById('event_preview');
+
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        preview.src = e.target.result;
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
 </script>

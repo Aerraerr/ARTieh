@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Artworks;
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Notification;
 use App\Models\Order_Items;
 use GuzzleHttp\Psr7\Query;
 use Illuminate\Auth\Events\Validated;
@@ -78,8 +79,10 @@ class ArtworksController extends Controller
             Session::flash('error', "No view found for '{$category}'.");
             return redirect()->route('home');
         }
-    
-        return view($view, compact('artworks'));
+        
+        $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+
+        return view($view, compact('artworks', 'notifications'));
     }
 
     private function getArtworksByCategory($category) // hiniwalay ko na, mapagalon magparaulit wahaha
@@ -117,7 +120,9 @@ class ArtworksController extends Controller
             }) //pag so artwork nasa order_item, ekis na siya
             ->get();
 
-        return view('Mods.artworks', compact('artworks'));
+        $notifications = Notification::where('user_id', Auth::id())->latest()->get();
+
+        return view('Mods.artworks', compact('artworks', 'notifications'));
     }
 
     //function to display the details of the clicked cards/item and the more works by artist

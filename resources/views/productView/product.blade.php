@@ -97,7 +97,7 @@
         <div class="mt-8 flex justify-between items-center">
             <h3 class="text-[#6e4d41] text-lg font-semibold">More Works by {{ $artwork->user->full_name ?? 'Unknown Artist' }}</h3>
             <!-- dgd so sa profile na kang seller/artist-->           
-            <a href="{{ route('profile') }}" class="border border-[#6e4d41] text-[#6e4d41] rounded hover:bg-[#FFE0B2] hover:border-[#FFE0B2]  px-3 py-2 rounded ">View All</a>
+            <a href="{{ route('view_artist', ['id' => $artwork->user->id]) }}" class="border border-[#6e4d41] text-[#6e4d41] rounded hover:bg-[#FFE0B2] hover:border-[#FFE0B2]  px-3 py-2 rounded ">View All</a>
         </div>
 
         <!-- More Works by Seleer -->

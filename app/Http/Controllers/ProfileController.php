@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Orders;
 use App\Models\Order_Items;
 use App\Models\User;
+use App\Models\Notification;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -21,6 +22,8 @@ class ProfileController extends Controller
         $artworks = collect();
         $ordered = collect();
 
+        $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+
         // Fetch artworks only if the user is a seller
         $artworks = collect();
         if ($user->role === 'seller') {
@@ -35,16 +38,18 @@ class ProfileController extends Controller
             ->get();
         }
 
-        return view('Mods.profile', compact('user', 'categories', 'artworks', 'ordered'));
+        return view('Mods.profile', compact('user', 'categories', 'artworks', 'ordered', 'notifications'));
     }
 
     public function showArtistList()
     {
+        $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+
         $creator = User::where('role', 'seller') //pag seller ang role
             ->whereHas('artworks') // tas may artworks
             ->with('artworks') // pede makuwa data hali artworks
             ->get(); // matik kuwa agad for display
-        return view('Mods.artists', compact('creator'));
+        return view('Mods.artists', compact('creator', 'notifications'));
     }
 
    //function to display the details of the clicked Artist 
@@ -55,7 +60,7 @@ class ProfileController extends Controller
                 ->with([ // pag nasa order_item na ang artwork tas may status na except sa cancelled, kuwaon
                     'artworks.category',
                     'artworks.orderItems.order' => function ($query) {
-                        $query->whereIn('status_id', [1, 2, 3, 4]);
+                        $query->whereIn('status_id', [1, 2, 3, 4, 5]);
                     }
                 ]) // pede makuwa data hali artworks and category tables
                 ->firstOrFail();
@@ -74,7 +79,7 @@ class ProfileController extends Controller
             'phone' => 'nullable|digits_between:8,15',
             'address' => 'nullable|string|max:255',
             'profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'biography'  => 'nullable|string|max:255'
+            'biography'  => 'nullable|string|max:1000'
         ]);
 
         //update yes
@@ -97,6 +102,43 @@ class ProfileController extends Controller
             return redirect()->back()->with('error', 'Profile update failed');
         }
     }
+    public function applySeller()
+    {
+        $user = Auth::user();
 
+        return view('Mods.beSeller', compact('user'));
+    }
+    public function beASeller(Request $request, $id)
+    {
+        $users = User::where('id', $id)->first();
+
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'phone' => 'nullable|digits_between:8,15',
+            'gcash_no' => 'nullable|digits_between:8,15',
+            'sampleArt' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'validId' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'biography'  => 'nullable|string|max:1000'
+        ]);
+
+        $sampleArt = $request->file('sampleArt')->store("sampleArt", 'public');
+        $validId = $request->file('validId')->store("validId", 'public');
+
+        $users->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'gcash_no' => $request->gcash_no,
+            'biography' => $request->biography,
+            'validId' => $validId,
+            'sampleArt' => $sampleArt,
+        ]);
+
+
+        return redirect()->route('profile')->with('success', 'Seller application submitted successfully! Wait for Admin conformation..');
+    }
    
 }

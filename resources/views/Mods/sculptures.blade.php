@@ -13,6 +13,8 @@
 <body style="height:auto;" class="bg-white text-gray-900">
        @include('layouts.forNav')
     @extends('layouts.forbg')
+    @include('Mods.forNotif')
+    @include('Mods.forChat')
     
     
 
@@ -34,19 +36,11 @@
         <span id="toggleFilterText" class="inline-block align-middle">Show Filters</span>
         </a>
         <!-- Search Bar -->
-        <div id="filterDiv" class="search-bar mr-[130px] mb-3 sm:w-1/2 w-full">
+        <div id="filterDiv" class="search-bar mr-[75px] mb-3 sm:w-1/2 w-full">
             <select id="priceFilter" class="form-select d-inline-block sm:h-10 sm:w-200 w-200">
                 <option selected>Price</option> 
                 <option value="low-to-high">Price: Low to High</option>
                 <option value="high-to-low">Price: High to Low</option>
-            </select>
-            <select class="form-select d-inline-block sm:h-10 sm:w-25 w-200">
-                <option selected disabled>Genre / Type</option>
-                <option>Renaisance</option>
-                <option>Retro</option>
-                <option>Indie</option>
-                <option>Realism</option>
-                <option>Abstract</option>
             </select>
             <input type="text" class="form-control d-inline-block h-10 w-50" placeholder="Search by name, artist">
             <button class="btn h-10 w-35">Search</button>

@@ -19,6 +19,7 @@
 </head>
 <body  class="bg-white text-gray-900">
 @include('layouts.forNav')
+
     <!-- Hero Section -->
     <section class="ml-[-20px] sm:ml-5 flex flex-col lg:flex-row items-center justify-between px-10 py-20">
         <div class="max-w-lg">

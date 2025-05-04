@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
-use App\Models\CartItem;
+use App\Models\Notification;
 use App\Models\Order_Items;
 use App\Models\Orders;
 use App\Models\Payments;
@@ -78,6 +78,22 @@ class CheckoutController extends Controller
             'amount' => $totalAmount,
             'payment_date' => null
         ]);
+        $approved = now()->format('Y-m-d');
+        $item = $order->items->first();
+        $artwork = $item->artwork;
+        $artworkTitle = $item->artwork->artwork_title;
+        $sellerId = $artwork->user_id;
+        $buyer = Auth::user()->full_name;
+
+        Notification::create([ // sa buyer notify cancel
+            'user_id' => Auth::id(),
+            'message' => 'This ' .$approved . ',you have checkout ' . $artworkTitle. '',
+        ]);
+        Notification::create([ // sa seller notify cancel
+            'user_id' => $sellerId,
+            'message' => 'This ' . $approved . ', your artwork "' . $artworkTitle . '" has been checkout by '.$buyer. '',
+        ]);
+
         return redirect()->route('purchases')->with('success', 'Your order has been placed successfully!');
     }
 }

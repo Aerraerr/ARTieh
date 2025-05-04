@@ -12,6 +12,8 @@ class Payments extends Model
         'order_id',
         'payment_method',
         'amount',
+        'payment_proof',
+        'payment_reference',
         'payment_date'
     ];
 

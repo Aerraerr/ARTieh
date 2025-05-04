@@ -12,7 +12,7 @@ use App\Http\Controllers\PurchasesController;
 use App\Http\Controllers\SellerDashboardController;
 use App\Http\Controllers\AdminController;
 use App\Mail\VerificationCodeMail;
-
+use App\Http\Controllers\NotificationController;
 
 
 
@@ -27,7 +27,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
-Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
 
 
 
@@ -52,9 +51,12 @@ Route::middleware(['auth'])->group(function() {
 
     //edit/update user info
     Route::put('/profile/{id}', [ProfileController::class, 'editProfile'])->name('profile.update');
+    Route::get('/beSeller', [ProfileController::class, 'applySeller'])->name('beSeller'); 
+    Route::patch('/beSeller/{id}', [ProfileController::class, 'beASeller'])->name('beASeller');
 
     //event add and display routes
     Route::post('/events/add/{id}', [EventController::class, 'addEvents'])->name('events.add');
+    Route::post('/events/{id}/attend', [EventController::class, 'attendEvent'])->name('events.attend');
 
     // cart logic 
     Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
@@ -71,6 +73,9 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/purchases/{order}', [PurchasesController::class, 'cancelOrder'])->name('cancel-order');
     Route::patch('/purchases/{orderId}', [PurchasesController::class, 'receivedOrder'])->name('received-order');
     Route::post('/purchases', [PurchasesController::class, 'reviewOrder'])->name('review-order');
+    Route::patch('/purchases/{payId}/gcash-payment', [PurchasesController::class, 'gcashpay'])->name('gcash-payment');
+
+
 
     // Artwork Upload 
     Route::post('/storeUpload', [ArtworksController::class, 'storeUpload'])->name('storeUpload');
@@ -106,15 +111,12 @@ Route::get('/Seller/dashboard', [SellerDashboardController::class, 'SellerDashbo
 Route::get('/Seller/orders', [SellerDashboardController::class, 'SellerOrder'])->name('SellerOrders');
 Route::get('/Seller/artworks', [SellerDashboardController::class, 'SellerArtworkDisplay'])->name('SellerArtworks');
 Route::put('/Seller/artworksModal/{id}', [SellerDashboardController::class, 'SellerEditArtwork'])->name('SellerEditArtwork');
-Route::get('/Seller/chat', [SellerDashboardController::class, 'SellerChat'])->name('SellerChat');
+Route::get('/notification', [NotificationController::class, 'displayNotif']);
 
 Route::get('/paintings', function () {
     return view('Mods.painting');
 })->name('paintings');
 
-Route::get('/beSeller', function () {
-    return view('Mods.beSeller');
-})->name('beSeller');
 
 Route::get('/forChat', function () {
     return view('layouts.forChat');
@@ -150,13 +152,18 @@ Route::get('/management', function () {
     return view('Admin.management');
 })->name('management');
 
+Route::get('/application', function () {
+    return view('Admin.application');
+})->name('application');
+
 Route::get('/forAdmin', function () {
     return view('layouts.forAdmin');
 })->name('forAdmin');
 
-Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users');
+Route::get('/admin', [AdminController::class, 'admindashboard'])->name('admin');
 Route::get('/management', [AdminController::class, 'index'])->name('management');
-
+Route::get('/application', [AdminController::class, 'applications'])->name('application');
+Route::patch('/application/{id}', [AdminController::class, 'approveApplication'])->name('approveApplication');
 
 
 
