@@ -152,7 +152,7 @@
                                 <span class="mt-2 text-gray-500">Waiting for Seller's Approval..</span>
                             @endif
                                 <button class="btn-outline" data-bs-toggle="modal" data-bs-target="#cancel{{$order->id}}">Cancel Order</button>
-                                <button class="btn-outline">Contact Seller</button>
+                                <a href="{{route('user', $item->artwork->user->id)}}" class="no-underline btn-outline">Contact Seller</a>
                             </div>
                         </div>
                     </div>
@@ -270,7 +270,7 @@
                                     @method('PATCH')
                                     <button class="btn-primary" type="submit">Receive Order</button>
                                 </form>
-                                <button class="btn-outline">Contact Seller</button>
+                                <a href="{{route('user', $item->artwork->user->id)}}" class="no-underline btn-outline">Contact Seller</a>
                             </div>
                         </div>
                     </div>
@@ -319,7 +319,7 @@
                             @method('PATCH')
                                 <button type="submit" class="btn-primary">Receive Order</button>
                             </form>
-                            <button class="btn-outline">Contact Seller</button>
+                            <a href="{{route('user', $item->artwork->user->id)}}" class="no-underline btn-outline">Contact Seller</a>
                         </div>
                     </div>
                 </div>
@@ -375,7 +375,7 @@
                                 @else
                                     <button class="btn-primary" data-bs-toggle="modal" data-bs-target="#rate{{$order->id}}">Review Order</button>
                                 @endif
-                                    <button class="btn-outline">Contact Seller</button>
+                                    <a href="{{route('user', $item->artwork->user->id)}}" class="no-underline btn-outline">Contact Seller</a>
                             </div>
                         </div>
                     </div>
@@ -493,7 +493,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-end space-x-2 mt-4">
-                                <button class="btn-outline">Contact Seller</button>
+                                <a href="{{route('user', $item->artwork->user->id)}}" class="no-underline btn-outline">Contact Seller</a>
                             </div>
                         </div>
                     </div>

@@ -60,7 +60,7 @@ class ProfileController extends Controller
                 ->with([ // pag nasa order_item na ang artwork tas may status na except sa cancelled, kuwaon
                     'artworks.category',
                     'artworks.orderItems.order' => function ($query) {
-                        $query->whereIn('status_id', [1, 2, 3, 4]);
+                        $query->whereIn('status_id', [1, 2, 3, 4, 5]);
                     }
                 ]) // pede makuwa data hali artworks and category tables
                 ->firstOrFail();

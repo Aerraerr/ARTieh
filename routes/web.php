@@ -12,6 +12,7 @@ use App\Http\Controllers\PurchasesController;
 use App\Http\Controllers\SellerDashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ChatController;
 
 
 
@@ -29,7 +30,9 @@ Route::get('/', [ArtworksController::class, 'homeDisplay'])->name('home');
 
 // authenticated onli access
 Route::middleware(['auth'])->group(function() {
-
+    Route::get('/test-users', function () {
+        return \App\Models\User::all()->pluck('full_name', 'id');
+    });
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     // tigsaro ko na so pag show kang profile with modals yes
@@ -90,6 +93,10 @@ Route::get('/view_artist/{id}', [ProfileController::class, 'AboutArtist'] )->nam
 //display all events
 Route::get('/announcements', [EventController::class, 'displayEvents'])->name('announcements');
 
+//Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+//Route::get('/chat/{user}', [ChatController::class, 'index'])->name('chat.view');
+//Route::post('/chat/send', [ChatController::class, 'send'])->name('chat.send');
+//Route::get('/chat/messages/{receiverId}', [ChatController::class, 'fetchMessages']);
 
 Route::get('/Seller/dashboard', [SellerDashboardController::class, 'SellerDashboard'])->name('SellerDashboard');
 Route::get('/Seller/orders', [SellerDashboardController::class, 'SellerOrder'])->name('SellerOrders');

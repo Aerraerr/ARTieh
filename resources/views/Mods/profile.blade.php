@@ -68,8 +68,6 @@
                     <hr class="w-full h-[3px] my-3 bg-black">
                     <h2 class=" parasaprofileiniuser1 my-1 font-medium text-sm ">{{ ucfirst(strtolower(Auth::user()->role)) }}</h2>
                     <h2 class="parasaprofileiniuser my-1 font-medium text-sm ">{{ Auth::user()->email }}</h2>
-                    <h2 class="parasaprofileiniuser my-1 font-medium text-sm ">{{ Auth::user()->phone }}</h2>
-                    <h2 class="parasaprofileiniuser my-1 font-medium text-sm ">{{ Auth::user()->address }}</h2>
                 @endif
             </div>
             
@@ -155,7 +153,10 @@
     </div>
         <div id="Viewpaintings" class="tab-content">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-4 p-5">
-              @forelse($artworks->filter(fn($artwork) => $artwork->orderItems->isEmpty()) as $artwork)
+              @forelse($artworks->filter(function($artwork) {
+                  return $artwork->orderItems->isEmpty() ||
+                        $artwork->orderItems->first(fn($oi) => optional($oi->order)->status_id == 5);
+              }) as $artwork)
                 <div class="relative w-full overflow-hidden ">
                     <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl">
                     <div class="mt-1 p-0 flex row items-center">
@@ -169,20 +170,72 @@
           </div>
 
     <div class="relative mb-3 flex justify-center text- gap-10 mt-4">
-        <h1  class="text-lg text-[#6E4D41] font-bold">SOLD ARTWORKS</h1>
+        <h1  class="text-lg text-[#6E4D41] font-bold">UNAVAILABLE ARTWORKS</h1>
     </div>
         <div id="Viewpaintings" class="tab-content">
             <div class="grid grid-cols-2 md:grid-cols-5 gap-3 p-5">
               @forelse($artworks->filter(fn($artwork) => $artwork->orderItems->isNotEmpty()) as $artwork)
-                <div class="relative w-full overflow-hidden ">
-                    <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl">
-                      <div class="absolute top-2 right-2 bg-white text-red-600 text-xs font-bold px-2 py-1 border border-red-600 rounded-lg shadow">
-                      SOLD
-                    </div>
+              @php
+                  $completedOrder = $artwork->orderItems->first(fn($oi) => optional($oi->order)->status_id == 4);
+                  $inProgressOrder = $artwork->orderItems->first(fn($oi) => in_array(optional($oi->order)->status_id, [1, 2, 3]));
+              @endphp
+                @if($completedOrder)
+                <div class="relative w-full overflow-hidden">
+                  <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl" alt="{{ $artwork->artwork_title }}" data-bs-toggle="modal" data-bs-target="#viewReview{{$artwork->id}}" style="cursor: pointer;">
+                  <div class="absolute top-2 right-2 bg-white text-red-600 text-xs font-bold px-2 py-1 border border-red-600 rounded-lg shadow max-w-[60px] sm:max-w-[80px] md:max-w-[100px]">
+                    SOLD
+                  </div>
                     <div class="mt-1 p-0 flex row items-center">
-                        <h3 class="font-bold text-sm">{{$artwork->artwork_title}}</h3>
+                    <h3 class="font-bold text-sm">{{ $artwork->artwork_title }}</h3>
                     </div>
-                </div>
+                  </div>
+
+                      <!-- Sa Sold ini na pang view -->
+                          <div class="modal fade" id="viewReview{{$artwork->id}}" tabindex="-1" aria-labelledby="viewReview{{$artwork->id}}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content p-4">
+                                    <div class="modal-header">
+                                        <p class="modal-title font-bold">Rating</p>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    @php
+                                        // Find the order with status 4 (completed) for the current artwork
+                                        $completedOrder = $artwork->orderItems->filter(function ($orderItem) {
+                                            return optional($orderItem->order)->status_id == 4;
+                                        })->first()->order ?? null;
+                                    @endphp
+                                    @if($completedOrder && $completedOrder->review)
+                                      <div class="modal-body text-center">
+                                          <p class="font-bold mb-2">Artist Rating:</p>
+                                          <p class="text-yellow-400 text-3xl">{{ str_repeat('★', $completedOrder->review->artist_rating) }}</p>
+
+                                          <p class="font-bold mt-4 mb-2">Artwork Rating:</p>
+                                          <p class="text-yellow-400 text-3xl">{{ str_repeat('★', $completedOrder->review->artwork_rating) }}</p>
+
+                                          <p class="font-bold mt-4 mb-2">Comment:</p>
+                                          <p class="text-gray-600">{{ $completedOrder->review->comment ?? 'No comment provided.' }}</p>
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                      </div>
+                                    @else
+                                      <p class="font-bold mt-4 mb-2 p-4 text-center"> This artwork has no review submitted.</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+              @elseif($inProgressOrder)
+                  {{-- PENDING / IN PROGRESS ARTWORK --}}
+                  <div class="relative w-full overflow-hidden">
+                      <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl" alt="{{ $artwork->artwork_title }}">
+                      <div class="absolute top-2 right-2 bg-white text-yellow-600 text-xs font-bold px-2 py-1 border border-yellow-600 rounded-lg shadow">
+                          ON PROGRESS
+                      </div>
+                      <div class="mt-1 p-0 flex row items-center">
+                          <h3 class="font-bold text-sm">{{ $artwork->artwork_title }}</h3>
+                      </div>
+                  </div>
+              @endif
               @empty
                 <p class="col-span-5 text-center text-gray-500">No sold artworks to display.</p>
               @endforelse
