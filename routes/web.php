@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function() {
 
     //event add and display routes
     Route::post('/events/add/{id}', [EventController::class, 'addEvents'])->name('events.add');
+    Route::post('/events/{id}/attend', [EventController::class, 'attendEvent'])->name('events.attend');
 
     // cart logic 
     Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');

@@ -49,4 +49,26 @@ class EventController extends Controller
 
         return view('Mods.announcements', compact('events', 'notifications'));
     }
+
+    public function attendEvent(Request $request, $eventId)
+{
+    $user = auth::user();
+    $event = Event::findOrFail($eventId);
+
+    // Check if already attending
+    if ($event->attendees()->where('user_id', $user->id)->exists()) {
+        return back()->with('info', 'You are already marked as attending.');
+    }
+
+    // Add to attendees
+    $event->attendees()->attach($user->id);
+
+    // Create a notification to event creator
+    Notification::create([
+        'user_id' => $event->user_id, // event creator
+        'message' => ''.$user->full_name. " will attend your event:" .$event->event_name. '',
+    ]);
+
+    return back()->with('success', 'You have been marked as attending!');
+}
 }
