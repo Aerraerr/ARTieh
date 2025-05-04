@@ -23,6 +23,7 @@ class ProfileController extends Controller
         $ordered = collect();
 
         $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+        $notificationCount = $notifications->count();
 
         // Fetch artworks only if the user is a seller
         $artworks = collect();
@@ -38,18 +39,19 @@ class ProfileController extends Controller
             ->get();
         }
 
-        return view('Mods.profile', compact('user', 'categories', 'artworks', 'ordered', 'notifications'));
+        return view('Mods.profile', compact('user', 'categories', 'artworks', 'ordered', 'notifications', 'notificationCount'));
     }
 
     public function showArtistList()
     {
         $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+        $notificationCount = $notifications->count();
 
         $creator = User::where('role', 'seller') //pag seller ang role
             ->whereHas('artworks') // tas may artworks
             ->with('artworks') // pede makuwa data hali artworks
             ->get(); // matik kuwa agad for display
-        return view('Mods.artists', compact('creator', 'notifications'));
+        return view('Mods.artists', compact('creator', 'notifications', 'notificationCount'));
     }
 
    //function to display the details of the clicked Artist 

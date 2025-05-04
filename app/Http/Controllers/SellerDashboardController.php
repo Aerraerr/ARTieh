@@ -52,6 +52,7 @@ class SellerDashboardController extends Controller
         $artworks = collect();
 
         $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+        $notificationCount = $notifications->count();
 
         // Fetch artworks only if the user is a seller
         $artworks = collect();
@@ -59,7 +60,7 @@ class SellerDashboardController extends Controller
             $artworks = Artworks::where('user_id', $user->id)->get();
         }
        
-        return view('Seller.artworks', compact('user', 'categories', 'artworks', 'notifications'));
+        return view('Seller.artworks', compact('user', 'categories', 'artworks', 'notifications', 'notificationCount'));
     }
 
     public function SellerDashboard(){
@@ -72,6 +73,7 @@ class SellerDashboardController extends Controller
         $categoryLabels = [];
         $categoryValues = [];
         $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+        $notificationCount = $notifications->count();
 
         // Fetch artworks only if the user is a seller
         $artworks = collect();
@@ -122,7 +124,7 @@ class SellerDashboardController extends Controller
             $categoryValues = $categoryData->values()->toArray();
         }
        
-        return view('Seller.dashboard', compact('ordered', 'artworks', 'notifications', 'totalsale', 'totalorders', 'monthlysale', 'yearlysale', 'monthlySales', 'monthlyItems', 'categoryLabels', 'categoryValues'));
+        return view('Seller.dashboard', compact('ordered', 'artworks', 'notifications', 'notificationCount', 'totalsale', 'totalorders', 'monthlysale', 'yearlysale', 'monthlySales', 'monthlyItems', 'categoryLabels', 'categoryValues'));
     }
 
     function SellerOrder(){
@@ -131,6 +133,7 @@ class SellerDashboardController extends Controller
         $artworks = collect();
         $ordered = collect();
         $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+        $notificationCount = $notifications->count();
 
         // Fetch artworks only if the user is a seller
         $artworks = collect();
@@ -147,7 +150,7 @@ class SellerDashboardController extends Controller
  
         }
        
-        return view('Seller.orders', compact('ordered', 'artworks', 'notifications'));
+        return view('Seller.orders', compact('ordered', 'artworks', 'notifications', 'notificationCount'));
     }
 
     public function updateOrder(Request $request, Orders $order)

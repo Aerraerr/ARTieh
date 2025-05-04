@@ -44,10 +44,11 @@ class EventController extends Controller
     
     public function displayEvents(){
         $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
-        
+        $notificationCount = $notifications->count();
+
         $events = Event::all();
 
-        return view('Mods.announcements', compact('events', 'notifications'));
+        return view('Mods.announcements', compact('events', 'notifications', 'notificationCount'));
     }
 
     public function attendEvent(Request $request, $eventId)
