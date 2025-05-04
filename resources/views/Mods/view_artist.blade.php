@@ -29,8 +29,7 @@
 
         <!-- Name -->
         <h1 class="mt-3 px-4 py-2 text-[#6E4D41] font-bold text-xl sm:text-2xl text-center">{{ $artist->full_name }}</h1>
-        <!-- Arist Rating -->
-        <p class="text-[#6E4D41] font-bold text-lg sm:text-lg text-center">Rating 4.6</p>
+
         <!-- Email and Role -->
         <div class="flex items-center gap-2 text-sm sm:text-base text-[#6E4D41]">
             <span>{{ $artist->email }}</span>
@@ -51,16 +50,13 @@
         </button>
 
         <!-- Action Buttons -->
-        <div class="relative mt-4 flex flex-wrap justify-center gap-3 sm:gap-4">
-          <button onclick="copyLink()">
+        <div class="relative mt-4 flex flex-wrap justify-center gap-2 sm:gap-4">
+          <button onclick="toggleModal('share-modal')">
               <img src="{{ asset('images/SHARE.svg') }}" alt="Share icon" class="w-6 h-6 sm:w-7 sm:h-7 hover:opacity-80 transition-opacity" />
           </button>
             <a href="{{route('user', $artist->id)}}" class=" no-underline px-3 py-1.5 sm:px-4 sm:py-2 text-[#6E4D41] rounded-full bg-white font-medium hover:bg-[#5a3c32] transition duration-300 text-sm sm:text-base">
                 Message
             </a>
-            <button class="px-3 py-1.5 sm:px-4 sm:py-2 text-white rounded-full bg-[#6E4D41] font-medium hover:bg-[#5a3c32] transition duration-300 text-sm sm:text-base" data-bs-toggle="modal" data-bs-target="#RateArtist" style="cursor: pointer;">
-                Rate
-            </button>
         </div>
     </div>
 </div>
@@ -253,7 +249,19 @@
         </div>
     </div>
 </div>
+<!-- share modal -->
+<div id="share-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white w-[400px] rounded-lg shadow-lg p-6">
+        <h2 class="text-lg font-bold text-[#6e4d41]">Share Profile</h2>
+        <p class="text-sm text-gray-600 mt-2">Share this artist with your friends...</p>
 
+        <!--<Modal Buttons -->
+        <div class="flex justify-end gap-3 mt-4">
+            <button onclick="toggleModal('share-modal')" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Close</button>
+            <button id="copyLinkBtn" onclick="copyLink()" class="px-4 py-2 bg-[#6e4d41] text-white rounded-lg hover:bg-[#5a3c32]">Copy Link</button>
+        </div>
+    </div>
+</div>
 
 <!-- Script for Show More -->   
 <script>
@@ -366,16 +374,27 @@
 </script>
 
 <script>
-// Function to fire an alert
-function copyLink() {
-    console.log('copyLink function called');
-    Swal.fire({
-        title: "Link copied!",
-        icon: "success",
-        timer: 800,
-        showConfirmButton: false
-    });
-}
+    // Function to copy the profile link
+    function copyLink() {
+        // Assuming you have a dynamic URL for the user's profile
+        const profileUrl = window.location.href; // Get the current page URL, or set your own URL
+
+        // Create a temporary input element to use the clipboard API
+        const tempInput = document.createElement('input');
+        document.body.appendChild(tempInput);
+        tempInput.value = profileUrl;
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+
+        Swal.fire({
+                title: "Link copied!",
+                icon: "success",
+                timer: 800,
+                showConfirmButton: false
+            });
+
+    }
 </script>
 
 <script>
@@ -411,4 +430,10 @@ function toggleRating(rating) {
     // Debug: Log the action
     console.log(`Set rating to ${currentRating}, Icon ${rating} toggled`);
 }
+</script>
+<script>
+    function toggleModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.toggle('hidden');
+    }
 </script>

@@ -77,7 +77,7 @@
             Swal.fire({
                 title: "{{ session('success') }}",
                 icon: "success",
-                timer: 800,
+                timer: 1000,
                 showConfirmButton: false
             });
         </script>
@@ -174,7 +174,7 @@
                                             <p class="mb-3">Please ensure that you make a payment of <span class="text-[#dc2626] font-semibold">${{$order->total_amount}}</span> to <strong>{{$item->artwork->user->full_name}}</strong>, and remember to provide accurate information.</p>
                                             <div class="mb-3">
                                                 <label class="form-label text-gray-800">Pay to this GCash Number:</label>
-                                                <input type="text" class="form-control text-sm" placeholder="{{$item->artwork->user->gcash_acc ?? '09123456789 - ST**P CU**Y"'}}" disabled>
+                                                <input type="text" class="form-control text-sm" placeholder="{{$item->artwork->user->gcash_no ?? 'no gcash number'}}" disabled>
                                             </div>
                                             
                                             <div class="mb-3">
@@ -433,17 +433,17 @@
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content p-4">
                                     <div class="modal-header">
-                                        <h3 class="modal-title font-bold">Your Review</h3>
+                                        <p class="modal-title font-bold">Your Review</p>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body text-center">
-                                        <h4 class="font-bold mb-2">Artist Rating:</h4>
+                                        <p class="font-bold mb-2">Artist Rating:</p>
                                         <p class="text-yellow-400 text-3xl">{{ str_repeat('★', $order->review->artist_rating) }}</p>
 
-                                        <h4 class="font-bold mt-4 mb-2">Artwork Rating:</h4>
+                                        <p class="font-bold mt-4 mb-2">Artwork Rating:</p>
                                         <p class="text-yellow-400 text-3xl">{{ str_repeat('★', $order->review->artwork_rating) }}</p>
 
-                                        <h4 class="font-bold mt-4 mb-2">Comment:</h4>
+                                        <p class="font-bold mt-4 mb-2">Comment:</p>
                                         <p class="text-gray-600">{{ $order->review->comment ?? 'No comment provided.' }}</p>
                                     </div>
                                     <div class="modal-footer">

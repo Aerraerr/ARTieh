@@ -66,7 +66,7 @@ class EventController extends Controller
     // Create a notification to event creator
     Notification::create([
         'user_id' => $event->user_id, // event creator
-        'message' => ''.$user->full_name. " will attend your event:" .$event->event_name. '',
+        'message' => ''.$user->full_name. " will attend your event: " .$event->event_name. '',
     ]);
 
     return back()->with('success', 'You have been marked as attending!');

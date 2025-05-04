@@ -68,7 +68,7 @@ class PurchasesController extends Controller
 
         Notification::create([ // sa buyer notify cancel
             'user_id' => Auth::id(),
-            'message' => 'This ' .$approved . ',you have cancelled ' . $artworkTitle. '',
+            'message' => 'This ' .$approved . ', you have cancelled ' . $artworkTitle. '',
         ]);
         Notification::create([ // sa seller notify cancel
             'user_id' => $sellerId,
@@ -160,7 +160,7 @@ class PurchasesController extends Controller
 
         Notification::create([ // sa buyer notify
             'user_id' => Auth::id(),
-            'message' => 'This ' .$approved . ',you have paid ₱' . $payment->amount . 'for order '. $payment->id . '',
+            'message' => 'This ' .$approved . ', you have paid ₱' . $payment->amount . ' for order '. $payment->id . '',
         ]);
         Notification::create([ // sa seller notify 
             'user_id' => $sellerId,
