@@ -14,6 +14,8 @@
 <body  class="bg-white text-gray-900">
 @include('layouts.forNav')
 @extends('layouts.forbg')
+@include('Mods.forNotif')
+@include('Mods.forChat')
     
     
 

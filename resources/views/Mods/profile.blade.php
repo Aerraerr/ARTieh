@@ -16,12 +16,15 @@
 <body  class="h-[1200px] bg-white text-gray-900">
 
     @include('layouts.forNav')
+    @include('Mods.forNotif')
+    @include('Mods.forChat')
+
     @if(session('success'))
         <script>
             Swal.fire({
                 title: "{{ session('success') }}",
                 icon: "success",
-                timer: 800,
+                timer: 1000,
                 showConfirmButton: false
             });
         </script>
@@ -100,7 +103,7 @@
                         <button onclick="toggleModal('addevent-modal')" class="mb-1 md:w-1/2 w-full bg-[#6e4d41] text-white px-4 py-3 rounded transition hover:bg-[#5a3c32]">
                             Add Event
                         </button>
-                        <a href="{{route('beSeller')}}"> <button class="mb-1 md:w-1/2 w-full bg-[#6e4d41] text-white px-4 py-3 rounded transition hover:bg-[#5a3c32]">
+                        <a href="{{route('beSeller')}}" class="no-underline"> <button class="mb-1 md:w-1/2 w-full bg-[#6e4d41] text-white px-4 py-3 rounded transition hover:bg-[#5a3c32]">
                             Start Selling
                         </button></a>
                     </div>

@@ -1,14 +1,4 @@
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@if(session('success'))
-        <script>
-            Swal.fire({
-                title: "{{ session('success') }}",
-                icon: "success",
-                timer: 800,
-                showConfirmButton: false
-            });
-        </script>
-    @endif
+
 <!-- Edit Artwork Modal -->
 <div class="modal fade" id="updateArtmodal{{ $artwork->id }}" tabindex="-1" aria-labelledby="updateArtmodalLabel{{ $artwork->id }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">

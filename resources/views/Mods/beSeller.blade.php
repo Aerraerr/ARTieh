@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Become an Art Seller</title>
   <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <style>
@@ -28,214 +30,168 @@
 @extends('layouts.forbg')
 
 
-<section class="flex justify-center items-center min-h-screen bg-white-100 py-12">
-<div class="bg-white p-10 rounded-2xl shadow-lg w-full max-w-3xl">
-  <div class=" border p-4">
-      <div class="flex justify-between mb-10">
-        <div id="step-indicator-1" class="step-indicator active w-8 h-8 flex items-center justify-center rounded-full border-2 border-blue-500 text-white bg-blue-500">1</div>
-        <div class="flex-1 border-t-2 border-gray-300"></div>
-        <div id="step-indicator-2" class="step-indicator w-8 h-8 flex items-center justify-center rounded-full border-2 border-gray-300 text-gray-500">2</div>      </div>
+<section class="flex justify-center items-center min-h-screen bg-gray-50 py-12">
+  <div class="bg-white p-10 rounded-2xl shadow-xl w-full max-w-3xl border">
+  @if($user->sampleArt && $user->validId && $user->gcash_no)
+    <div id="step-1" class="form-step bg-white p-6 rounded-xl shadow-md text-center">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">🎨 Welcome to ARTieh Seller Side!</h2>
+      <p class="text-gray-600 text-lg">
+        Your application has been submitted successfully.<br>
+        Please wait while the admin reviews and approves your request.
+      </p>
+    </div>
+  @else
+    <!-- Step Indicators -->
+    <div class="flex items-center justify-between mb-10">
+      <div id="step-indicator-1" class="w-8 h-8 flex items-center justify-center rounded-full border-2 text-white bg-blue-500 border-blue-500">1</div>
+      <div class="flex-1 border-t-2 border-gray-300 mx-2"></div>
+      <div id="step-indicator-2" class="w-8 h-8 flex items-center justify-center rounded-full border-2 text-gray-500 border-gray-300">2</div>
+    </div>
 
     <!-- Step 1 -->
     <div id="step-1" class="form-step">
-        <h2 class="text-xl font-bold mb-4">Welcome to ARTieh Seller Side!</h2>
-        <div class="mb-4">
-          <p>By applying to become a seller on our platform, you agree to the following terms and conditions. Please read them carefully before proceeding.</p>
+      <h2 class="text-2xl font-semibold mb-4">🎨 Welcome to ARTieh Seller Side!</h2>
+      <p class="mb-4">By applying to become a seller on our platform, you agree to the following terms and conditions. Please read them carefully before proceeding.</p>
+      <p class="mb-4">
+        Read the agreements here
+        <button class=" cursor-pointer text-blue-600 " data-bs-toggle="modal" data-bs-target="#termsConditions">Terms & Conditions</button>
+      </p>
+      <div class="flex items-center mb-6">
+        <input type="checkbox" id="terms" class="h-5 w-5 text-blue-600" required>
+        <label for="terms" class="ml-3 text-gray-700 text-sm">
+          I have read and accepted the Terms and Conditions
+        </label>
+      </div>
+      <button onclick="nextStep(2)" class="w-full py-3 bg-[#3A2E2A] hover:bg-[#2E2420] text-white rounded-lg transition">Next</button>
+    </div>
+
+    <!-- Step 2 -->
+    <form id="step-2" method="POST" action="{{route('beASeller', $user->id)}}" enctype="multipart/form-data" class="form-step hidden">
+      @csrf
+      @method('PATCH')
+      <h2 class="text-2xl font-semibold text-center mb-6">Step 2: Artwork Details</h2>
+
+      <!-- Personal Information -->
+      <div class="space-y-4 mb-8">
+        <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Artist Information</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">First Name</label>
+            <input type="text" name="first_name" placeholder="{{$user->first_name ?? 'First Name'}}" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-gray-800">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1">Last Name</label>
+            <input type="text" name="last_name" placeholder="{{$user->last_name ?? 'Last Name'}}" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-gray-800">
+          </div>
+        </div>
+       
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Contact Number</label>
+            <input type="text" name="phone" placeholder="{{$user->phone ?? 'Number'}}" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-gray-800">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1">Gcash Number</label>
+            <input type="text" name="gcash_no" placeholder="For payment transaction" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-gray-800">
+          </div>
+        </div>
+
+        <div>
+
+          <label class="block text-sm font-medium mb-1">Address</label>
+          <input type="text" name="address" placeholder="{{$user->address ?? 'house-no, Barangay, City, Province'}}" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-gray-800 mb-4">
+
+          
+          <label class="block text-sm font-medium mb-1">Email Address</label>
+          <input type="email" name="email" placeholder="{{$user->email ?? 'Email'}}" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-gray-800"
+            placeholder="your.email@example.com"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+          <p class="text-xs text-gray-500 mt-1">Must be a valid email address</p>
+
+          <div>
+          <label class="block text-sm font-medium mb-1">Artist Bio</label>
+          <textarea name="biography" placeholder="Write about your self and works" rows="4" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-gray-800"></textarea>
+          </div>
+      </div>
+
+      <!-- Verification -->
+      <div class="space-y-4 mb-8">
+        <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Verification</h3>
+        <div>
+          <label class="block text-sm font-medium mb-1">Sample Artwork</label>
+          <input type="file" name="sampleArt" class="w-full p-2 border rounded-lg" required>
+          <p class="text-xs text-gray-500 mt-1">1 sample of your artwork JPEG/PNG, max 5MB </p>
         </div>
         <div>
-          <p>Read the Agreements here <button class="border"  data-bs-toggle="modal" data-bs-target="#terms&conditions">paper</button></p>
+          <label class="block text-sm font-medium mb-1">Valid ID</label>
+          <input type="file" required name="validId" class="w-full p-2 border rounded-lg" required>
+          <p class="text-xs text-gray-500 mt-1">Valid ID (e.g., passport, driver’s license)</p>
         </div>
-        <div class="flex items-center mb-6">
-          <input type="checkbox" id="terms" class="form-checkbox h-5 w-5 text-blue-600" required>
-          <label for="terms" class="ml-3 text-gray-700 text-sm">
-            I have read and accepted the Terms and Conditions
-          </label>
-        </div>
-        <button type="button" onclick="nextStep(2)" class="px-4 py-2 bg-blue-500 text-white rounded-lg">Next</button>
-    </div>
-
-    <div>
-        <!-- Step 2 -->
-        <form id="step-2" class="form-step hidden">
-            <h2 class="text-xl font-bold mb-4 text-center">Step 2: Artwork Details</h2>
-            <div class="mb-4">
-                <label for="title" class="block text-gray-700">Title of Artwork</label>
-                <input type="text" id="title" name="title" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Enter artwork title">
-            </div>
-            <div class="mb-4">
-                <!-- Personal Information -->
-          <div class="space-y-4">
-            <h3 class="text-lg font-semibold text-[#3A2E2A] border-b pb-2">Personal Information</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-medium mb-1">Full Legal Name</label>
-                <input type="text" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]">
-              </div>
-              <div>
-                <label class="block text-sm font-medium mb-1">Contact Number</label>
-                <input type="tel" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]">
-              </div>
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1">Email Address</label>
-              <input type="email" required 
-                    class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]"
-                    placeholder="your.email@example.com"
-                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
-              <p class="text-xs text-gray-500 mt-1">Must be a valid email address</p>
-            </div>
-          </div>
-
-          <!-- Artist Profile -->
-          <div class="space-y-4">
-            <h3 class="text-lg font-semibold text-[#3A2E2A] border-b pb-2">Artist Profile</h3>
-            <div>
-              <label class="block text-sm font-medium mb-1">Artist/Brand Name</label>
-              <input type="text" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]">
-              <p class="text-xs text-gray-500 mt-1">This will be displayed to buyers</p>
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1">Artist Bio (150-200 words)</label>
-              <textarea rows="3" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]"></textarea>
-            </div>
-          </div>
-
-          <!-- Art Portfolio -->
-          <div class="space-y-4">
-            <h3 class="text-lg font-semibold text-[#3A2E2A] border-b pb-2">Art Portfolio</h3>
-            <div>
-              <label class="block text-sm font-medium mb-1">Portfolio Samples (3-5 pieces)</label>
-              <input type="file" class="file-input w-full" accept="image/*" multiple>
-              <p class="text-xs text-gray-500 mt-1">Showcase your best work (JPEG/PNG, max 5MB each)</p>
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1">Primary Art Medium</label>
-              <select required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]">
-                <option value="">Select Medium</option>
-                <option>Painting</option>
-                <option>Sculpture</option>
-                <option>Digital Art</option>
-                <option>Photography</option>
-                <option>Mixed Media</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Shop Setup -->
-          <div class="space-y-4">
-            <h3 class="text-lg font-semibold text-[#3A2E2A] border-b pb-2">Shop Setup</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-medium mb-1">Average Price Range</label>
-                <select required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]">
-                  <option value="">Select Range</option>
-                  <option>₱1,000 - ₱5,000</option>
-                  <option>₱5,000 - ₱15,000</option>
-                  <option>₱15,000 - ₱30,000</option>
-                  <option>₱30,000+</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-sm font-medium mb-1">Production Time</label>
-                <select required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]">
-                  <option value="">Select Timeframe</option>
-                  <option>1-2 weeks</option>
-                  <option>3-4 weeks</option>
-                  <option>1-2 months</option>
-                  <option>Commission Basis</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <!-- Verification -->
-          <div class="space-y-4">
-            <h3 class="text-lg font-semibold text-[#3A2E2A] border-b pb-2">Verification</h3>
-            <div>
-              <label class="block text-sm font-medium mb-1">Government ID</label>
-              <input type="file" required class="file-input w-full" accept=".pdf,.jpg,.png">
-              <p class="text-xs text-gray-500 mt-1">Upload clear photo of valid ID (e.g., passport, driver's license)</p>
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1">Artist Statement</label>
-              <textarea rows="2" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]" 
-                placeholder="Describe your artistic practice and process"></textarea>
-            </div>
-          </div>
-
-          <!-- Terms -->
-          <div class="space-y-4">
-            <div class="flex items-start space-x-2">
-              <input type="checkbox" required class="mt-1">
-              <p class="text-sm text-gray-600">
-                I agree to the 
-                <a href="#" class="text-[#3A2E2A] hover:underline">Marketplace Terms</a> and confirm that:
-                <ul class="list-disc pl-5 mt-2 space-y-1">
-                  <li>All artworks are original creations</li>
-                  <li>I will fulfill orders promptly</li>
-                  <li>I understand the 15% commission fee</li>
-                </ul>
-              </p>
-            </div>
-          </div>
-
-          <!-- Submission -->
-          <div class="pt-6">
-            <button type="submit" class="w-full bg-[#3A2E2A] text-white py-3 rounded-lg hover:bg-[#2E2420] transition-colors">
-              Submit Seller Application
-            </button>
-            <p id="formMessage" class="text-center mt-3 text-sm"></p>
-          </div>
-              <button type="button" onclick="nextStep(1)" class="px-4 py-2 bg-gray-500 text-white rounded-lg">Back</button>
-              <button type="button"  class="px-4 py-2 bg-blue-500 text-white rounded-lg">Next</button>
-        </form>
       </div>
-    </div>
+
+      <!-- Terms Agreement -->
+      <div class="flex items-start mb-6">
+        <input type="checkbox" required class="mt-1">
+        <div class="ml-3 text-sm text-gray-600">
+          I agree to the 
+          <a href="#" class="text-blue-600 hover:underline">Marketplace Terms</a> and confirm that:
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>All artworks are original creations</li>
+            <li>I will fulfill orders promptly</li>
+            <li>I understand the 15% commission fee</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="flex justify-between space-x-2 pt-4">
+        <button type="button" onclick="nextStep(1)" class="w-1/2 py-2 bg-gray-400 hover:bg-gray-500 text-white rounded-lg transition">Back</button>
+        <button type="submit" class="w-1/2 py-2 bg-[#3A2E2A] hover:bg-[#2E2420] text-white rounded-lg transition">Submit Application</button>
+      </div>
+
+      <p id="formMessage" class="text-center mt-4 text-sm text-green-600"></p>
+    </form>
   </div>
-</div>
 
 
 <!-- Modal -->
-<div class="modal fade" id="terms&conditions" tabindex="-1" aria-labelledby="terms&conditions" aria-hidden="true">
+<div class="modal fade" id="termsConditions" tabindex="-1" aria-labelledby="termsConditionsLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content rounded-lg">
       <div class="modal-header">
-        <h5 class="modal-title" id="terms&conditions">Terms and Conditions</h5>
+        <h5 class="modal-title" id="termsConditionsLabel">Terms and Conditions</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-       <div class="modal-body">
-        <h6>Seller Responsibilities</h6>
-        <ul>
+      <div class="modal-body space-y-4 text-sm text-gray-700">
+        <h6 class="font-semibold text-base">Seller Responsibilities</h6>
+        <ul class="list-disc pl-5 space-y-1">
           <li>List only original, one-of-a-kind artworks that comply with our platform’s guidelines.</li>
           <li>Accurately describe your artworks, including dimensions, materials, and other relevant details.</li>
           <li>Fulfill orders promptly and ensure proper packaging for safe delivery.</li>
           <li>Respond to buyer inquiries in a timely and professional manner.</li>
         </ul>
 
-        <h6 class="mt-3">Fees and Payments</h6>
-        <ul>
-          <li>A [percentage]% commission will be deducted from each sale as a platform fee.</li>
-          <li>Payments will be processed and transferred to your registered bank account within [X] business days after the order is marked as completed.</li>
+        <h6 class="font-semibold text-base">Platform Policies</h6>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>All sellers must adhere to community guidelines regarding content and conduct.</li>
+          <li>A 15% commission fee is applied to each successful sale.</li>
+          <li>Violations of policies may lead to suspension or termination of your seller account.</li>
         </ul>
 
-        <h6 class="mt-3">Prohibited Activities</h6>
-        <ul>
-          <li>Selling counterfeit or plagiarized artworks.</li>
-          <li>Engaging in fraudulent activities or misrepresenting your identity.</li>
-          <li>Violating intellectual property rights or any applicable laws.</li>
+        <h6 class="font-semibold text-base">Legal Compliance</h6>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Sellers are responsible for ensuring compliance with local laws and regulations.</li>
+          <li>Provide accurate identity and tax-related documents when requested.</li>
         </ul>
-
-        <h6 class="mt-3">Termination</h6>
-        <p>We reserve the right to suspend or terminate your seller account if you violate any of these terms or engage in activities that harm the platform or its users.</p>
-
-        <h6 class="mt-3">Agreement Updates</h6>
-        <p>This agreement may be updated from time to time. Sellers will be notified of any changes, and continued use of the platform constitutes acceptance of the updated terms.</p>
       </div>
     </div>
   </div>
 </div>
-
+@endif
 </section>
+@include('layouts.footer')
+
 <script>
 function nextStep(step) {
 
@@ -243,7 +199,12 @@ function nextStep(step) {
   if (step === 2) {
     var termsCheckbox = document.getElementById('terms');
     if (!termsCheckbox.checked) {
-      alert('Please accept the Terms and Conditions before proceeding.');
+      Swal.fire({
+                title: "Please accept the Terms and Conditions before proceeding.",
+                icon: "warning",
+                timer: 800,
+                showConfirmButton: false
+            });
       return; // Stop here, don't move to the next step
     }
   }
@@ -267,202 +228,5 @@ function nextStep(step) {
   activeIndicator.classList.add('bg-blue-500', 'text-white', 'border-blue-500');
 }
 </script>
-
-{{--
-<section class="max-w-2xl mx-auto py-8 px-4">
-  <div class="bg-white p-8 rounded-xl shadow-sm">
-    <div class="flex items-center gap-2 mb-8">
-      <button onclick="history.back()" class="text-[#6E4D41] text-xl">&larr;</button>
-      <h2 class="text-2xl font-bold text-[#3A2E2A]">Become an Art Seller</h2>
-    </div>
-
-    <form id="sellerRegistration" class="space-y-6">
-      <!-- Account Verification -->
-      <div class="bg-[#FFF3E0] p-4 rounded-lg">
-        <p class="text-sm text-[#3A2E2A]">
-          <span class="font-semibold">Note:</span> You must have a verified user account.
-          <a href="#" class="text-[#6E4D41] hover:underline">Login first</a> if you haven't
-        </p>
-      </div>
-
-      <!-- Personal Information -->
-      <div class="space-y-4">
-        <h3 class="text-lg font-semibold text-[#3A2E2A] border-b pb-2">Personal Information</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-medium mb-1">Full Legal Name</label>
-            <input type="text" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Contact Number</label>
-            <input type="tel" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]">
-          </div>
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Email Address</label>
-          <input type="email" required 
-                 class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]"
-                 placeholder="your.email@example.com"
-                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
-          <p class="text-xs text-gray-500 mt-1">Must be a valid email address</p>
-        </div>
-      </div>
-
-      <!-- Artist Profile -->
-      <div class="space-y-4">
-        <h3 class="text-lg font-semibold text-[#3A2E2A] border-b pb-2">Artist Profile</h3>
-        <div>
-          <label class="block text-sm font-medium mb-1">Artist/Brand Name</label>
-          <input type="text" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]">
-          <p class="text-xs text-gray-500 mt-1">This will be displayed to buyers</p>
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Artist Bio (150-200 words)</label>
-          <textarea rows="3" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]"></textarea>
-        </div>
-      </div>
-
-      <!-- Art Portfolio -->
-      <div class="space-y-4">
-        <h3 class="text-lg font-semibold text-[#3A2E2A] border-b pb-2">Art Portfolio</h3>
-        <div>
-          <label class="block text-sm font-medium mb-1">Portfolio Samples (3-5 pieces)</label>
-          <input type="file" class="file-input w-full" accept="image/*" multiple>
-          <p class="text-xs text-gray-500 mt-1">Showcase your best work (JPEG/PNG, max 5MB each)</p>
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Primary Art Medium</label>
-          <select required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]">
-            <option value="">Select Medium</option>
-            <option>Painting</option>
-            <option>Sculpture</option>
-            <option>Digital Art</option>
-            <option>Photography</option>
-            <option>Mixed Media</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Shop Setup -->
-      <div class="space-y-4">
-        <h3 class="text-lg font-semibold text-[#3A2E2A] border-b pb-2">Shop Setup</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-medium mb-1">Average Price Range</label>
-            <select required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]">
-              <option value="">Select Range</option>
-              <option>₱1,000 - ₱5,000</option>
-              <option>₱5,000 - ₱15,000</option>
-              <option>₱15,000 - ₱30,000</option>
-              <option>₱30,000+</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Production Time</label>
-            <select required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]">
-              <option value="">Select Timeframe</option>
-              <option>1-2 weeks</option>
-              <option>3-4 weeks</option>
-              <option>1-2 months</option>
-              <option>Commission Basis</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- Verification -->
-      <div class="space-y-4">
-        <h3 class="text-lg font-semibold text-[#3A2E2A] border-b pb-2">Verification</h3>
-        <div>
-          <label class="block text-sm font-medium mb-1">Government ID</label>
-          <input type="file" required class="file-input w-full" accept=".pdf,.jpg,.png">
-          <p class="text-xs text-gray-500 mt-1">Upload clear photo of valid ID (e.g., passport, driver's license)</p>
-        </div>
-        <div>
-          <label class="block text-sm font-medium mb-1">Artist Statement</label>
-          <textarea rows="2" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-[#3A2E2A]" 
-            placeholder="Describe your artistic practice and process"></textarea>
-        </div>
-      </div>
-
-      <!-- Terms -->
-      <div class="space-y-4">
-        <div class="flex items-start space-x-2">
-          <input type="checkbox" required class="mt-1">
-          <p class="text-sm text-gray-600">
-            I agree to the 
-            <a href="#" class="text-[#3A2E2A] hover:underline">Marketplace Terms</a> and confirm that:
-            <ul class="list-disc pl-5 mt-2 space-y-1">
-              <li>All artworks are original creations</li>
-              <li>I will fulfill orders promptly</li>
-              <li>I understand the 15% commission fee</li>
-            </ul>
-          </p>
-        </div>
-      </div>
-
-      <!-- Submission -->
-      <div class="pt-6">
-        <button type="submit" class="w-full bg-[#3A2E2A] text-white py-3 rounded-lg hover:bg-[#2E2420] transition-colors">
-          Submit Seller Application
-        </button>
-        <p id="formMessage" class="text-center mt-3 text-sm"></p>
-      </div>
-    </form>
-  </div>
-</section>
-
-<script>
-document.getElementById('sellerRegistration').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const messageEl = document.getElementById('formMessage');
-  const requiredFields = this.querySelectorAll('[required]');
-  let isValid = true;
-
-  // Validate all required fields
-  requiredFields.forEach(field => {
-    const isEmailValid = field.type === 'email' ? field.checkValidity() : true;
-    
-    if (!field.value || !isEmailValid) {
-      isValid = false;
-      field.classList.add('border-red-500');
-      if(field.type === 'email' && !field.checkValidity()) {
-        field.nextElementSibling.textContent = 'Please enter a valid email address';
-      }
-    } else {
-      field.classList.remove('border-red-500');
-      if(field.type === 'email') {
-        field.nextElementSibling.textContent = 'Must be a valid email address';
-      }
-    }
-  });
-
-  // Validate file inputs
-  const fileInputs = this.querySelectorAll('input[type="file"]');
-  fileInputs.forEach(input => {
-    if(!input.files.length) {
-      isValid = false;
-      input.parentElement.classList.add('border-red-500');
-    } else {
-      input.parentElement.classList.remove('border-red-500');
-    }
-  });
-
-  if (isValid) {
-    messageEl.textContent = 'Application submitted! We will review your submission within 3 business days.';
-    messageEl.classList.add('text-green-600');
-    messageEl.classList.remove('text-red-600');
-    this.reset();
-  } else {
-    messageEl.textContent = 'Please complete all required fields marked in red';
-    messageEl.classList.add('text-red-600');
-    messageEl.classList.remove('text-green-600');
-  }
-});
-</script>--}}
-
-
-@include('layouts.footer')
-
 </body>
 </html>

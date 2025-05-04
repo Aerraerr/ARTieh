@@ -22,7 +22,8 @@
     <!-- Navigation Links -->
     <div id="forNav" class="flex flex-col items-center justify-center space-y-4 w-full text-center">
         <a href="{{ route('admin') }}" class="text-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-4 transition duration-300">DASHBOARD</a>
-        <a href="{{ route('management') }}" class="menu-link  opacity-50 text-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-3 transition duration-300">MANAGEMENT</a>
+        <a href="{{ route('management') }}" class='"menu-link  opacity-50 text-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-3 transition duration-300"'>MANAGEMENT</a>
+        <a href="{{ route('application') }}" class="text-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-3 transition duration-300">APPLICATION</a>
     </div>
 
 

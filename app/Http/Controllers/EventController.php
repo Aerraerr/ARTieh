@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Exception;
 use App\Models\Event;
+use App\Models\User;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,16 +36,17 @@ class EventController extends Controller
             'event_description' => $request->event_description,
             'event_date' => $request->event_date,
             'event_img' => $eventImgPath,
-        ]);            
-    
+        ]);           
+
         return redirect()->back()->with('success', 'Event Created!');
     }
 
     
     public function displayEvents(){
-
+        $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+        
         $events = Event::all();
 
-        return view('Mods.announcements', compact('events'));
+        return view('Mods.announcements', compact('events', 'notifications'));
     }
 }

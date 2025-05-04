@@ -5,14 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/datatable.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 </head>
 <body  class="bg-white text-gray-900">
+@if(session('success'))
+        <script>
+            Swal.fire({
+                title: "{{ session('success') }}",
+                icon: "success",
+                timer: 1000,
+                showConfirmButton: false
+            });
+        </script>
+    @endif
 
-    
 <nav class="fixed left-0 top-0 w-56 h-full bg-white shadow-md flex flex-col items-center py-6">
     <!-- Logo -->
     <div class="mb-6">
@@ -24,7 +34,6 @@
         <a href="{{ route('SellerDashboard') }}" class="menu-link text-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-3 transition duration-300 {{ request()->routeIs('SellerDashboard') ? 'border-b-4 border-[#6e4d41]' : ''}} ">DASHBOARD</a>
         <a href="{{ route('SellerArtworks') }}" class="menu-link text-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-3 transition duration-300 {{ request()->routeIs('SellerArtworks') ? 'border-b-4 border-[#6e4d41]' : '' }}">ARTWORKS</a>
         <a href="{{ route('SellerOrders') }}" class="menu-link text-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-3 transition duration-300 {{ request()->routeIs('SellerOrders') ? 'border-b-4 border-[#6e4d41]' : '' }}">ORDERS</a>
-         <a href="{{ route('SellerChat') }}" class="menu-link text-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-3 transition duration-300 {{ request()->routeIs('SellerChat') ? 'border-b-4 border-[#6e4d41]' : '' }}">CHATS</a>
     </div>
 
     @guest
@@ -45,7 +54,7 @@
             <button ctype="submit" class="text-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-3 transition duration-300">LOGOUT</button>
             </form> 
             <span class="mb-3">| </span>
-            <a href="{{route('artworks')}}" class="text-[#6e4d41] hover:text-gray-500 font-medium transition duration-300 mb-3"> BUYER</a>
+            <a href="{{route('artworks')}}" class="text-[#6e4d41] no-underline hover:text-gray-500 font-medium transition duration-300 mb-3"> BUYER</a>
         </div>
     @endauth
 </nav>

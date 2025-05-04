@@ -1,4 +1,6 @@
 @extends('layouts.forSeller')
+@include('Mods.forNotif')
+@include('Mods.forChat')
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">

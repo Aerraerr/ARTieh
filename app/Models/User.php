@@ -27,7 +27,10 @@ class User extends Authenticatable
         'password',
         'address',
         'profile_pic',
-        'biography'
+        'biography',
+        'gcash_no',
+        'sampleArt',
+        'validId'
     ];
 
     /**

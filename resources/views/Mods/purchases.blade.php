@@ -6,6 +6,7 @@
     <title>My Purchases</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -109,6 +110,7 @@
                 </div>
             </div>
 
+
             <!-- to pay -->
             <div class="tab-content to-pay mt-6">
             <h3 class="text-xl font-bold text-[#d4a373] text-center mb-4">TO PAY</h3>
@@ -144,112 +146,84 @@
                                 </div>
                             </div>
                             <div class="flex justify-end space-x-2 mt-4">
-                            @if($order->payment->payment_method === 'gcash')
+                            @if($order->payment->payment_method === 'gcash'  &&  $order->payment->payment_reference === null && $order->payment->payment_proof === null && $order->payment->payment_date === null)
                                 <button class="btn-primary " data-bs-toggle="modal" data-bs-target="#pay{{$order->id}}">Pay Now</button>
-                            @else
-                                <span class="mt-2 text-gray">Waiting for Sellers Approval..</span>
+                            @elseif($order->payment->payment_method === 'cod' || $order->payment->payment_reference !== null && $order->payment->payment_proof !== null && $order->payment->payment_date !== null)
+                                <span class="mt-2 text-gray-500">Waiting for Seller's Approval..</span>
                             @endif
                                 <button class="btn-outline" data-bs-toggle="modal" data-bs-target="#cancel{{$order->id}}">Cancel Order</button>
                                 <button class="btn-outline">Contact Seller</button>
                             </div>
                         </div>
                     </div>
+
                     @if($topay->isNotEmpty())
-                    {{-- PAY MODAL ======== --}}
-                    <div class="modal fade" id="pay{{$order->id}}" tabindex="-1" aria-labelledby="paylabel{{$order->id}}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content p-4 border border-gray-300 rounded-lg">
-                                <div class="modal-header border-0">
-                                    <h5 class="modal-title font-bold text-lg text-[#1f2937]" id="paylabel{{$order->id}}">Mode of Payment: <span class="text-[#0f172a]">{{$order->payment->payment_method}}</span></h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-
-                                <div class="modal-body px-4 py-2">
-                                    <p class="mb-3">Please ensure that you make a payment of <span class="text-[#dc2626] font-semibold">${{$order->total_amount}}</span> to <strong>{{$item->artwork->user->full_name}}</strong>, and remember to provide accurate information.</p>
-                                    <div class="mb-3">
-                                        <label class="form-label text-gray-800">Pay to this GCash Number:</label>
-                                        <input type="text" class="form-control text-sm" placeholder="{{$item->artwork->user->gcash_acc ?? '09123456789 - ST**P CU**Y"'}}" disabled>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label text-gray-800">Reference Number</label>
-                                        <input type="text" name="payment_reference" id="refNumberInput{{ $order->id }}" class="form-control text-sm" placeholder="Enter reference number" required>
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label class="form-label text-gray-800">Proof of Payment</label>
-                                        <input type="file" name="proof" id="proofInput{{ $order->id }}" class="form-control text-sm" required>
-                                    </div>
-                                </div>
-
-                                <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <button data-bs-toggle="modal" data-bs-target="#payconfirm{{$order->id}}" class="btn btn-primary bg-[#d4a373] hover:bg-[#c49767] text-white">Confirm Payment</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- confirm modal-->
-                    <div class="modal fade" id="payconfirm{{$order->id}}" tabindex="-1" aria-labelledby="paylabel{{$order->id}}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content p-4 border border-gray-300 rounded-lg">
-                                <div class="modal-header border-0">
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-
-                                <div class="modal-body px-4 py-2">
-                                    <h3 class="mb-3 text-center">Are the inputed information correct?</h3>
-                                </div>
-
-                                <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <form method="POST">
-                                            @csrf
-                                            <input type="hidden" name="reference_number" id="hiddenRefNumber{{ $order->id }}">
-                                            <input type="hidden" name="proof" id="hiddenProof{{ $order->id }}">
-                                            <button type="submit" class="btn btn-primary bg-[#d4a373] hover:bg-[#c49767] text-white">Confirm Payment</button>
-                                        </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{--CANCEL ORDER MODAL --}}
-                    <div class="modal fade" id="cancel{{$order->id}}" tabindex="-1" aria-labelledby="cancelLabel{{$order->id}}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content p-4">
-                                <div class="modal-header">
-                                    <h5 class="modal-title font-bold" id="cancelLabel{{$order->id}}">Cancel Order</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-
-                                <form  method="POST" action="{{route('cancel-order', $order->id)}}" class="mt-4">
+                        {{-- PAY MODAL ======== --}}
+                        <div class="modal fade" id="pay{{$order->id}}" tabindex="-1" aria-labelledby="paylabel{{$order->id}}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content p-4 border border-gray-300 rounded-lg">
+                                <form action="{{route('gcash-payment', $order->id)}}" method="POST" class="payment-form" enctype="multipart/form-data">
                                     @csrf
-                                    <div class="modal-body">
-                                        <p>Reason for cancellation of this order?</p>
-                                            <textarea name="cancel_reason" rows="3" class="w-full border rounded p-2" placeholder="Optional: Reason for cancellation..."></textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Go Back</button>
-                                        <button type="submit" class="btn btn-danger bg-red-500 hover:bg-red-600 text-white">Confirm Cancel</button>
-                                    </div>
-                                </form>
+                                    @method('PATCH')
+                                        <div class="modal-header border-0">
+                                            <h5 class="modal-title font-bold text-lg text-[#1f2937]" id="paylabel{{$order->id}}">Mode of Payment: <span class="text-[#0f172a]">{{$order->payment->payment_method}}</span></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
 
+                                        <div class="modal-body px-4 py-2">
+                                            <p class="mb-3">Please ensure that you make a payment of <span class="text-[#dc2626] font-semibold">${{$order->total_amount}}</span> to <strong>{{$item->artwork->user->full_name}}</strong>, and remember to provide accurate information.</p>
+                                            <div class="mb-3">
+                                                <label class="form-label text-gray-800">Pay to this GCash Number:</label>
+                                                <input type="text" class="form-control text-sm" placeholder="{{$item->artwork->user->gcash_acc ?? '09123456789 - ST**P CU**Y"'}}" disabled>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label text-gray-800">Reference Number</label>
+                                                <input type="text" name="payment_reference" id="refNumberInput{{ $order->id }}" class="form-control text-sm" placeholder="Enter reference number" required>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label class="form-label text-gray-800">Proof of Payment</label>
+                                                <input type="file" name="payment_proof" id="proofInput{{ $order->id }}" class="form-control text-sm" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button  type="submit" class="btn btn-primary">Confirm Payment</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <script>//para sa payment modal copy data
-                        document.addEventListener('DOMContentLoaded', function () {
-                            const confirmBtn = document.querySelector('#pay{{ $order->id }} .btn.btn-primary');
-                            confirmBtn.addEventListener('click', function () {
-                                const refVal = document.getElementById('refNumberInput{{ $order->id }}').value;
-                                const proofVal = document.getElementById('proofInput{{ $order->id }}').value;
-
-                                document.getElementById('hiddenRefNumber{{ $order->id }}').value = refVal;
-                                document.getElementById('hiddenProof{{ $order->id }}').value = proofVal;
-                            });
-                        });
-                    </script>
                     @endif
+
+                    @if($topay->isNotEmpty())
+                        {{--CANCEL ORDER MODAL --}}
+                        <div class="modal fade" id="cancel{{$order->id}}" tabindex="-1" aria-labelledby="cancelLabel{{$order->id}}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content p-4">
+                                 <form  method="POST" action="{{route('cancel-order', $order->id)}}" class="mt-4">
+                                    @csrf
+                                        <div class="modal-header">
+                                            <h5 class="modal-title font-bold" id="cancelLabel{{$order->id}}">Cancel Order</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <p>Reason for cancellation of this order?</p>
+                                                <textarea name="cancel_reason" rows="3" class="w-full border rounded p-2" placeholder="Optional: Reason for cancellation..."></textarea>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Go Back</button>
+                                            <button type="submit" class="btn btn-danger bg-red-500 hover:bg-red-600 text-white">Confirm Cancel</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     @endif
                 @endforeach
             @else
@@ -291,7 +265,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-end space-x-2 mt-4">
-                                <form  action="{{ route('received-order', $order->id) }}" method="POST">
+                                <form  action="{{ route('received-order', $order->id) }}" method="POST" class="receive-form">
                                     @csrf   
                                     @method('PATCH')
                                     <button class="btn-primary" type="submit">Receive Order</button>
@@ -340,7 +314,7 @@
                             </div>
                         </div>
                         <div class="flex justify-end space-x-2 mt-4">
-                            <form method="POST" action="{{ route('received-order', $order->id) }}">
+                            <form method="POST" action="{{ route('received-order', $order->id) }}" class="receive-form">
                             @csrf
                             @method('PATCH')
                                 <button type="submit" class="btn-primary">Receive Order</button>
@@ -536,7 +510,7 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() { //tabs sa status
         // Tab switching functionality
         document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', function () {
@@ -582,7 +556,8 @@
     });
 </script>
 <script>
-function setRating(inputName, rating) {
+
+function setRating(inputName, rating) { //rating star sa completed
     // Set the rating value to the hidden input field
     document.querySelector(`input[name=${inputName}]`).value = rating;
 
@@ -600,7 +575,59 @@ function setRating(inputName, rating) {
 }
 </script>
 
+<script> // alert confirmation for to receive button
+document.addEventListener('DOMContentLoaded', function () {
+    const receiveForms = document.querySelectorAll('.receive-form');
 
+    receiveForms.forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); 
+
+            Swal.fire({
+                title: 'Received Order?',
+                text: "This action will mark the order as received.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); 
+                }
+            });
+        });
+    });
+});
+</script>
+
+<script> // alert confirmation for payment button
+document.addEventListener('DOMContentLoaded', function () {
+    const receiveForms = document.querySelectorAll('.payment-form');
+
+    receiveForms.forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); 
+
+            Swal.fire({
+                title: 'Are the inputed information correct?',
+                text: "This action will send the information to the seller.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); 
+                }
+            });
+        });
+    });
+});
+</script>
 
 </body>
 <footer>

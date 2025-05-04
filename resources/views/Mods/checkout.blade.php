@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -36,7 +37,7 @@
             </div>
         </div>
 
-    <form action="{{ route('checkout.store') }}" method="POST">
+    <form action="{{ route('checkout.store') }}" method="POST" class="checkout-form">
         @csrf
         <input type="hidden" name="artwork_id" value="{{ $artwork->id }}">
         <input type="hidden" name="item_total" value="{{ $artwork->price }}">
@@ -150,7 +151,32 @@
 </section>
 
 @include('layouts.footer')
+<script> // alert confirmation for payment button
+document.addEventListener('DOMContentLoaded', function () {
+    const receiveForms = document.querySelectorAll('.checkout-form');
 
+    receiveForms.forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); 
+
+            Swal.fire({
+                title: 'Are the inputed information correct?',
+                text: "This action will send the information to the seller.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); 
+                }
+            });
+        });
+    });
+});
+</script>
 {{--<script>
     // Mobile Menu Toggle (If applicable)
     const menuBtn = document.getElementById("menuBtn");
