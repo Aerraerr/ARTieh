@@ -6,7 +6,7 @@
 <h3><strong></strong></h3>
 
 ARTieh is a dedicated e-commerce platform that connects local artists with buyers in the Albay area. It provides a seamless marketplace where artists can showcase and sell their artworks while art enthusiasts can discover and purchase unique pieces, fostering a thriving local art community.
-
+ 
 ## OBJECTIVES
 1. Streamline the showcasing and selling of artworks for better efficiency and convenience.
 2. Develop a user-friendly e-commerce platform that offers personalized customer needs, allowing users to easily discover and purchase local artworks.
