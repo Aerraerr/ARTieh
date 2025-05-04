@@ -6,114 +6,100 @@
     <title>View Artist</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
       
 </head>
-<body  class="bg-white text-gray-900">
+<body style="height:auto;" class="bg-white text-gray-900">
 
     @include('layouts.forNav')
-@extends('layouts.forbg')
+
    
-<section>    
-    <div class="container-fluid ">
-        <div class="bg-white pb-4  rounded-md shadow-lg border mx-auto max-w-[100%]   relative">
+    <section class="w-full">
+    <div class="w-full bg-white pb-4 rounded-md shadow-lg border relative">
         
-            <div class="w-full bg-[#F6EBDA] min-h-[400px]  flex flex-col md:flex-row justify-center mb-3 py-5 px-3 md:px-20 lg:px-32 xl:px-40 gap-6">
-               
-            <div class="flex flex-col items-center w-[50%] ">
-            <div class="w-[120px] h-[120px] rounded-full overflow-hidden">
-              <img id="profileImage" src="{{ asset('storage/' . $artist->profile_pic) }}" alt="Profile Photo" class="object-cover w-full h-full" />
-            </div>     
-            <h1 class="mt-3 px-4 py-2 text-[#6E4D41] font-bold text-2xl">{{ $artist->full_name }}</h1>
-            <div class="flex items-center text- gap-2">
-             <label class=>{{ $artist->email }}</label>
-             <div class="bg-[#6E4D41] border-l h-4 w-[1.5px]"></div>
-             <label class=>Seller</label>
-          </div>
-            <div class="flex row text-center w-[500px] h-[50px] overflow-hidden">
-            <p id="bioText" class="mt-1 px-4  text-[#6E4D41]"> {{ $artist->bio }} </p>
-            </div>
-            <button id="showMoreContainer" class="mt-2 text-sm text-[#6E4D41] font-bold hover:underline"  
-            data-bs-toggle="modal" data-bs-target="#ViewmoreModal" aria-label="View more">
-          Show full bio
-          </button>
-
-     
-
-          <div class="relative mt-3 flex items-center text- gap-2">
-          <div class="pr-2">
-          <button>
-            <button onclick="toggleModal('share-modal')"><img src="{{ asset('images/SHARE.svg') }}" alt="copylink icon"  class="w-7 h-7 hover:opacity-80 transition-opacity"></button>
-          </button>
-          </div>
-          <button class="whitespace-nowrap px-4 py-2 text-[#6E4D41] rounded-full bg-white font-medium hover:bg-[#5a3c32] transition duration-300"
-          data-bs-toggle="modal" data-bs-target="#MessageModal" aria-label="View more">
-          Message</button>
-          <button class="whitespace-nowrap px-3 py-2 text-white rounded-full  bg-[#6E4D41] font-medium hover:bg-[#5a3c32] transition duration-300">Rate</button>
-          <div class="pl-2">
-          <button>
-            <img src="{{ asset('images/REPORT.svg') }}" alt="copylink icon"  class="w-7 h-7 hover:opacity-80 transition-opacity">
-          </button>
-          </div>
-          </div>
-        
-          
-          
-            </div>
-
-          </div>
-
-
-          <div class="relative mb-3 flex justify-center text- gap-10 mt-4">
-            <h1  class="text-lg text-[#6E4D41] font-bold">AVAILABLE ARTWORKS</h1>
-          </div>
-          <div id="Viewpaintings" class="tab-content">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 p-3">
-              @forelse($artist->artworks->filter(fn($artwork) => $artwork->orderItems->isEmpty()) as $artwork)
-                <div class="relative w-full overflow-hidden ">
-                    <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl">
-                    <div class="mt-1 p-0 flex row items-center">
-                        <h3 class="font-bold text-sm">{{$artwork->artwork_title}}</h3>
-                    </div>
+        <!-- Header Section -->
+        <div class="w-full bg-[#F6EBDA] min-h-[300px] flex flex-col md:flex-row justify-center items-center mb-3 py-5 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 gap-4 sm:gap-6">
+            <div class="flex flex-col items-center w-full max-w-md md:w-1/2 lg:w-1/3">
+                <div class="w-24 h-24 sm:w-30 sm:h-30 md:w-40 md:h-40 rounded-full overflow-hidden">
+                    <img id="profileImage" src="{{ asset('storage/' . $artist->profile_pic) }}" alt="Profile Photo" class="object-cover w-full h-full" />
                 </div>
-              @empty
-                <p class="col-span-5 text-center text-gray-500">No artworks to display.</p>
-              @endforelse
-            </div>
-          </div>
-        
-          <div class="relative mb-3 flex justify-center text- gap-10 mt-4">
-            <h1  class="text-lg text-[#6E4D41] font-bold">SOLD ARTWORKS</h1>
-          </div>
-          <div id="Viewpaintings" class="tab-content">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 p-3">
-              @forelse($artist->artworks->filter(fn($artwork) => $artwork->orderItems->isNotEmpty()) as $artwork)
-                <div class="relative w-full overflow-hidden ">
-                    <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl">
-                      <div class="absolute top-2 right-2 bg-white text-red-600 text-xs font-bold px-2 py-1 border border-red-600 rounded-lg shadow">
-                      SOLD
-                    </div>
-                    <div class="mt-1 p-0 flex row items-center">
-                        <h3 class="font-bold text-sm">{{$artwork->artwork_title}}</h3>
-                    </div>
+
+                <h1 class="mt-3 px-4 py-2 text-[#6E4D41] font-bold text-xl sm:text-2xl text-center">{{ $artist->full_name }}</h1>
+                <p class="text-[#6E4D41] font-bold text-lg sm:text-lg text-center">Rating 4.6</p>
+                <div class="flex items-center gap-2 text-sm sm:text-base text-[#6E4D41]">
+                    <span>{{ $artist->email }}</span>
+                    <div class="bg-[#6E4D41] h-4 w-[1.5px]"></div>
+                    <span>Seller</span>
                 </div>
-              @empty
-                <p class="col-span-5 text-center text-gray-500">No artworks to display.</p>
-              @endforelse
+
+                <div class="flex flex-row text-center w-full max-w-[90%] sm:max-w-[400px] mt-2">
+                    <p id="bioText" class="px-4 text-[#6E4D41] text-sm sm:text-base line-clamp-3">{{ $artist->bio }}</p>
+                </div>
+
+                <button id="showMoreContainer" class="mt-2 text-sm text-[#6E4D41] font-bold hover:underline" data-bs-toggle="modal" data-bs-target="#ViewmoreModal" aria-label="View more">
+                    Show full bio
+                </button>
+
+                <div class="relative mt-4 flex flex-wrap justify-center gap-3 sm:gap-4">
+                    <button onclick="copyLink()">
+                        <img src="{{ asset('images/SHARE.svg') }}" alt="Share icon" class="w-6 h-6 sm:w-7 sm:h-7 hover:opacity-80 transition-opacity" />
+                    </button>
+                    <button class="px-3 py-1.5 sm:px-4 sm:py-2 text-[#6E4D41] rounded-full bg-white font-medium hover:bg-[#5a3c32] transition duration-300 text-sm sm:text-base" data-bs-toggle="modal" data-bs-target="#MessageModal">
+                        Message
+                    </button>
+                    <button class="px-3 py-1.5 sm:px-4 sm:py-2 text-white rounded-full bg-[#6E4D41] font-medium hover:bg-[#5a3c32] transition duration-300 text-sm sm:text-base" data-bs-toggle="modal" data-bs-target="#RateArtist" style="cursor: pointer;">
+                        Rate
+                    </button>
+                </div>
             </div>
-          </div>
-
-          </div>
-
-                
-            </div>
-
-    
         </div>
+
+        <!-- Available Artworks -->
+        <div class="relative mb-3 flex justify-center gap-10 mt-4">
+            <h1 class="text-lg text-[#6E4D41] font-bold">AVAILABLE ARTWORKS</h1>
+        </div>
+        <div id="Viewpaintings" class="tab-content">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 p-3">
+                @forelse($artist->artworks->filter(fn($artwork) => $artwork->orderItems->isEmpty()) as $artwork)
+                    <div class="relative w-full overflow-hidden">
+                        <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl">
+                        <div class="mt-1 p-0 flex row items-center">
+                            <h3 class="font-bold text-sm">{{ $artwork->artwork_title }}</h3>
+                        </div>
+                    </div>
+                @empty
+                    <p class="col-span-5 text-center text-gray-500">No artworks to display.</p>
+                @endforelse
+            </div>
+        </div>
+
+        <!-- Sold Artworks -->
+        <div class="relative mb-3 flex justify-center gap-10 mt-4">
+            <h1 class="text-lg text-[#6E4D41] font-bold">SOLD ARTWORKS</h1>
+        </div>
+        <div id="Viewpaintings" class="tab-content">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 p-3">
+                @forelse($artist->artworks->filter(fn($artwork) => $artwork->orderItems->isNotEmpty()) as $artwork)
+                    <div class="relative w-full overflow-hidden">
+                        <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl" alt="{{ $artwork->artwork_title }}" data-bs-toggle="modal" data-bs-target="#viewReview" style="cursor: pointer;">
+                        <div class="absolute top-2 right-2 bg-white text-red-600 text-xs font-bold px-2 py-1 border border-red-600 rounded-lg shadow max-w-[60px] sm:max-w-[80px] md:max-w-[100px]">
+                            SOLD
+                        </div>
+                        <div class="mt-1 p-0 flex row items-center">
+                            <h3 class="font-bold text-sm">{{ $artwork->artwork_title }}</h3>
+                        </div>
+                    </div>
+                @empty
+                    <p class="col-span-5 text-center text-gray-500">No artworks to display.</p>
+                @endforelse
+            </div>
+        </div>
+
     </div>
-    </section>
+</section>
+
 
 
   <!-- VIEW  MORE MODAL -->
@@ -153,19 +139,76 @@
   </div>
 </div>
 
-<!-- share modal -->
-<div id="share-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white w-[400px] rounded-lg shadow-lg p-6">
-        <h2 class="text-lg font-bold text-[#6e4d41]">Share Profile</h2>
-        <p class="text-sm text-gray-600 mt-2">Share this artist with your friends...</p>
+<!-- RateArtist Modal -->
+<div class="modal fade" id="RateArtist" tabindex="-1" aria-labelledby="RateArtistLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="flex justify-end p-2">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="text-center">
+              <h1 class="text-xl sm:text-2xl md:text-4xl font-bold mb-2 sm:mb-4">Rate Artist</h1>
+                    <p class="text-[#6E4D41] font-bold mb-4">{{ $artist->full_name }}</p>
+                    <div class="flex flex-row items-center justify-center gap-2 mb-6">
+                        <div class="flex flex-col items-center">
+                            <img id="rating-icon5" src="{{ asset('images/Rating5.svg') }}" alt="Rating 5 stars" aria-label="Rate 5 stars" class="w-10 h-10 cursor-pointer transition-all duration-300" onclick="toggleRating(5)" />
+                            <p class="text-[#6E4D41] font-bold w-10 text-center mt-1">1</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <img id="rating-icon4" src="{{ asset('images/Rating4.svg') }}" alt="Rating 4 stars" aria-label="Rate 4 stars" class="w-10 h-10 cursor-pointer transition-all duration-300" onclick="toggleRating(4)" />
+                            <p class="text-[#6E4D41] font-bold w-10 text-center mt-1">2</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <img id="rating-icon3" src="{{ asset('images/Rating3.svg') }}" alt="Rating 3 stars" aria-label="Rate 3 stars" class="w-10 h-10 cursor-pointer transition-all duration-300" onclick="toggleRating(3)" />
+                            <p class="text-[#6E4D41] font-bold w-10 text-center mt-1">3</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <img id="rating-icon2" src="{{ asset('images/Rating2.svg') }}" alt="Rating 2 stars" aria-label="Rate 2 stars" class="w-10 h-10 cursor-pointer transition-all duration-300" onclick="toggleRating(2)" />
+                            <p class="text-[#6E4D41] font-bold w-10 text-center mt-1">4</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <img id="rating-icon1" src="{{ asset('images/Rating1.svg') }}" alt="Rating 1 star" aria-label="Rate 1 star" class="w-10 h-10 cursor-pointer transition-all duration-300" onclick="toggleRating(1)" />
+                            <p class="text-[#6E4D41] font-bold w-10 text-center mt-1">5</p>
+                        </div>
+                    </div>
 
-        <!--<Modal Buttons -->
-        <div class="flex justify-end gap-3 mt-4">
-            <button onclick="toggleModal('share-modal')" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Close</button>
-            <button id="copyLinkBtn" onclick="copyLink()" class="px-4 py-2 bg-[#6e4d41] text-white rounded-lg hover:bg-[#5a3c32]">Copy Link</button>
+      <div class="flex justify-center gap-4 p-4">
+        <button class="px-4 py-2 bg-[#6E4D41] text-white rounded-md hover:bg-[#5a3e34]">Send</button>
+        <button class="px-4 py-2 border-3 border-[#6E4D41] text-gray-800 rounded-md hover:bg-gray-300" data-bs-dismiss="modal">Cancel</button>
+      </div>
+</div>
+</div>
+          
         </div>
     </div>
 </div>
+<!-- Sa Sold ini na pang view -->
+<div class="modal fade" id="viewReview" tabindex="-1" aria-labelledby="viewReview" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content p-4">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title font-bold">Rating</h3>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <h4 class="font-bold mb-2">Artist Rating:</h4>
+                                        <p class="text-yellow-400 text-3xl"></p>
+
+                                        <h4 class="font-bold mt-4 mb-2">Artwork Rating:</h4>
+                                        <p class="text-yellow-400 text-3xl"></p>
+
+                                        <h4 class="font-bold mt-4 mb-2">Comment:</h4>
+                                        <p class="text-gray-600"></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
 
 <!-- Script for Show More -->   
 <script>
@@ -276,26 +319,51 @@
     }
   });
 </script>
+
 <script>
-    // Function to copy the profile link
-    function copyLink() {
-        // Assuming you have a dynamic URL for the user's profile
-        const profileUrl = window.location.href; // Get the current page URL, or set your own URL
+// Function to fire an alert
+function copyLink() {
+    console.log('copyLink function called');
+    Swal.fire({
+        title: "Link copied!",
+        icon: "success",
+        timer: 800,
+        showConfirmButton: false
+    });
+}
+</script>
 
-        // Create a temporary input element to use the clipboard API
-        const tempInput = document.createElement('input');
-        document.body.appendChild(tempInput);
-        tempInput.value = profileUrl;
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
+<script>
+let currentRating = 0; // Track the currently lit icon (0 means none)
 
-        Swal.fire({
-                title: "Link copied!",
-                icon: "success",
-                timer: 800,
-                showConfirmButton: false
-            });
+function toggleRating(rating) {
+    const basePath = "{{ asset('images/') }}".replace(/\/$/, ''); // Remove trailing slash
 
+    // Toggle off if the same rating is clicked, otherwise set new rating
+    currentRating = (currentRating === rating) ? 0 : rating;
+
+    // Update all icons
+    for (let i = 1; i <= 5; i++) {
+        const icon = document.getElementById(`rating-icon${i}`);
+        if (!icon) {
+            console.error(`Icon with ID rating-icon${i} not found`);
+            continue;
+        }
+
+        const defaultSrc = `${basePath}/Rating${i}.svg`; // e.g., /images/Rating1.svg
+        const clickedSrc = `${basePath}/Rating${i}clicked.svg`; // e.g., /images/Rating1clicked.svg
+
+        // Set clicked SVG only for the current rating, default for others
+        icon.src = (i === currentRating) ? clickedSrc : defaultSrc;
+
+        // Handle image load errors
+        icon.onerror = () => {
+            console.error(`Failed to load image: ${icon.src}`);
+            icon.src = '{{ asset('images/fallback.svg') }}'; // Fallback image
+        };
     }
+
+    // Debug: Log the action
+    console.log(`Set rating to ${currentRating}, Icon ${rating} toggled`);
+}
 </script>

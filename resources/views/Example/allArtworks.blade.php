@@ -1,7 +1,7 @@
 <style>
     .artwork-card {
         width: 100%;
-        max-width: 300px;
+        max-width: 350px;
     }
 
     .card-container.single-visible {
@@ -13,11 +13,12 @@
     @forelse($artworks as $artwork)
         <a href="{{ route('product-details', ['id' => $artwork->id]) }}" 
            class="block no-underline text-inherit artwork-card transition-all duration-300" 
-           data-name="{{ strtolower($artwork->artwork_title . ' ' . ($artwork->user->full_name ?? '')) }}">
+           data-name="{{ strtolower($artwork->artwork_title . ' ' . ($artwork->user->full_name ?? '')) }}"
+           data-price="{{ $artwork->price }}">
             <div class="card border-0 shadow-lg">
-                <div class="w-full h-64"> 
+                <div class="w-full h-64">
                     <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="card-img-top w-full h-full object-cover">
-                </div>   
+                </div>
                 <div class="card-body text-start">
                     <h5 class="fw-bold text-[#6E4D41]">{{ $artwork->artwork_title }}</h5>
                     <p class="text-semibold text-[#6E4D41] text-[13px] mt-[-10px] mb-1">by {{ $artwork->user?->full_name ?? 'Unknown Artist' }}</p>
@@ -36,11 +37,15 @@
     @endforelse
 </div>
 
+
+
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const searchInput = document.querySelector('.search-bar input[type="text"]');
         const artworkCards = document.querySelectorAll('.artwork-card');
         const cardContainer = document.getElementById('artworkCardsContainer');
+        const priceFilter = document.getElementById('priceFilter');
 
         function updateVisibleCards() {
             const searchValue = searchInput.value.trim().toLowerCase();
@@ -63,6 +68,29 @@
             }
         }
 
+        function sortByPrice(order) {
+            const sortedCards = Array.from(artworkCards).sort((a, b) => {
+                const priceA = parseFloat(a.dataset.price);
+                const priceB = parseFloat(b.dataset.price);
+                if (order === 'low-to-high') {
+                    return priceA - priceB;
+                } else if (order === 'high-to-low') {
+                    return priceB - priceA;
+                }
+                return 0;
+            });
+
+            // Reattach the sorted cards to the container
+            sortedCards.forEach(card => cardContainer.appendChild(card));
+        }
+
+        // Event listeners
         searchInput.addEventListener('input', updateVisibleCards);
+        priceFilter.addEventListener('change', function () {
+            const selectedOrder = priceFilter.value;
+            sortByPrice(selectedOrder);
+        });
+
+        updateVisibleCards(); // initial call
     });
 </script>

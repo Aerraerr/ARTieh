@@ -1,12 +1,23 @@
-<div class="card-container justify-start">
-<div id="artworkCardsWrapper" class="flex flex-wrap gap-4 justify-start">
+<style>
+    .artwork-card {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .card-container.single-visible {
+        justify-content: center !important;
+    }
+</style>
+
+<div class="card-container flex flex-wrap gap-4 justify-center" id="artworkCardsContainer">
     @forelse($artworks as $artwork)
         <a href="{{ route('product-details', ['id' => $artwork->id]) }}" 
-           class="block no-underline text-inherit artwork-card w-[300px]" 
-           data-name="{{ strtolower($artwork->artwork_title . ' ' . ($artwork->user->full_name ?? '')) }}">
-            <div id="productdetails" class="card border-0 shadow-lg">
+           class="block no-underline text-inherit artwork-card transition-all duration-300" 
+           data-name="{{ strtolower($artwork->artwork_title . ' ' . ($artwork->user->full_name ?? '')) }}" 
+           data-price="{{ $artwork->price }}">
+            <div class="card border-0 shadow-lg">
                 <div class="w-full h-64"> 
-                   <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="card-img-top w-full h-full object-cover">
+                    <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="card-img-top w-full h-full object-cover">
                 </div>   
                 <div class="card-body text-start">
                     <h5 class="fw-bold text-[#6E4D41]">{{ $artwork->artwork_title }}</h5>
@@ -26,36 +37,54 @@
     @endforelse
 </div>
 
-</div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const searchInput = document.querySelector('.search-bar input[type="text"]');
-    const artworkCards = document.querySelectorAll('.artwork-card');
-    const artworkCardsWrapper = document.getElementById('artworkCardsWrapper');
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector('.search-bar input[type="text"]');
+        const artworkCards = document.querySelectorAll('.artwork-card');
+        const cardContainer = document.getElementById('artworkCardsContainer');
+        const priceFilter = document.getElementById('priceFilter');
 
-    function updateCardLayout() {
-        const visibleCards = Array.from(artworkCards).filter(card => card.style.display !== 'none');
-        if (visibleCards.length === 1) {
-            artworkCardsWrapper.classList.remove('justify-start');
-            artworkCardsWrapper.classList.add('justify-start');
-        } else {
-            artworkCardsWrapper.classList.remove('justify-start');
-            artworkCardsWrapper.classList.add('justify-start');
+        function updateVisibleCards() {
+            const searchValue = searchInput.value.trim().toLowerCase();
+            let visibleCount = 0;
+
+            artworkCards.forEach(card => {
+                const dataName = card.dataset.name;
+                if (dataName.includes(searchValue)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            cardContainer.classList.toggle('single-visible', visibleCount === 1);
         }
-    }
 
-    searchInput.addEventListener('input', function () {
-        const searchValue = this.value.trim().toLowerCase();
+        function sortByPrice(order) {
+            const sortedCards = Array.from(artworkCards).sort((a, b) => {
+                const priceA = parseFloat(a.dataset.price);
+                const priceB = parseFloat(b.dataset.price);
+                if (order === 'low-to-high') {
+                    return priceA - priceB;
+                } else if (order === 'high-to-low') {
+                    return priceB - priceA;
+                }
+                return 0; // No sorting if no valid order
+            });
 
-        artworkCards.forEach(card => {
-            const dataName = card.dataset.name;
-            card.style.display = dataName.includes(searchValue) ? 'block' : 'none';
+            // Reattach the sorted cards to the container
+            sortedCards.forEach(card => cardContainer.appendChild(card));
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', updateVisibleCards);
+        priceFilter.addEventListener('change', function () {
+            const selectedOrder = priceFilter.value;
+            sortByPrice(selectedOrder);
         });
 
-        updateCardLayout();
+        updateVisibleCards(); // initial call
     });
-
-    updateCardLayout(); // run initially on load
-});
 </script>

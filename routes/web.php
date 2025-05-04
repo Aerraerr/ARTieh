@@ -16,6 +16,7 @@ use App\Mail\VerificationCodeMail;
 
 
 
+
 // REGISTRATION / LOGIN
 Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register');
@@ -90,6 +91,8 @@ Route::middleware(['guest'])->group(function() {
 });
 
 Route::get('/artworks', [ArtworksController::class, 'showAllArtworks'])->name('artworks');
+Route::get('/all-artworks', [ArtworksController::class, 'showAllArtworks'])->name('all-artworks');
+
 
 //Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
 Route::get('/artists', [ProfileController::class, 'showArtistList'])->name('artists');
@@ -211,6 +214,9 @@ Route::get('/footer', function () {
 
 Route::get('/product-details/{id}', [ArtworksController::class, 'showDetails'])->name('product-details');
 Route::get('/category/{category}', [ArtworksController::class, 'showByCategory'])->name('category');
+
+
+
 
 
 

@@ -26,7 +26,7 @@ class ArtworksController extends Controller
             'category_id'   => 'required|exists:category,id',
             'dimension'     =>  'required|string',
             'price'         => 'required|numeric|min:0',
-            'image'         => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'image'         => 'required|image|mimes:jpeg,png,jpg|max:10485760',
         ]);
 
         //Store the image in the storage/public/artworks/category

@@ -104,32 +104,19 @@
     @include('Example.featuredpainting')
 
 
-<section class="mt-10 py-10 px-3 bg-[#F6EBDA]">
+    <section class="mt-10 py-10 px-3 bg-[#F6EBDA]">
   <h2 class="text-3xl font-bold text-[#6E4D41] text-center mb-8">Featured Sculptures</h2>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
-    <!-- Sculptures Example (repeat for more) -->
-    @foreach($sculpt as $artwork)
+    @foreach($sculpt->take(6) as $artwork)
       <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
-        <img src="{{ asset($artwork->image_path) }}" alt="Sculpture 2" class="w-full h-64 object-cover mb-4 rounded-lg">
-        <h5 class="font-semibold text-[#6E4D41] text-lg">{{$artwork->artwork_title}}</h5>
-        <p class="text-gray-600">{{$artwork->user->full_name}}</p>
+        <img src="{{ asset($artwork->image_path) }}" alt="Sculpture" class="w-full h-64 object-cover mb-4 rounded-lg">
+        <h5 class="font-semibold text-[#6E4D41] text-lg">{{ $artwork->artwork_title }}</h5>
+        <p class="text-gray-600">{{ $artwork->user->full_name }}</p>
       </div>
     @endforeach
-
-    <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
-      <img src="https://source.unsplash.com/400x400/?sculpture" alt="Sculpture 3" class="w-full h-64 object-cover mb-4 rounded-lg">
-      <h5 class="font-semibold text-[#6E4D41] text-lg">Venus de Milo</h5>
-      <p class="text-gray-600">Alexandros of Antioch</p>
-    </div>
-
-    <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
-      <img src="https://source.unsplash.com/400x400/?sculpture" alt="Sculpture 4" class="w-full h-64 object-cover mb-4 rounded-lg">
-      <h5 class="font-semibold text-[#6E4D41] text-lg">Bust of Nefertiti</h5>
-      <p class="text-gray-600">Thutmose</p>
-    </div>
-    <!-- Add more sculpture items here if needed -->
   </div>
+
   <div class="flex justify-center mt-10">
     <a href="{{ route('category', ['category' => 'sculpture']) }}" style="border-radius:10px;" class="no-underline blob-btn h-[50px] px-6 flex items-center justify-center">
       See More Masterpieces
@@ -144,6 +131,7 @@
     </a>
   </div>
 </section>
+
 
 
 <!-- New Section: Art That Reflects Your Story -->

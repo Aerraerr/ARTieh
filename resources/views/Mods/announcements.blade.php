@@ -8,47 +8,98 @@
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/mods/paintings.css') }}">
     <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
     
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </head>
 <body  class="bg-white text-gray-900 min-h-screen max-h-[100vh]">
     @include('layouts.forNav')
     @extends('layouts.forbg')
     
-    <section>    
-        <div class="bg-white p-4 rounded shadow-lg border mx-auto max-w-[100%] sm:max-w-[100%]" >
-            <h4 class="mt-10 font-semibold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl ml-0 sm:ml-6 md:ml-10">Upcoming Fairs and Events</h4>
-            <div class="mt-[-50px] line ml-20"><hr></div>
+    <section>
+    <div class="bg-white p-8 rounded-lg shadow-lg border mx-auto max-w-[100%] sm:max-w-[100%]">
+        <!-- Header Section -->
+        <div class="text-center">
+            <h4 class="font-semibold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl">Upcoming Fairs and Events</h4>
+            <h5 class="text-[#6E4D41] text-sm italic mt-2 mx-auto max-w-4xl">
+                Join us for exciting fairs and events that celebrate creativity, culture, and community. Don’t miss the chance to experience art in a whole new way.
+            </h5>
+        </div>
 
+        <!-- Horizontal Line -->
+        <div class="mt-6 mb-8">
+            <hr class="border-t border-[#6E4D41] w-24 mx-auto">
+        </div>
 
-
-            <!-- Event List -->
-            <div class="ml-10 mr-10 grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                <!-- Event 1 -->
+        <!-- Centered Event List -->
+        <div class="flex justify-center">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 justify-center">
                 @forelse($events as $event)
-                    <div class="p-4 border rounded-lg shadow-md">
-                        <img src="{{asset('storage/' . $event->event_img)}}" alt="{{ $event->event_name }}" class="w-full h-60 rounded mb-2" />
-                        <h5 class="text-xl font-semibold text-[#6E4D41]">{{$event->event_name}} </h5>
-                        <p class="text-[#6E4D41]">🧑‍🎨 {{$event->organizer_name}} | 📅 {{$event->event_date}} | 📍 {{$event->location}}</p>
-                        <p class="mt-2 text-[#6E4D41]">{{$event->event_description}}</p>
+                <div class="w-full max-w-[400px] h-auto rounded-xl shadow-lg bg-white">
+                    <!-- Image Section -->
+                    <div class="w-full h-[230px] rounded-t-lg overflow-hidden">
+                        <img src="{{ asset('storage/' . $event->event_img) }}" alt="{{ $event->event_name }}"
+                            class="w-full h-full object-cover" />
                     </div>
+
+                    <!-- Content Section -->
+                    <div class="p-4">
+                        <div class="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0">
+                            <!-- Left Info -->
+                            <div class="space-y-2">
+    <h5 class="text-xl font-semibold text-[#6E4D41]">{{ $event->event_name }}</h5>
+
+    @auth
+        <p class="text-[#6E4D41] text-sm">
+            <span class="font-medium">WHEN:</span>
+            <span class="text-gray-600">{{ $event->event_date }}</span>
+        </p>
+        <p class="text-[#6E4D41] text-sm">
+            <span class="font-medium">ORGANIZER:</span>
+            <span class="text-gray-600">{{ $event->organizer_name }}</span>
+        </p>
+        <div class="flex text-sm text-[#6E4D41] text-start space-x-1">
+            <span class="font-medium">LOCATION:</span>
+            <span class="text-gray-600 flex-1">{{ $event->location }}</span>
+        </div>
+    @endauth
+</div>
+
+                            <!-- Right Actions -->
+                            <div class="flex flex-col items-start md:items-end space-y-2 w-full md:w-auto">
+                                <div class="flex items-center space-x-2 text-sm text-[#6E4D41]">
+                                    <p>👥 12 Attending</p>
+                                </div>
+
+                                @auth
+                                    <!-- Button for logged-in users -->
+                                    <button class="bg-[#6E4D41] text-white px-4 py-2 rounded whitespace-nowrap hover:bg-[#5a3e34] transition-colors w-full md:w-auto"
+                                        data-bs-toggle="modal" data-bs-target="#ViewDetailsModal">
+                                        Event Info
+                                    </button>
+                                @else
+                                    <!-- Disabled button for guests or non-logged-in users -->
+                                    <button class="bg-gray-400 text-white px-4 py-2 rounded cursor-not-allowed w-full md:w-[200px]" disabled>
+                                        Please log in to view details
+                                    </button>
+                                @endauth
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
                 @empty
-                        <p class="text-center text-gray-500 col-span-2">No events found.</p>
+                <p class="text-center text-gray-500 col-span-full">No events found.</p>
                 @endforelse
             </div>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#"><</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">></a></li>
-                </ul>
-            </nav>
         </div>
-    </section>
+    </div>
+</section>
+
 
         
 
@@ -155,6 +206,59 @@
         </div>
     </div>
     </div>
+
+    <!-- View Details Modal -->
+    
+<div class="modal fade" id="ViewDetailsModal" tabindex="-1" aria-labelledby="ViewDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="space-y-1 mb-4">
+          <h5 class="modal-title text-xl font-semibold text-[#6E4D41]" id="ViewDetailsModalLabel">Swimming</h5>
+          <p class="text-[#6E4D41] text-start flex items-center gap-2">
+          <img src="images/calendar.svg" class="w-4 h-4">
+            <span class="text-sm font-medium">WHEN:</span>
+            <span class="text-sm text-gray-600">30 May 2025, 3.30 PM - 10.00 PM</span>
+          </p>
+          <p class="text-[#6E4D41] text-start flex items-center gap-2">
+  <img src="images/person.svg" class="w-4 h-4">
+  <span class="text-sm font-medium">ORGANIZER:</span>
+  <span class="text-sm text-gray-600">Cedricku</span>
+</p>
+          <div class="flex text-sm text-[#6E4D41] text-start space-x-1">
+          <img src="images/location.svg">
+            <span class="font-medium">LOCATION:</span>
+            <span class="text-gray-600 flex-1">Beach party</span>
+          </div>
+          <div class="pt-2">
+            <p class="text-sm text-[#6E4D41] font-medium">DESCRIPTION:</p>
+            <p class="text-sm text-gray-600">Magugma at suliting ang bakasyon sa pa outing ni cedrick mari na kamo</p>
+          </div>
+        </div>
+        
+        <!-- Buttons aligned to the right -->
+        <div class="flex justify-end space-x-2 pt-2">
+          <button
+            class="bg-[#6E4D41] text-white px-4 py-2 rounded hover:bg-[#5a3e34] transition-colors text-sm"
+          >
+            Notify Me!
+          </button>
+          <button
+            class="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition-colors text-sm"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    
+</div>
     @endauth
 
 
@@ -186,3 +290,5 @@
         mobileMenu.classList.add('hidden');
     });
 </script>
+
+

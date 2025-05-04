@@ -32,8 +32,11 @@
 <section>    
 
 <div  class="bg-white p-4 rounded shadow-lg border  max-w-[100%] sm:max-w-[100%]" >
-<h4 class="mt-10 mb-5 font-bold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl ml-0 sm:ml-[130px] md:ml-[130px]">Artworks</h4> 
-        <!-- Toggle Button for Mobile View -->
+<h4 class="mt-10 font-bold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl ml-0 sm:ml-[130px] md:ml-[130px]">All Artworks</h4> 
+<h5 class="mb-5 text-[#6E4D41] text-sm italic ml-0 sm:ml-[130px] md:ml-[130px]">
+    Explore a diverse collection of art, where creativity knows no bounds. From paintings to sculptures, each piece tells its own unique story.
+</h5> 
+<!-- Toggle Button for Mobile View -->
         <a id="toggleFilterBtn"
         class="btn sm:hidden sm:ml-[120px] ml-[53%] sm:mt-[-30px] mt-[-42px] absolute text-[10px] flex items-center gap-1 whitespace-nowrap">
         <img src="{{ asset('/iconused/filters.png') }}" 
@@ -45,18 +48,50 @@
         <!-- Search Bar -->
         <div id="filterDiv" class="search-bar mr-[130px] mb-3 sm:w-1/2 w-full">
             <select id="priceFilter" class="form-select d-inline-block sm:h-10 sm:w-200 w-200">
-                <option selected>Price</option> 
-                <option value="low-to-high">Price: Low to High</option>
-                <option value="high-to-low">Price: High to Low</option>
+                <option selected>Sort by Price</option> 
+                <option value="low-to-high">Sort: Low to High</option>
+                <option value="high-to-low">Sort: High to Low</option>
             </select>
             <select class="form-select d-inline-block sm:h-10 sm:w-25 w-200">
                 <option selected disabled>Genre / Type</option>
-                <option>Renaisance</option>
+                <option>Renaissance</option>
+                <option>Baroque</option>
+                <option>Rococo</option>
+                <option>Neoclassicism</option>
+                <option>Romanticism</option>
+                <option>Realism</option>
+                <option>Impressionism</option>
+                <option>Post-Impressionism</option>
+                <option>Expressionism</option>
+                <option>Fauvism</option>
+                <option>Symbolism</option>
+                <option>Art Nouveau</option>
+                <option>Cubism</option>
+                <option>Dada</option>
+                <option>Surrealism</option>
+                <option>Abstract</option>
+                <option>Abstract Expressionism</option>
+                <option>Pop Art</option>
+                <option>Minimalism</option>
+                <option>Conceptual Art</option>
+                <option>Contemporary</option>
+                <option>Modernism</option>
+                <option>Postmodernism</option>
+                <option>Street Art</option>
+                <option>Graffiti</option>
+                <option>Futurism</option>
+                <option>Constructivism</option>
                 <option>Retro</option>
                 <option>Indie</option>
-                <option>Realism</option>
-                <option>Abstract</option>
+                <option>Digital Art</option>
+                <option>Photorealism</option>
+                <option>Fantasy</option>
+                <option>Naïve Art</option>
+                <option>Outsider Art</option>
+                <option>Installation Art</option>
+                <option>Performance Art</option>
             </select>
+
             <input type="text" class="form-control d-inline-block h-10 w-50" placeholder="Search by name, artist">
             <button class="btn h-10 w-35">Search</button>
         </div>
@@ -64,15 +99,7 @@
         <div class="line sm:w-[82%] w-full ml-10 mr-10"><hr></div>
 
         @include('Example.allArtworks')
-    <nav aria-label="Page navigation example">
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#"><</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">></a></li>
-    </ul>
-    </nav>
+
 
 </div>
 </section>
@@ -90,13 +117,12 @@
 
 
 
-
-
-
-
-    
+<section>
 
 @include('Example.howtoget')
+</section>
+
+
 @include('layouts.footer')
 
 </body>

@@ -11,10 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 <body  class="h-[1200px] bg-white text-gray-900">
-
     @include('layouts.forNav')
     @if(session('success'))
         <script>
@@ -27,11 +26,10 @@
         </script>
     @endif
     <section class="w-full">
-    <div class=" bg-[#F6EBDA] pb-4  border max-w-full relative">
-        <div class=" md:ml-[100px] ml-[-10px] max-w-full  bg-[#F6EBDA] h-[400px] md:h-[350px] sm:mt-[-200px] md:mt-0 flex flex-col md:flex-row items-center justify-center p-6 md:p-[150px]">
+        <div class=" bg-[#F6EBDA] pb-4  border max-w-full relative">
+            <div class=" md:ml-[100px] ml-[-10px] max-w-full  bg-[#F6EBDA] h-[400px] md:h-[350px] sm:mt-[-200px] md:mt-0 flex flex-col md:flex-row items-center justify-center p-6 md:p-[150px]">
             
-            <button onclick="history.back()" style="font-family: Rubik;" class="text-[#6e4d41] opacity-60 ml-2 md:ml-12 mt-2 absolute top-2 left-2 md:top-5 md:left-10 md:-translate-x-10 no-underline text-inherit"> < BACK
-            </button>
+                <button onclick="history.back()" style="font-family: Rubik;" class="text-[#6e4d41] opacity-60 ml-2 md:ml-12 mt-2 absolute top-2 left-2 md:top-5 md:left-10 md:-translate-x-10 no-underline text-inherit"> < BACK</button>
 
             <div class="sm:ml-0 ml-[25px] sm:mb-0 mb-[20px] border-5 border-[#6e4d41] rounded-full w-[150px] md:w-[220px] h-[150px] md:h-[220px] flex items-center justify-center shadow-md p-3 mt-5 md:mt-5">
                 <div class="flex flex-col gap-5 bg-transparent  w-full h-full">
@@ -100,7 +98,7 @@
                         <button onclick="toggleModal('addevent-modal')" class="mb-1 md:w-1/2 w-full bg-[#6e4d41] text-white px-4 py-3 rounded transition hover:bg-[#5a3c32]">
                             Add Event
                         </button>
-                        <a href="{{route('beSeller')}}"> <button class="mb-1 md:w-1/2 w-full bg-[#6e4d41] text-white px-4 py-3 rounded transition hover:bg-[#5a3c32]">
+                        <a style="text-decoration:none;" href="{{route('beSeller')}}"> <button style="text-decoration:none;" class="mb-1 md:w-1/2 w-full bg-[#6e4d41] text-white px-4 py-3 rounded transition hover:bg-[#5a3c32]">
                             Start Selling
                         </button></a>
                     </div>
@@ -116,105 +114,111 @@
     </div>
 
 </section>
-<div class=" bg-white forcurve">
+<div class=" bg-white forcurve z-1">
 </div>
 
-<section class="w-full">
-    <div x-data="{ open: false }" class="relative z-50">
-    <!-- Trigger Button -->
-    <button @click="open = !open" class="absolute mr-6 right-0 border p-2 bg-white rounded shadow hover:bg-gray-100">
-        ☰ Menu
-    </button>
+<section class="w-full px-4 sm:px-8">
+    <div x-data="{ open: false }" class="relative ">
+        <!-- Trigger Button -->
+        <button @click="open = !open"
+            class="w-15 sm:w-[200px] sm:mt-[-60px] mt-[-70px] sm:mr-0 mr-[-20px] absolute top-0 right-4 border p-2 bg-white rounded shadow hover:bg-gray-100">
+            ☰ Menu
+        </button>
 
-    <!-- Floating Modal -->
-    <div x-show="open" @click.away="open = false" x-transition
-         class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg p-3 border border-gray-200">
-
-        <a href="{{ route('purchases') }}"
-           class="block px-4 py-2 no-underline rounded-md text-gray-700 hover:bg-[#A99476] hover:text-white font-medium">
-            Purchases
-        </a>
-        @if(Auth::user()->role === 'seller')
-        <a href="{{ route('SellerDashboard') }}"
-           class="block px-4 py-2 no-underline rounded-md text-gray-700 hover:bg-[#A99476] hover:text-white font-medium">
-            Dashboard
-        </a>
-        @endif
-    </div>
-</div>
-
-
-
-    
-@if(Auth::user()->role === 'seller')
-    <div class="relative mb-3 flex justify-center text- gap-10 mt-4">
-        <h1  class="text-lg text-[#6E4D41] font-bold">AVAILABLE ARTWORKS</h1>
-    </div>
-        <div id="Viewpaintings" class="tab-content">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 p-5">
-              @forelse($artworks->filter(fn($artwork) => $artwork->orderItems->isEmpty()) as $artwork)
-                <div class="relative w-full overflow-hidden ">
-                    <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl">
-                    <div class="mt-1 p-0 flex row items-center">
-                        <h3 class="font-bold text-sm">{{$artwork->artwork_title}}</h3>
-                    </div>
-                </div>
-              @empty
-                <p class="col-span-5 text-center text-gray-500">No available artworks to display.</p>
-              @endforelse
-            </div>
-          </div>
-
-    <div class="relative mb-3 flex justify-center text- gap-10 mt-4">
-        <h1  class="text-lg text-[#6E4D41] font-bold">SOLD ARTWORKS</h1>
-    </div>
-        <div id="Viewpaintings" class="tab-content">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 p-5">
-              @forelse($artworks->filter(fn($artwork) => $artwork->orderItems->isNotEmpty()) as $artwork)
-                <div class="relative w-full overflow-hidden ">
-                    <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl">
-                      <div class="absolute top-2 right-2 bg-white text-red-600 text-xs font-bold px-2 py-1 border border-red-600 rounded-lg shadow">
-                      SOLD
-                    </div>
-                    <div class="mt-1 p-0 flex row items-center">
-                        <h3 class="font-bold text-sm">{{$artwork->artwork_title}}</h3>
-                    </div>
-                </div>
-              @empty
-                <p class="col-span-5 text-center text-gray-500">No sold artworks to display.</p>
-              @endforelse
-            </div>
-          </div>
-@endif
-    <!-- Sa ilalim ng profile -->
-    
-
+        <!-- Floating Modal -->
+        <div x-show="open" @click.away="open = false" x-transition
+             class="absolute sm:right-4 right-0 sm:mt-[-20px] mt-[-30px] z-10 w-44 sm:w-48 bg-white rounded-xl shadow-lg p-3 border border-gray-200">
+            <a href="{{ route('purchases') }}"
+               class="block px-4 py-2 no-underline rounded-md text-gray-700 hover:bg-[#A99476] hover:text-white font-medium">
+                Purchases
+            </a>
+            @if(Auth::user()->role === 'seller')
+            <a href="{{ route('SellerDashboard') }}"
+               class="block px-4 py-2 no-underline rounded-md text-gray-700 hover:bg-[#A99476] hover:text-white font-medium">
+                Dashboard
+            </a>
+            @endif
         </div>
     </div>
-    
+
+    @if(Auth::user()->role === 'seller')
+        <!-- Available Artworks -->
+        <div class="mt-20 sm:mt-20 mb-3 flex justify-center">
+            <h1 class="text-lg text-[#6E4D41] font-bold">AVAILABLE ARTWORKS</h1>
+        </div>
+        <div id="Viewpaintings" class="tab-content">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-2 sm:p-5">
+                @forelse($artworks->filter(fn($artwork) => $artwork->orderItems->isEmpty()) as $artwork)
+                    <div class="relative w-full overflow-hidden">
+                        <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl">
+                        <div class="mt-1 p-0 flex row items-center">
+                            <h3 class="font-bold text-sm">{{ $artwork->artwork_title }}</h3>
+                        </div>
+                    </div>
+                @empty
+                    <p class="col-span-full text-center text-gray-500">No available artworks to display.</p>
+                @endforelse
+            </div>
+        </div>
+
+        <!-- Sold Artworks -->
+        <div class="mb-3 flex justify-center mt-4">
+            <h1 class="text-lg text-[#6E4D41] font-bold">SOLD ARTWORKS</h1>
+        </div>
+        <div id="Viewpaintings" class="tab-content">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-2 sm:p-5">
+                @forelse($artworks->filter(fn($artwork) => $artwork->orderItems->isNotEmpty()) as $artwork)
+                    <div class="relative w-full overflow-hidden">
+                        <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl">
+                        <div class="absolute top-2 right-2 bg-white text-red-600 text-xs font-bold px-2 py-1 border border-red-600 rounded-lg shadow">
+                            SOLD
+                        </div>
+                        <div class="mt-1 p-0 flex row items-center">
+                            <h3 class="font-bold text-sm">{{ $artwork->artwork_title }}</h3>
+                        </div>
+                    </div>
+                @empty
+                    <p class="col-span-full text-center text-gray-500">No sold artworks to display.</p>
+                @endforelse
+            </div>
+        </div>
+    @endif
+    @if(Auth::user()->role === 'buyer')
+
+
+    <!-- Info Message -->
+    <div class="mb-3 mt-[70px] text-center">
+        <p class="text-sm md:text-base text-[#6E4D41] font-semibold">
+            Want to post your artworks? <a href="{{ route('beSeller') }}" class="underline text-[#5a3c32] hover:text-[#3e2a23]">Apply as a Seller</a> to start sharing your creations!
+        </p>
+    </div>
+
+    <!-- Sold Artworks -->
+    <div class="mb-3 flex justify-center mt-4">
+        <h1 class="text-lg text-[#6E4D41] font-bold">SOLD ARTWORKS</h1>
+    </div>
+    <div id="Viewpaintings" class="tab-content">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-2 sm:p-5">
+            @forelse($artworks->filter(fn($artwork) => $artwork->orderItems->isNotEmpty()) as $artwork)
+                <div class="relative w-full overflow-hidden">
+                    <img src="{{ asset($artwork->image_path) }}" class="w-full h-[250px] object-cover rounded-xl">
+                    <div class="absolute top-2 right-2 bg-white text-red-600 text-xs font-bold px-2 py-1 border border-red-600 rounded-lg shadow">
+                        SOLD
+                    </div>
+                    <div class="mt-1 p-0 flex row items-center">
+                        <h3 class="font-bold text-sm">{{ $artwork->artwork_title }}</h3>
+                    </div>
+                </div>
+            @empty
+                <p class="col-span-full text-center text-gray-500">No sold artworks to display.</p>
+            @endforelse
+        </div>
+    </div>
+@endif
+
 </section>
 
 
-
-
-
-    
-
-
-    <!-- Featured Paintings 
-    <section class="text-center px-10 py-16 bg-gray-100">
-        <h2 class="text-4xl font-bold">Featured Paintings</h2>
-        <div class="flex justify-center mt-6">
-            <div class="p-4 bg-white shadow-lg rounded-lg max-w-xs">
-                <img src="{{ asset('storage/featured-art.jpg') }}" alt="Wallowing Breeze" class="w-full h-80 object-cover rounded-md">
-                <p class="font-semibold mt-2">Wallowing Breeze</p>
-                <p class="text-gray-500">Aeron Jead Marquez</p>
-                <p class="text-gray-500 text-sm">Oil on canvas, 2008</p>
-            </div>
-        </div>
-    </section>-->
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
 

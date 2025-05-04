@@ -1,5 +1,5 @@
 
-<footer class="bg-[#594639] mb0 text-[#E7E1D8] p-6 w-full">
+<footer class="bg-[#594639] mb-0 text-[#E7E1D8] p-6 w-full">
     <div class="container mx-auto flex flex-wrap justify-between px-6">
         <!-- Developers Section -->
         <div class="w-full md:w-1/3 mb-4 md:mb-0">

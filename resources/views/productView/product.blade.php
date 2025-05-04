@@ -43,26 +43,7 @@
             <!-- Main Image -->
             <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="w-full rounded-lg object-cover">
             
-            <!-- Thumbnail Navigation with Arrows -->
-            <div class=" flex items-center justify-center gap-2 mt-3 relative">
-                <!-- Left Arrow -->
-                <button class="ml-10 absolute left-0 -translate-x-10 bg-gray-300 hover:bg-gray-400 p-2 rounded-full">
-                    &#9664;
-                </button>
 
-                <!-- Thumbnails -->
-                <div class="flex gap-2">
-                    <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="w-16 h-14 object-cover rounded cursor-pointer">
-                    <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="w-16 h-14 object-cover rounded cursor-pointer">
-                    <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="w-16 h-14 object-cover rounded cursor-pointer">
-                    <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="w-16 h-14 object-cover rounded cursor-pointer">
-                </div>
-
-                <!-- Right Arrow -->
-                <button class="mr-10 absolute right-0 translate-x-10 bg-gray-300 hover:bg-gray-400 p-2 rounded-full">
-                    &#9654;
-                </button>
-            </div>
         </div>
 
 

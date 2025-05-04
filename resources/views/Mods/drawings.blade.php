@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 </head>
-<body  class="bg-white text-gray-900">
+<body style="height:auto;"  class="bg-white text-gray-900">
 @include('layouts.forNav')
 @extends('layouts.forbg')
     
@@ -22,8 +22,11 @@
 
 <section>    
 <div  class="bg-white p-4 rounded shadow-lg border  max-w-[100%] sm:max-w-[100%]" >
-    <h4 class="mt-10 mb-5 font-semibold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl ml-0 sm:ml-[130px] md:ml-[130px]">Drawings</h4>
-        <!-- Toggle Button for Mobile View -->
+    <h4 class="mt-10 font-semibold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl ml-0 sm:ml-[130px] md:ml-[130px]">Drawings</h4>
+    <h5 class="mb-5 text-[#6E4D41] text-sm italic ml-0 sm:ml-[130px] md:ml-[130px]">
+    Where lines and sketches tell captivating stories.
+</h5> 
+    <!-- Toggle Button for Mobile View -->
         <a id="toggleFilterBtn"
         class="btn sm:hidden sm:ml-[120px] ml-[53%] sm:mt-[-30px] mt-[-42px] absolute text-[10px] flex items-center gap-1 whitespace-nowrap">
         <img src="{{ asset('/iconused/filters.png') }}" 

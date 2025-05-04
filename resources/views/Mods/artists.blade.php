@@ -10,17 +10,63 @@
     <link rel="stylesheet" href="{{ asset('css/mods/paintings.css') }}">
     <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+    <style>
+    @media (max-width: 640px) {
+        /* Adjust the grid for 1 column on small screens */
+        #artistCardsContainer {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+            margin-left: 1rem !important;
+            margin-right: 1rem !important;
+        }
 
+        /* Adjust heading and search bar to stack properly */
+        .search-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-left: 1rem !important;
+            margin-right: 1rem !important;
+        }
+
+        .search-bar select,
+        .search-bar input,
+        .search-bar button {
+            width: 100% !important;
+        }
+
+        .line {
+            margin-left: 1rem !important;
+            margin-right: 1rem !important;
+            width: 100% !important;
+        }
+
+        h4 {
+            margin-left: 1rem !important;
+            font-size: 1.5rem !important;
+        }
+
+        #toggleFilterBtn {
+            left: 1rem !important;
+            top: 0 !important;
+            transform: translateY(-100%) !important;
+        }
+    }
+</style>
+
+</style>
 </head>
-<body  class="bg-white text-gray-900">
+<body style="height:auto;"  class="bg-white text-gray-900 h-auto">
 @include('layouts.forNav')
 @extends('layouts.forbg')
     
     
 <section>    
     <div class="bg-white p-4 rounded shadow-lg border mx-auto max-w-[100%] sm:max-w-[100%]" >
-    <h4 class="mt-10 mb-5 font-semibold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl ml-0 sm:ml-[130px] md:ml-[130px]">Artists</h4>
-        <!-- Toggle Button for Mobile View -->
+    <h4 class="mt-10 font-semibold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl ml-0 sm:ml-[130px] md:ml-[130px]">Artists</h4>
+    <h5 class="mb-5 text-[#6E4D41] text-sm italic ml-0 sm:ml-[130px] md:ml-[130px]">Connect with the artists behind the art..</h5>
+    <!-- Toggle Button for Mobile View -->
         <a id="toggleFilterBtn"
         class="btn sm:hidden sm:ml-[120px] ml-[53%] sm:mt-[-30px] mt-[-42px] absolute text-[10px] flex items-center gap-1 whitespace-nowrap">
         <img src="{{ asset('/iconused/filters.png') }}" 
@@ -50,7 +96,8 @@
         <div class="line sm:w-[82%] w-full ml-10 mr-10"><hr></div>
 
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 px-5 mt-5 ml-20 mr-20" id="artistCardsContainer">
+        <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 px-4 sm:px-5 mt-5 sm:ml-[115px] sm:mr-[110px]" id="artistCardsContainer">
+
             @foreach ($creator as $artist)
             <div class="artist-card aspect-[3/4] bg-white rounded-xl shadow-md p-4 flex flex-col items-center text-center hover:shadow-lg transition-all" data-name="{{ strtolower($artist->full_name) }}">
 
@@ -64,9 +111,9 @@
 
                     <!-- Artist Info -->
                     <div class="mt-4">
-                        <h5 class="text-base font-semibold">{{ $artist->full_name }}</h5>
-                        <p class="text-xs text-gray-500">Artist</p>
-                        <p class="text-xs text-gray-500">Artworks: {{ $artist->artworks->count() ?? 0 }}</p>
+                        <h5 class="text-base font-semibold text-[#6E4D41]">{{ $artist->full_name }}</h5>
+                        <p class="text-xs  text-[#6E4D41]">Artist</p>
+                        <p class="text-xs  text-[#6E4D41]">Artworks: {{ $artist->artworks->count() ?? 0 }}</p>
                     </div>
 
                     <!-- Social Icons -->
@@ -86,29 +133,14 @@
                     </div>
 
                     <!-- View Artist Button -->
-                    <a href="{{ route('view_artist', ['id' => $artist->id]) }}"
-                    class="mt-4 bg-[#6e4d41] text-white text-xs py-1 px-4 rounded-full hover:bg-[#5a3f34] transition">
+                    <a href="{{ route('view_artist', ['id' => $artist->id]) }}" class="btn btn-outline-dark rounded-md px-4 custom-button">
                         View Artist
                     </a>
+                    
                 </div>
             @endforeach
         </div>
-
-
-
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#"><</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">></a></li>
-        </ul>
-        </nav>
-
     </div>
-
-        
 
 </section>
 
