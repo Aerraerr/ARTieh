@@ -7,6 +7,7 @@ use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use PhpParser\Node\Expr\AssignOp\Concat;
 
 class AuthController extends Controller
 {
@@ -28,7 +29,8 @@ class AuthController extends Controller
             'phone' => 'required|string|max:20',
             'password' => 'required|string|min:8|confirmed'
         ]);
-
+        $validated['name'] = $validated['first_name'] . ' ' . $validated['last_name'];
+        
         //saves new user to the user table with the validated field (uyan na validation sa tass boa)
         $user = User::create($validated);
 

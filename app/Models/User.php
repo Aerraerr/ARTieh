@@ -6,14 +6,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Chatify\Traits\ChatifyMessenger;
 use Chatify\Traits\ChatifyMessengerTrait;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-
-
     protected $table = 'users';
     
     /**
@@ -24,6 +23,7 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name', 
         'last_name',
+        'name',
         'email',
         'phone',
         'password',
@@ -59,15 +59,17 @@ class User extends Authenticatable
     }
 
     //para sa full name call nalang ining function --full_name--
-    public function getFullNameAttribute()
+    /*public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
-    }
+    }*/
 
     public function getNameAttribute()
     {
-        return $this->full_name;
+        //return $this->full_name;
+        return "{$this->first_name} {$this->last_name}";
     }
+    
 
     //Eloquent ORMs
     public function artworks()

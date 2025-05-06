@@ -31,6 +31,7 @@
             <th class="py-3 px-6 border-b">Action</th>
         </tr>
     </thead>
+    
     <tbody class="divide-y divide-gray-200">
     @foreach ($users as $user)
         @if ($user->role === 'buyer'  && $user->sampleArt && $user->validId && $user->gcash_no) 
