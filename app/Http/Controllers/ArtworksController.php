@@ -81,8 +81,8 @@ class ArtworksController extends Controller
         }
         
         $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
-
-        return view($view, compact('artworks', 'notifications'));
+        $notificationCount = $notifications->count();
+        return view($view, compact('artworks', 'notifications', 'notificationCount'));
     }
 
     private function getArtworksByCategory($category) // hiniwalay ko na, mapagalon magparaulit wahaha
@@ -121,8 +121,9 @@ class ArtworksController extends Controller
             ->get();
 
         $notifications = Notification::where('user_id', Auth::id())->latest()->get();
+        $notificationCount = $notifications->count();
 
-        return view('Mods.artworks', compact('artworks', 'notifications'));
+        return view('Mods.artworks', compact('artworks', 'notifications', 'notificationCount'));
     }
 
     //function to display the details of the clicked cards/item and the more works by artist

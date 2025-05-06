@@ -74,12 +74,13 @@
 <body style="height:auto;"  class="bg-white text-gray-900 font-rubik " >
 @include('layouts.forNav')
 @extends('layouts.forbg')
+@include('Mods.forChat')
 @if(session('success'))
         <script>
             Swal.fire({
                 title: "{{ session('success') }}",
                 icon: "success",
-                timer: 800,
+                timer: 1000,
                 showConfirmButton: false
             });
         </script>
@@ -157,7 +158,7 @@
             <span class="text-gray-500 sm:self-center">Waiting for Seller's Approval...</span>
         @endif
         <button class="btn-outline w-full sm:w-auto" data-bs-toggle="modal" data-bs-target="#cancel{{ $order->id }}">Cancel Order</button>
-        <button class="btn-outline w-full sm:w-auto">Contact Seller</button>
+        <a href="{{route('user', $item->artwork->user->id)}}" class="no-underline btn-outline w-full sm:w-auto">Contact Seller</a>
     </div>
 </div>
 
@@ -180,7 +181,7 @@
                                             <p class="mb-3">Please ensure that you make a payment of <span class="text-[#dc2626] font-semibold">${{$order->total_amount}}</span> to <strong>{{$item->artwork->user->full_name}}</strong>, and remember to provide accurate information.</p>
                                             <div class="mb-3">
                                                 <label class="form-label text-gray-800">Pay to this GCash Number:</label>
-                                                <input type="text" class="form-control text-sm" placeholder="{{$item->artwork->user->gcash_acc ?? '09123456789 - ST**P CU**Y"'}}" disabled>
+                                                <input type="text" class="form-control text-sm" placeholder="{{$item->artwork->user->gcash_no ?? 'no gcash number'}}" disabled>
                                             </div>
                                             
                                             <div class="mb-3">
@@ -276,7 +277,7 @@
                                     @method('PATCH')
                                     <button class="btn-primary" type="submit">Receive Order</button>
                                 </form>
-                                <button class="btn-outline">Contact Seller</button>
+                                <a href="{{route('user', $item->artwork->user->id)}}" class="no-underline btn-outline">Contact Seller</a>
                             </div>
                         </div>
                     </div>
@@ -325,7 +326,7 @@
                             @method('PATCH')
                                 <button type="submit" class="bg-[#6e4d41] btn-primary">Receive Order</button>
                             </form>
-                            <button class="btn-outline">Contact Seller</button>
+                            <a href="{{route('user', $item->artwork->user->id)}}" class="no-underline btn-outline">Contact Seller</a>
                         </div>
                     </div>
                 </div>
@@ -381,7 +382,7 @@
                                 @else
                                     <button class="btn-primary" data-bs-toggle="modal" data-bs-target="#rate{{$order->id}}">Review Order</button>
                                 @endif
-                                    <button class="btn-outline">Contact Seller</button>
+                                    <a href="{{route('user', $item->artwork->user->id)}}" class="no-underline btn-outline">Contact Seller</a>
                             </div>
                         </div>
                     </div>
@@ -439,17 +440,17 @@
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content p-4">
                                     <div class="modal-header">
-                                        <h3 class="modal-title font-bold">Your Review</h3>
+                                        <p class="modal-title font-bold">Your Review</p>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body text-center">
-                                        <h4 class="font-bold mb-2">Artist Rating:</h4>
+                                        <p class="font-bold mb-2">Artist Rating:</p>
                                         <p class="text-yellow-400 text-3xl">{{ str_repeat('★', $order->review->artist_rating) }}</p>
 
-                                        <h4 class="font-bold mt-4 mb-2">Artwork Rating:</h4>
+                                        <p class="font-bold mt-4 mb-2">Artwork Rating:</p>
                                         <p class="text-yellow-400 text-3xl">{{ str_repeat('★', $order->review->artwork_rating) }}</p>
 
-                                        <h4 class="font-bold mt-4 mb-2">Comment:</h4>
+                                        <p class="font-bold mt-4 mb-2">Comment:</p>
                                         <p class="text-gray-600">{{ $order->review->comment ?? 'No comment provided.' }}</p>
                                     </div>
                                     <div class="modal-footer">
@@ -499,7 +500,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-end space-x-2 mt-4">
-                                <button class="btn-outline">Contact Seller</button>
+                                <a href="{{route('user', $item->artwork->user->id)}}" class="no-underline btn-outline">Contact Seller</a>
                             </div>
                         </div>
                     </div>

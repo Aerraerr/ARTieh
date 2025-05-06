@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Announcements</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/mods/paintings.css') }}">
     <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
@@ -22,19 +23,12 @@
      @include('Mods.forNotif')
      @include('Mods.forChat')
     
-     <section>
-    <div class="bg-white p-4 rounded shadow-lg border mx-auto max-w-[100%] sm:max-w-[100%]">
-    <div class="text-center">
-            <h4 class="font-semibold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl">Upcoming Fairs and Events</h4>
-            <h5 class="text-[#6E4D41] text-sm italic mt-2 mx-auto max-w-4xl">
-                Join us for exciting fairs and events that celebrate creativity, culture, and community. Don’t miss the chance to experience art in a whole new way.
-            </h5>
-        </div>
+    <section>    
+        <div class="bg-white p-4 rounded shadow-lg border mx-auto max-w-[100%] sm:max-w-[100%]" >
+            <h4 class="mt-10 font-semibold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl ml-0 sm:ml-6 md:ml-10">Upcoming Fairs and Events</h4>
+            <div class="mt-[-50px] line ml-20"><hr></div>
 
-        <!-- Horizontal Line -->
-        <div class="mt-6 mb-8">
-            <hr class="border-t border-[#6E4D41] w-24 mx-auto">
-        </div>
+
 
         <!-- Event List -->
         <!-- Centered Event List -->

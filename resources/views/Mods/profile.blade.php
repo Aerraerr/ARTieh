@@ -45,7 +45,7 @@
             <div class="flex-1 pl-5 md:pl-10 w-full text-[#6e4d41] ">
                 @if(Auth::user()->role === 'seller')
                     <h1 class="parasaprofileini font-extrabold text-lg md:text-2xl mb-2">
-                        {{ Auth::user()->full_name }}
+                        {{ Auth::user()->first_name }}
                     </h1>
                     <hr class="w-full h-[3px] my-2 bg-black text-[#6e4d41]">
                     <h2 class="parasaprofileiniuser1 my-1 font-medium text-sm mt-[-20px]">{{ ucfirst(strtolower(Auth::user()->role)) }} &nbsp;|&nbsp; Artist</h2>
@@ -61,13 +61,11 @@
                 @endif
                 @if(Auth::user()->role === 'buyer')
                     <h1 class="parasaprofileini mb-2 font-extrabold text-lg md:text-xl">
-                        {{ Auth::user()->full_name }}
+                        {{ Auth::user()->first_name }}
                     </h1>
                     <hr class="w-full h-[3px] my-3 bg-black">
                     <h2 class=" parasaprofileiniuser1 my-1 font-medium text-sm ">{{ ucfirst(strtolower(Auth::user()->role)) }}</h2>
                     <h2 class="parasaprofileiniuser my-1 font-medium text-sm ">{{ Auth::user()->email }}</h2>
-                    <h2 class="parasaprofileiniuser my-1 font-medium text-sm ">{{ Auth::user()->phone }}</h2>
-                    <h2 class="parasaprofileiniuser my-1 font-medium text-sm ">{{ Auth::user()->address }}</h2>
                 @endif
             </div>
             

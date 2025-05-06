@@ -56,7 +56,7 @@
                 <button type="submit" class="text-[#6e4d41] w-[100px] hover:text-gray-500 font-medium py-3 transition duration-300">LOGOUT</button>
             </form>
             <span class="mb-3">|</span>
-            <a href="{{ route('artworks') }}" class="text-[#6e4d41] hover:text-gray-500 font-medium transition duration-300 mb-3">BUYER</a>
+            <a href="{{ route('artworks') }}" class="no-underline text-[#6e4d41] hover:text-gray-500 font-medium transition duration-300 mb-3">BUYER</a>
         </div>
         @endauth
     </nav>

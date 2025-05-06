@@ -15,6 +15,7 @@
     @extends('layouts.forbg')
     @include('Mods.forNotif')
     @include('Mods.forChat')
+
     
     
 

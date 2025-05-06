@@ -62,16 +62,6 @@
 </section>
 
 
-       
-
-
-
-
-
-
-
-
-
 @include('Example.howtoget')
 @include('layouts.footer')
 

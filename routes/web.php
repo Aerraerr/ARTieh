@@ -13,6 +13,7 @@ use App\Http\Controllers\SellerDashboardController;
 use App\Http\Controllers\AdminController;
 use App\Mail\VerificationCodeMail;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ChatController;
 
 
 
@@ -37,9 +38,6 @@ Route::get('/', function () {
 });
 
 Route::get('/', [ArtworksController::class, 'homeDisplay'])->name('home'); 
-/*Route::get('/', function () {
-    return view('landing');
-})->name('home'); */
 
 // authenticated onli access
 Route::middleware(['auth'])->group(function() {
@@ -49,7 +47,7 @@ Route::middleware(['auth'])->group(function() {
     // tigsaro ko na so pag show kang profile with modals yes
     Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile'); 
 
-    //edit/update user info
+    //profile edit & update user info
     Route::put('/profile/{id}', [ProfileController::class, 'editProfile'])->name('profile.update');
     Route::get('/beSeller', [ProfileController::class, 'applySeller'])->name('beSeller'); 
     Route::patch('/beSeller/{id}', [ProfileController::class, 'beASeller'])->name('beASeller');
@@ -77,11 +75,26 @@ Route::middleware(['auth'])->group(function() {
 
 
 
-    // Artwork Upload 
+    // Artwork Upload & edit
     Route::post('/storeUpload', [ArtworksController::class, 'storeUpload'])->name('storeUpload');
+    Route::put('/artworks/{id}', [ArtworksController::class, 'editArtwork'])->name('artworks.update');
+
     //sellerdashboard
     Route::get('sellerdashboard', [SellerDashboardController::class, 'SellerDashDisplay'])->name('sellerdashboard');
     Route::patch('ordersModal/{order}', [SellerDashboardController::class, 'updateOrder'])->name('order.update');
+    Route::get('/Seller/dashboard', [SellerDashboardController::class, 'SellerDashboard'])->name('SellerDashboard');
+    Route::get('/Seller/orders', [SellerDashboardController::class, 'SellerOrder'])->name('SellerOrders');
+    Route::get('/Seller/artworks', [SellerDashboardController::class, 'SellerArtworkDisplay'])->name('SellerArtworks');
+    Route::put('/Seller/artworksModal/{id}', [SellerDashboardController::class, 'SellerEditArtwork'])->name('SellerEditArtwork');
+
+    //sa notifications
+    Route::get('/notification', [NotificationController::class, 'displayNotif']);
+
+    //sa admin
+    Route::get('/admin', [AdminController::class, 'admindashboard'])->name('admin');
+    Route::get('/management', [AdminController::class, 'index'])->name('management');
+    Route::get('/application', [AdminController::class, 'applications'])->name('application');
+    Route::patch('/application/{id}', [AdminController::class, 'approveApplication'])->name('approveApplication');
 });
 
 
@@ -95,6 +108,7 @@ Route::middleware(['guest'])->group(function() {
     Route::post('/register', [AuthController::class, 'register'])->name('register');
 });
 
+//display all artworks
 Route::get('/artworks', [ArtworksController::class, 'showAllArtworks'])->name('artworks');
 Route::get('/all-artworks', [ArtworksController::class, 'showAllArtworks'])->name('all-artworks');
 
@@ -107,16 +121,9 @@ Route::get('/view_artist/{id}', [ProfileController::class, 'AboutArtist'] )->nam
 Route::get('/announcements', [EventController::class, 'displayEvents'])->name('announcements');
 
 
-Route::get('/Seller/dashboard', [SellerDashboardController::class, 'SellerDashboard'])->name('SellerDashboard');
-Route::get('/Seller/orders', [SellerDashboardController::class, 'SellerOrder'])->name('SellerOrders');
-Route::get('/Seller/artworks', [SellerDashboardController::class, 'SellerArtworkDisplay'])->name('SellerArtworks');
-Route::put('/Seller/artworksModal/{id}', [SellerDashboardController::class, 'SellerEditArtwork'])->name('SellerEditArtwork');
-Route::get('/notification', [NotificationController::class, 'displayNotif']);
-
 Route::get('/paintings', function () {
     return view('Mods.painting');
 })->name('paintings');
-
 
 Route::get('/forChat', function () {
     return view('layouts.forChat');
@@ -141,45 +148,20 @@ Route::get('/product-details', function () {
     return view('productView.product');
 })->name('product-details');
 
-//PRODUCT VIEW
 
-//  FOR ADMIN
-Route::get('/admin', function () {
-    return view('Admin.admin');
-})->name('admin');
 
-Route::get('/management', function () {
-    return view('Admin.management');
-})->name('management');
-
-Route::get('/application', function () {
-    return view('Admin.application');
-})->name('application');
 
 Route::get('/forAdmin', function () {
     return view('layouts.forAdmin');
 })->name('forAdmin');
 
-Route::get('/admin', [AdminController::class, 'admindashboard'])->name('admin');
-Route::get('/management', [AdminController::class, 'index'])->name('management');
-Route::get('/application', [AdminController::class, 'applications'])->name('application');
-Route::patch('/application/{id}', [AdminController::class, 'approveApplication'])->name('approveApplication');
-
-
 
 //LAYOUTS
 
-
 // FOR VIEWPROFILE
-
 Route::get('/forViewProfile', function () {
     return view('layouts.forViewProfile');
 })->name('forViewProfile');
-// update artwork route
-Route::put('/artworks/{id}', [ArtworksController::class, 'editArtwork'])->name('artworks.update');
-
-
-
 
 // FOR BG EXTEND
 Route::get('/forbg', function () {
@@ -188,8 +170,6 @@ Route::get('/forbg', function () {
 Route::get('/forbg', function () {
     return view('Mods.mainbg');
 })->name('mainbg');
-
-
 
 //FOR NAV EXTEND
 Route::get('/forNav', function () {
@@ -207,11 +187,6 @@ Route::get('/featuredpainting', function () {
 Route::get('/howtoget', function () {
     return view('Example.howtoget');
 })->name('howtoget');
-
-
-
-
-
 
 //FOR FOOTER
 Route::get('/footer', function () {

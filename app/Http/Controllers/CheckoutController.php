@@ -87,7 +87,7 @@ class CheckoutController extends Controller
 
         Notification::create([ // sa buyer notify cancel
             'user_id' => Auth::id(),
-            'message' => 'This ' .$approved . ',you have checkout ' . $artworkTitle. '',
+            'message' => 'This ' .$approved . ', you have checkout ' . $artworkTitle. '',
         ]);
         Notification::create([ // sa seller notify cancel
             'user_id' => $sellerId,

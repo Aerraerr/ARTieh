@@ -35,7 +35,7 @@
         }
     </style>
 </head>
-<body class="bg-white text-gray-900">
+<body class="bg-white text-gray-900 h-auto">
 
 <!-- Success Message -->
 @if(session('success'))
@@ -51,7 +51,6 @@
 
 <!-- Navigation -->
 @include('layouts.fornav')
-@extends('layouts.forbg')
 
 <!-- Cart Section -->
 <section class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">

@@ -21,7 +21,7 @@ class EventController extends Controller
             'location' => 'required|string',
             'event_description'     =>  'required|string',
             'event_date'         => 'required|date',
-            'event_img'         => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'event_img'         => 'required|image|mimes:jpeg,png,jpg|max:10485760',
         ]);
 
         //store event_img path in storage
@@ -44,10 +44,11 @@ class EventController extends Controller
     
     public function displayEvents(){
         $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
-        
+        $notificationCount = $notifications->count();
+
         $events = Event::all();
 
-        return view('Mods.announcements', compact('events', 'notifications'));
+        return view('Mods.announcements', compact('events', 'notifications', 'notificationCount'));
     }
 
     public function attendEvent(Request $request, $eventId)
@@ -66,7 +67,7 @@ class EventController extends Controller
     // Create a notification to event creator
     Notification::create([
         'user_id' => $event->user_id, // event creator
-        'message' => ''.$user->full_name. " will attend your event:" .$event->event_name. '',
+        'message' => ''.$user->full_name. " will attend your event: " .$event->event_name. '',
     ]);
 
     return back()->with('success', 'You have been marked as attending!');

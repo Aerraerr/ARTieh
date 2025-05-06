@@ -62,6 +62,7 @@
 @extends('layouts.forbg')
 @include('Mods.forNotif')
 @include('Mods.forChat')
+
     
     
 <section>    
@@ -104,7 +105,7 @@
 
                     <!-- Artist Info -->
                     <div class="mt-4">
-                        <h5 class="text-base font-semibold text-[#6E4D41]">{{ $artist->full_name }}</h5>
+                        <h5 class="text-base font-semibold text-[#6E4D41]">{{ $artist->first_name }}</h5>
                         <p class="text-xs  text-[#6E4D41]">Artist</p>
                         <p class="text-xs  text-[#6E4D41]">Artworks: {{ $artist->artworks->count() ?? 0 }}</p>
                     </div>

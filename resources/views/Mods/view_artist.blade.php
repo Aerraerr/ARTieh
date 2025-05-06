@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Artist</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -26,7 +26,7 @@
                     <img id="profileImage" src="{{ asset('storage/' . $artist->profile_pic) }}" alt="Profile Photo" class="object-cover w-full h-full" />
                 </div>
 
-                <h1 class="mt-3 px-4 py-2 text-[#6E4D41] font-bold text-xl sm:text-2xl text-center">{{ $artist->full_name }}</h1>
+                <h1 class="mt-3 px-4 py-2 text-[#6E4D41] font-bold text-xl sm:text-2xl text-center">{{ $artist->first_name }}</h1>
                 <p class="text-[#6E4D41] font-bold text-lg sm:text-lg text-center">Rating 4.6</p>
                 <div class="flex items-center gap-2 text-sm sm:text-base text-[#6E4D41]">
                     <span>{{ $artist->email }}</span>
@@ -43,12 +43,12 @@
                 </button>
 
                 <div class="relative mt-4 flex flex-wrap justify-center gap-3 sm:gap-4">
-                    <button onclick="copyLink()">
+                    <button onclick="toggleModal('share-modal')">
                         <img src="{{ asset('images/SHARE.svg') }}" alt="Share icon" class="w-6 h-6 sm:w-7 sm:h-7 hover:opacity-80 transition-opacity" />
                     </button>
-                    <button class="px-3 py-1.5 sm:px-4 sm:py-2 text-[#6E4D41] rounded-full bg-white font-medium hover:bg-[#5a3c32] transition duration-300 text-sm sm:text-base" data-bs-toggle="modal" data-bs-target="#MessageModal">
+                    <a href="{{route('user', $artist->id)}}" class="px-3 py-1.5 no-underline sm:px-4 sm:py-2 text-[#6E4D41] rounded-full bg-white font-medium hover:bg-[#5a3c32] transition duration-300 text-sm sm:text-base">
                         Message
-                    </button>
+                    </a>
                     <button class="px-3 py-1.5 sm:px-4 sm:py-2 text-white rounded-full bg-[#6E4D41] font-medium hover:bg-[#5a3c32] transition duration-300 text-sm sm:text-base" data-bs-toggle="modal" data-bs-target="#RateArtist" style="cursor: pointer;">
                         Rate
                     </button>
@@ -376,16 +376,27 @@
 </script>
 
 <script>
-// Function to fire an alert
-function copyLink() {
-    console.log('copyLink function called');
-    Swal.fire({
-        title: "Link copied!",
-        icon: "success",
-        timer: 800,
-        showConfirmButton: false
-    });
-}
+    // Function to copy the profile link
+    function copyLink() {
+        // Assuming you have a dynamic URL for the user's profile
+        const profileUrl = window.location.href; // Get the current page URL, or set your own URL
+
+        // Create a temporary input element to use the clipboard API
+        const tempInput = document.createElement('ipnut');
+        document.body.appendChild(tempInput);
+        tempInput.value = profileUrl;
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+
+        Swal.fire({
+                title: "Link copied!",
+                icon: "success",
+                timer: 800,
+                showConfirmButton: false
+            });
+
+    }
 </script>
 
 <script>
@@ -421,4 +432,10 @@ function toggleRating(rating) {
     // Debug: Log the action
     console.log(`Set rating to ${currentRating}, Icon ${rating} toggled`);
 }
+</script>
+<script>
+    function toggleModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.toggle('hidden');
+    }
 </script>
