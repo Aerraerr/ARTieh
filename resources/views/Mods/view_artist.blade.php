@@ -16,53 +16,48 @@
     @include('layouts.forNav')
 
    
-<section>    
-    <div class="container-fluid ">
-        <div class="bg-white pb-4  rounded-md shadow-lg border mx-auto max-w-[100%]   relative">
+    <section class="w-full">
+    <div class="w-full bg-white pb-4 rounded-md shadow-lg border relative">
         
+        <!-- Header Section -->
         <div class="w-full bg-[#F6EBDA] min-h-[300px] flex flex-col md:flex-row justify-center items-center mb-3 py-5 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 gap-4 sm:gap-6">
-    <div class="flex flex-col items-center w-full max-w-md md:w-1/2 lg:w-1/3">
-        <!-- Profile Image -->
-        <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden">
-            <img id="profileImage" src="{{ asset('storage/' . $artist->profile_pic) }}" alt="Profile Photo" class="object-cover w-full h-full" />
+            <div class="flex flex-col items-center w-full max-w-md md:w-1/2 lg:w-1/3">
+                <div class="w-24 h-24 sm:w-30 sm:h-30 md:w-40 md:h-40 rounded-full overflow-hidden">
+                    <img id="profileImage" src="{{ $artist->profile_pic ? asset('storage/' . $artist->profile_pic) : asset('storage/profile_pic/user.png') }}" alt="Profile Photo" class="object-cover w-full h-full" />
+                </div>
+
+                <h1 class="mt-3 px-4 py-2 text-[#6E4D41] font-bold text-xl sm:text-2xl text-center">{{ $artist->full_name }}</h1>
+                <p class="text-[#6E4D41] font-bold text-lg sm:text-lg text-center">Rating 4.6</p>
+                <div class="flex items-center gap-2 text-sm sm:text-base text-[#6E4D41]">
+                    <span>{{ $artist->email }}</span>
+                    <div class="bg-[#6E4D41] h-4 w-[1.5px]"></div>
+                    <span>Seller</span>
+                </div>
+
+                <div class="flex flex-row text-center w-full max-w-[90%] sm:max-w-[400px] mt-2">
+                    <p id="bioText" class="px-4 text-[#6E4D41] text-sm sm:text-base line-clamp-3">{{ $artist->bio }}</p>
+                </div>
+
+                <button id="showMoreContainer" class="mt-2 text-sm text-[#6E4D41] font-bold hover:underline" data-bs-toggle="modal" data-bs-target="#ViewmoreModal" aria-label="View more">
+                    Show full bio
+                </button>
+
+                <div class="relative mt-4 flex flex-wrap justify-center gap-3 sm:gap-4">
+                    <button onclick="toggleModal('share-modal')">
+                        <img src="{{ asset('images/SHARE.svg') }}" alt="Share icon" class="w-6 h-6 sm:w-7 sm:h-7 hover:opacity-80 transition-opacity" />
+                    </button>
+                    <a href="{{route('user', $artist->id)}}" class="px-3 py-1.5 no-underline sm:px-4 sm:py-2 text-[#6E4D41] rounded-full bg-white font-medium hover:bg-[#5a3c32] transition duration-300 text-sm sm:text-base">
+                        Message
+                    </a>
+                    <button class="px-3 py-1.5 sm:px-4 sm:py-2 text-white rounded-full bg-[#6E4D41] font-medium hover:bg-[#5a3c32] transition duration-300 text-sm sm:text-base" data-bs-toggle="modal" data-bs-target="#RateArtist" style="cursor: pointer;">
+                        Rate
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <!-- Name -->
-        <h1 class="mt-3 px-4 py-2 text-[#6E4D41] font-bold text-xl sm:text-2xl text-center">{{ $artist->full_name }}</h1>
-
-        <!-- Email and Role -->
-        <div class="flex items-center gap-2 text-sm sm:text-base text-[#6E4D41]">
-            <span>{{ $artist->email }}</span>
-            <div class="bg-[#6E4D41] h-4 w-[1.5px]"></div>
-            <span>Seller</span>
-        </div>
-
-        <!-- Bio -->
-        <div class="flex flex-row text-center w-full max-w-[90%] sm:max-w-[400px] mt-2">
-            <p id="bioText" class="px-4 text-[#6E4D41] text-sm sm:text-base line-clamp-3">{{ $artist->bio }}</p>
-        </div>
-
-      
-
-        <!-- Show Full Bio Button -->
-        <button id="showMoreContainer" class="mt-2 text-sm text-[#6E4D41] font-bold hover:underline" data-bs-toggle="modal" data-bs-target="#ViewmoreModal" aria-label="View more">
-            Show full bio
-        </button>
-
-        <!-- Action Buttons -->
-        <div class="relative mt-4 flex flex-wrap justify-center gap-2 sm:gap-4">
-          <button onclick="toggleModal('share-modal')">
-              <img src="{{ asset('images/SHARE.svg') }}" alt="Share icon" class="w-6 h-6 sm:w-7 sm:h-7 hover:opacity-80 transition-opacity" />
-          </button>
-            <a href="{{route('user', $artist->id)}}" class=" no-underline px-3 py-1.5 sm:px-4 sm:py-2 text-[#6E4D41] rounded-full bg-white font-medium hover:bg-[#5a3c32] transition duration-300 text-sm sm:text-base">
-                Message
-            </a>
-        </div>
-    </div>
-</div>
-
-
-          <div class="relative mb-3 flex justify-center text- gap-10 mt-4">
+        <!-- Available Artworks -->
+        <div class="relative mb-3 flex justify-center text- gap-10 mt-4">
             <h1  class="text-lg text-[#6E4D41] font-bold">AVAILABLE ARTWORKS</h1>
           </div>
           <div id="Viewpaintings" class="tab-content">
@@ -82,8 +77,9 @@
               @endforelse
             </div>
           </div>
-        
-          <div class="relative mb-3 flex justify-center text- gap-10 mt-4">
+
+        <!-- Sold Artworks -->
+        <div class="relative mb-3 flex justify-center text- gap-10 mt-4">
             <h1  class="text-lg text-[#6E4D41] font-bold">UNAVAILABLE ARTWORKS</h1>
           </div>
           <div id="Viewpaintings" class="tab-content">
@@ -109,16 +105,18 @@
                           <div class="modal fade" id="viewReview{{$artwork->id}}" tabindex="-1" aria-labelledby="viewReview{{$artwork->id}}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content p-4">
-                                    <div class="modal-header">
-                                        <p class="modal-title font-bold">Rating</p>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
                                     @php
                                         // Find the order with status 4 (completed) for the current artwork
                                         $completedOrder = $artwork->orderItems->filter(function ($orderItem) {
                                             return optional($orderItem->order)->status_id == 4;
                                         })->first()->order ?? null;
                                     @endphp
+
+                                    <div class="modal-header">
+                                        <p class="modal-title font-bold">Rate by: {{$completedOrder->user->full_name ?? 'Unknown Buyer'}}</p>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    
                                     @if($completedOrder && $completedOrder->review)
                                       <div class="modal-body text-center">
                                           <p class="font-bold mb-2">Artist Rating:</p>
@@ -156,16 +154,9 @@
               @endforelse
             </div>
           </div>
-
-          </div>
-
-                
-            </div>
-
-    
-        </div>
     </div>
-    </section>
+</section>
+
 
 
   <!-- VIEW  MORE MODAL -->
@@ -249,19 +240,32 @@
         </div>
     </div>
 </div>
-<!-- share modal -->
-<div id="share-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white w-[400px] rounded-lg shadow-lg p-6">
-        <h2 class="text-lg font-bold text-[#6e4d41]">Share Profile</h2>
-        <p class="text-sm text-gray-600 mt-2">Share this artist with your friends...</p>
+<!-- Sa Sold ini na pang view -->
+<div class="modal fade" id="viewReview" tabindex="-1" aria-labelledby="viewReview" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content p-4">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title font-bold">Rating</h3>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <h4 class="font-bold mb-2">Artist Rating:</h4>
+                                        <p class="text-yellow-400 text-3xl"></p>
 
-        <!--<Modal Buttons -->
-        <div class="flex justify-end gap-3 mt-4">
-            <button onclick="toggleModal('share-modal')" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Close</button>
-            <button id="copyLinkBtn" onclick="copyLink()" class="px-4 py-2 bg-[#6e4d41] text-white rounded-lg hover:bg-[#5a3c32]">Copy Link</button>
-        </div>
-    </div>
-</div>
+                                        <h4 class="font-bold mt-4 mb-2">Artwork Rating:</h4>
+                                        <p class="text-yellow-400 text-3xl"></p>
+
+                                        <h4 class="font-bold mt-4 mb-2">Comment:</h4>
+                                        <p class="text-gray-600"></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
 
 <!-- Script for Show More -->   
 <script>
@@ -380,7 +384,7 @@
         const profileUrl = window.location.href; // Get the current page URL, or set your own URL
 
         // Create a temporary input element to use the clipboard API
-        const tempInput = document.createElement('input');
+        const tempInput = document.createElement('ipnut');
         document.body.appendChild(tempInput);
         tempInput.value = profileUrl;
         tempInput.select();

@@ -19,6 +19,7 @@
 </head>
 <body  class="bg-white text-gray-900">
 @include('layouts.forNav')
+
     <!-- Hero Section -->
     <section class="ml-[-20px] sm:ml-5 flex flex-col lg:flex-row items-center justify-between px-10 py-20">
         <div class="max-w-lg">
@@ -28,8 +29,8 @@
                 Discover unique artworks, connect with Albay's local artists, 
                 and bring creativity into your space.
             </p>
-            <div class="buttons ml-[-300px]">
-            <a class="no-underline blob-btn">
+            <div class="buttons sm:ml-[-300px] ml-[-100px]">
+            <button class="blob-btn">
                 Explore Now
                 <span class="blob-btn__inner">
                 <span class="blob-btn__blobs">
@@ -39,7 +40,7 @@
                     <span class="blob-btn__blob"></span>
                 </span>
                 </span>
-            </a>
+            </button>
             <br/>
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
             <defs>
@@ -51,6 +52,7 @@
             </defs>
             </svg>
         </div>
+        
 
         <div class="hidden lg:flex flex-col space-y-6 absolute right-5 top-1/2 transform -translate-y-1/2 z-50 mt-40">
         <a href="https://facebook.com" target="_blank" class="flex items-center group relative">
@@ -103,32 +105,19 @@
     @include('Example.featuredpainting')
 
 
-<section class="mt-10 py-10 px-3 bg-[#F6EBDA]">
+    <section class="mt-10 py-10 px-3 bg-[#F6EBDA]">
   <h2 class="text-3xl font-bold text-[#6E4D41] text-center mb-8">Featured Sculptures</h2>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
-    <!-- Sculptures Example (repeat for more) -->
-    @foreach($sculpt as $artwork)
+    @foreach($sculpt->take(6) as $artwork)
       <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
-        <img src="{{ asset($artwork->image_path) }}" alt="Sculpture 2" class="w-full h-64 object-cover mb-4 rounded-lg">
-        <h5 class="font-semibold text-[#6E4D41] text-lg">{{$artwork->artwork_title}}</h5>
-        <p class="text-gray-600">{{$artwork->user->full_name}}</p>
+        <img src="{{ asset($artwork->image_path) }}" alt="Sculpture" class="w-full h-64 object-cover mb-4 rounded-lg">
+        <h5 class="font-semibold text-[#6E4D41] text-lg">{{ $artwork->artwork_title }}</h5>
+        <p class="text-gray-600">{{ $artwork->user->full_name }}</p>
       </div>
     @endforeach
-
-    <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
-      <img src="https://source.unsplash.com/400x400/?sculpture" alt="Sculpture 3" class="w-full h-64 object-cover mb-4 rounded-lg">
-      <h5 class="font-semibold text-[#6E4D41] text-lg">Venus de Milo</h5>
-      <p class="text-gray-600">Alexandros of Antioch</p>
-    </div>
-
-    <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
-      <img src="https://source.unsplash.com/400x400/?sculpture" alt="Sculpture 4" class="w-full h-64 object-cover mb-4 rounded-lg">
-      <h5 class="font-semibold text-[#6E4D41] text-lg">Bust of Nefertiti</h5>
-      <p class="text-gray-600">Thutmose</p>
-    </div>
-    <!-- Add more sculpture items here if needed -->
   </div>
+
   <div class="flex justify-center mt-10">
     <a href="{{ route('category', ['category' => 'sculpture']) }}" style="border-radius:10px;" class="no-underline blob-btn h-[50px] px-6 flex items-center justify-center">
       See More Masterpieces
@@ -143,6 +132,7 @@
     </a>
   </div>
 </section>
+
 
 
 <!-- New Section: Art That Reflects Your Story -->

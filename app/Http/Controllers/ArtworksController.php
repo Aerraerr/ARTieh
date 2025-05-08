@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Auth;
 class ArtworksController extends Controller
 {
 
-
     //function to store the form from upload-modal
     public function storeUpload(Request $request){
         // Validate the form data
@@ -27,7 +26,7 @@ class ArtworksController extends Controller
             'category_id'   => 'required|exists:category,id',
             'dimension'     =>  'required|string',
             'price'         => 'required|numeric|min:0',
-            'image'         => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'image'         => 'required|image|mimes:jpeg,png,jpg|max:10485760',
         ]);
 
         //Store the image in the storage/public/artworks/category
@@ -65,7 +64,6 @@ class ArtworksController extends Controller
                 $query->where('status_id', '!=', 5); // pagnacancel order, luwas giray sa display
             }) //pag so artwork nasa order_item, ekis na siya
             ->get();
-              
 
          // Map the category name to the correct view
         $view = match($category) {
@@ -74,6 +72,7 @@ class ArtworksController extends Controller
             'sculpture' => 'Mods.sculptures',
             default => null 
         };
+
         // Handle unknown category views
         if (!$view) {
             Session::flash('error', "No view found for '{$category}'.");
@@ -82,10 +81,12 @@ class ArtworksController extends Controller
         
         $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
         $notificationCount = $notifications->count();
+
         return view($view, compact('artworks', 'notifications', 'notificationCount'));
     }
 
-    private function getArtworksByCategory($category) // hiniwalay ko na, mapagalon magparaulit wahaha
+    // get the artwork by category
+    private function getArtworksByCategory($category) 
     {
         $categoryModel = Category::where('category_name', $category)->first();
 
@@ -99,6 +100,7 @@ class ArtworksController extends Controller
             ->get();
     }
 
+    // display the artworks that is collected via its category
     public function homeDisplay()
     {
         $creator = User::where('role', 'seller') 
@@ -112,8 +114,11 @@ class ArtworksController extends Controller
         return view('landing', compact('sculpt', 'creator', 'paint'));
     }
 
+    // display all artworks to the artworks page
     public function showAllArtworks()
     {
+        $categories = Category::all();
+
         $artworks = Artworks::with('user')
             ->whereDoesntHave('orderItems.order', function($query){
                 $query->where('status_id', '!=', 5); // pagnacancel order, luwas giray sa display
@@ -123,12 +128,13 @@ class ArtworksController extends Controller
         $notifications = Notification::where('user_id', Auth::id())->latest()->get();
         $notificationCount = $notifications->count();
 
-        return view('Mods.artworks', compact('artworks', 'notifications', 'notificationCount'));
+        return view('Mods.artworks', compact('artworks', 'notifications', 'notificationCount', 'categories'));
     }
 
     //function to display the details of the clicked cards/item and the more works by artist
     public function showDetails($id)
     {
+        $user = Auth::user();
         // Retrieve the artwork along with the user relationship
         $artwork = Artworks::with('user', 'category')->find($id);
 
@@ -152,9 +158,7 @@ class ArtworksController extends Controller
             ->where('user_id', '!=', $artwork->user_id) // exclude same artist
             ->get();
 
-        return view('productView.product', compact('artwork', 'moreWorks', 'otherArtworks'));
+        return view('productView.product', compact('user', 'artwork', 'moreWorks', 'otherArtworks'));
     }
-
-
 
 }

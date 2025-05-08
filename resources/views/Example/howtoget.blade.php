@@ -1,4 +1,4 @@
-<div class="flex mt-[-200px] items-center justify-center min-h-screen bg-transparent">
+<div class="flex sm:mt-[-150px] mt-20 items-center justify-center min-h-screen bg-transparent">
   <div class="bg-[#F6EBDA] p-8 rounded-lg shadow-md max-w-4xl w-full text-center opacity-0 translate-y-12 transition-all duration-1000 ease-out" id="how-to-get-artworks">
     <h2 class="text-2xl font-bold text-[#6E4D41] mb-6">How to Get Artworks</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">

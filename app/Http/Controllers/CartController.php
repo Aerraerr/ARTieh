@@ -10,23 +10,21 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    //add to cart/wishlist function
+    //add to cart function
     public function addTocart(Request $request, $artworkId)
     {
-        //dapat naka login
+        //user must be logged in
         $user = auth::user();
-
-        //hanap so artwork
         $artwork = Artworks::findOrFail($artworkId);
         
 
-        //hanap or gibo cart
+        //find or create cart if not exist
         $cart = Cart::firstOrCreate(
             ['user_id' => $user->id], // use to find a record in cart
             ['user_id' => $user->id] // use to create a new record if wara pa
         );
 
-        // Check if the item is already in the cart (optional logic)
+        // Check if the item is already in the cart
         $existingItem = CartItem::where('cart_id', $cart->id)
                                 ->where('artwork_id', $artwork->id)
                                 ->first();
@@ -39,7 +37,7 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Artwork added to cart!');
     }
 
-    //display users added artworks in cart/wishlist
+    //display users added artworks in cart
     public function displayCart()
     {
         $user = auth::user();
@@ -61,14 +59,13 @@ class CartController extends Controller
         return view('Mods.cart', compact('cart'));
     }
 
-    //remove an artwork from cart/wishlist
+    //remove an artwork from cart
     public function removeFromCart($id)
     {
         $user = auth::user();
 
         // Find the item and make sure it belongs to the user's cart
         $cartItem = CartItem::findOrFail($id);
-
         $cartItem->delete();
 
         return redirect()->route('cart')->with('success', 'Item removed from cart.');

@@ -43,4 +43,5 @@ class Artworks extends Model
     {
         return $this->hasMany(CartItem::class);
     }
+    
 }

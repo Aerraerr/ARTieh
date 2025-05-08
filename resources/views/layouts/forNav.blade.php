@@ -30,38 +30,38 @@
         @endphp
         
         <a href="{{route('artworks')}}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
-            {{ $currentRoute == 'artworks' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+            {{ $currentRoute == 'artworks' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-80 hover:text-gray-500' }}">
             ARTWORKS
         </a>
 
         <a href="{{ route('category', ['category' => 'paintings']) }}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
-            {{ $currentRoute == 'category' && $currentCategory == 'paintings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+            {{ $currentRoute == 'category' && $currentCategory == 'paintings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-80 hover:text-gray-500' }}">
             PAINTINGS
         </a>
 
         <a href="{{ route('category', ['category' => 'drawings']) }}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
-            {{ $currentRoute == 'category' && $currentCategory == 'drawings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+            {{ $currentRoute == 'category' && $currentCategory == 'drawings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-80 hover:text-gray-500' }}">
             DRAWINGS
         </a>
 
         <a href="{{ route('category', ['category' => 'sculpture']) }}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
-            {{ $currentRoute == 'category' && $currentCategory == 'sculpture' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+            {{ $currentRoute == 'category' && $currentCategory == 'sculpture' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-80 hover:text-gray-500' }}">
             SCULPTURES
         </a>
 
         <a href="{{ route('artists') }}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
-            {{ $currentRoute == 'artists' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+            {{ $currentRoute == 'artists' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-80 hover:text-gray-500' }}">
             ARTISTS
         </a>
 
         <a href="{{ route('announcements') }}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
-            {{ $currentRoute == 'announcements' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+            {{ $currentRoute == 'announcements' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-80 hover:text-gray-500' }}">
             ANNOUNCEMENTS
         </a>
         @auth
-            <a href="{{ route('cart') }}" class="flex items-center justify-center font-medium h-[50px] px-3 transition duration-300 
-                {{ $currentRoute == 'cart' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
-                <img src="{{ asset('images/Cart.svg') }}" alt="cart" class="w-[30px] h-[40px]">
+            <a href="{{ route('cart') }}" class="flex items-center justify-center font-medium h-[50px] px-2 transition duration-300 
+                {{ $currentRoute == 'cart' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-80 hover:text-gray-500' }}">
+                <img class="h-12 w-12"  src="{{ asset('images/cartlogo.svg') }}" alt="cart" >
                 @if ($cartItemCount > 0)
                     <span class="absolute top-1 ml-6 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                         {{ $cartItemCount }}
@@ -152,7 +152,7 @@
     @endif
 
 <!-- Mobile Navigation -->
-<div  id="mobileMenu" class="hidden   fixed inset-0 bg-white flex flex-col items-center justify-start space-y-5 shadow-md z-40  h-full" style="font-family: 'Rubik', sans-serif;">
+<div  id="mobileMenu"  class="hidden   fixed inset-0 bg-white flex flex-col items-center justify-start space-y-5 shadow-md z-40  h-full" style="font-family: 'Rubik', sans-serif;">
     <div class="mt-[-50px] w-1/2" >
     @php
         $currentRoute = Route::currentRouteName();
@@ -161,7 +161,10 @@
             {{ $currentRoute == 'home' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
             HOME
         </a>
-
+    <a href="{{route('artworks')}}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
+        {{ $currentRoute == 'artworks' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
+        ARTWORKS
+    </a>
 
     <a href="{{ route('category', ['category' => 'paintings']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
         {{ $currentRoute == 'category' && request('category') == 'paintings' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
@@ -178,7 +181,7 @@
         SCULPTURES
     </a>
 
-    <a href="{{ route('category', ['category' => 'sculpture']) }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
+    <a href="{{ route('artists') }}" class="flex items-center justify-center font-medium h-[50px] px-4 transition duration-300 
         {{ $currentRoute == 'artists' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
         ARTISTS
     </a>
@@ -192,7 +195,7 @@
                 {{ $currentRoute == 'cart' ? 'text-[#6e4d41] underline underline-offset-8 decoration-2' : 'text-[#6e4d41] opacity-60 hover:text-gray-500' }}">
                 <img src="{{ asset('images/Cart.svg') }}" alt="cart" class="w-[30px] h-[40px]">
                 @if ($cartItemCount > 0)
-                    <span class="absolute top-[51%] ml-6 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                    <span class="absolute top-[56%] ml-6 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                         {{ $cartItemCount }}
                     </span>
                 @endif

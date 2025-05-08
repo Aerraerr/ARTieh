@@ -6,6 +6,7 @@
     <title>ARTieh - Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/registration.css') }}">
+    <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 </head>

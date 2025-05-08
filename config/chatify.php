@@ -13,7 +13,7 @@ return [
     | User Model - this is needed!
     |--------------------------------------------------------------------------
     */
-    'User' => App\Models\User::class,
+    'user_model' => App\Models\User::class,
     
     /*
     |-------------------------------------

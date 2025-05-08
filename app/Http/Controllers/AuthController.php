@@ -11,17 +11,19 @@ use PhpParser\Node\Expr\AssignOp\Concat;
 
 class AuthController extends Controller
 {
+    //call the blade register
     public function showRegister(){
         return view ('auth.register');
     }
-    
+    // call the blade login
     public function showLogin(){
         return view ('auth.login');
     }
 
+    // function to register user
     public function register(Request $request){
 
-        //check the post form data for validations mga boa
+        //check the post form data for validations
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -34,12 +36,12 @@ class AuthController extends Controller
         //saves new user to the user table with the validated field (uyan na validation sa tass boa)
         $user = User::create($validated);
 
-        //
         Auth::login($user);
         
         return redirect()->route('home');
     }
     
+    // functuion to login
     public function login(Request $request){
         //check the post form data for validations mga boa
         $validated = $request->validate([
@@ -50,9 +52,11 @@ class AuthController extends Controller
         if (Auth::attempt($validated)){
             $request->session()->regenerate(); //regenerate the session id for newly authenticated user but keeps the data intack
             
+            // pag seller, redirect to sellerdashboard
             if (Auth::user()->role === 'seller') {
-                return redirect()->route('SellerDashboard'); // make sure this route exists
+                return redirect()->route('SellerDashboard'); 
             }
+            //if admin, redirect to admin dashboard
             elseif (Auth::user()->role === 'admin') {
                 return redirect()->route('admin'); // Redirect admin to admin dashboard
             }
@@ -67,12 +71,12 @@ class AuthController extends Controller
 
     }
 
-    //syempre logout mahapot pa
+    // logout user
     public function logout(Request $request){
         Auth::logout();
 
         $request->session()->invalidate(); //tigclear so data kang nakalogin 
-        $request->session()->regenerateToken(); //added layer of security, no auq mag explain sau
+        $request->session()->regenerateToken();
 
         return redirect()->route('show.login');
     }

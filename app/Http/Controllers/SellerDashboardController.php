@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Artworks;
 use App\Models\User;
+use App\Models\Status;
 use App\Models\Category;
 use App\Models\Notification;
 use App\Models\Orders;
@@ -12,46 +13,13 @@ use Illuminate\Http\Request;
 
 class SellerDashboardController extends Controller
 {
-    function SellerDashDisplay(){
-
-        $user = Auth::user();
-        $artworks = collect();
-        $ordered = collect();
-        
-
-        // Fetch artworks only if the user is a seller
-        $artworks = collect();
-        if ($user->role === 'seller') {
-            $artworks = Artworks::where('user_id', $user->id)->get();
-
-            //display ordered artwork of user(seller)
-            $ordered = Orders::whereHas('items.artwork.user', function($query) use ($user) {
-                $query->where('id', $user->id);
-            })
-            ->with(['items.artwork.user', 'status', 'payment'])
-            ->latest('ordered_at')
-            ->get();
-            
-            // sa Business insight
-            $totalorders = $ordered->count();
-            $totalsale = $ordered->sum('total_amount');
-            $monthlysale = $ordered->filter(function ($order) {
-                return $order->ordered_at && \Carbon\Carbon::parse($order->ordered_at)->isCurrentMonth();
-            })->sum('total_amount');
-            $yearlysale = $ordered->filter(function ($order) {
-                return $order->ordered_at && \Carbon\Carbon::parse($order->ordered_at)->isCurrentYear();
-            })->sum('total_amount');
-            
-        } 
-        return view('Mods.sellerdashboard', compact('user', 'ordered', 'artworks', 'totalsale', 'totalorders', 'monthlysale', 'yearlysale'));
-    }
-
+    //get all artworks of seller
     function SellerArtworkDisplay(){
         $categories = Category::all();
         $user = Auth::user();
         $artworks = collect();
 
-        $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+        $notifications = Notification::where('user_id', Auth::id())->latest()->get();
         $notificationCount = $notifications->count();
 
         // Fetch artworks only if the user is a seller
@@ -63,16 +31,14 @@ class SellerDashboardController extends Controller
         return view('Seller.artworks', compact('user', 'categories', 'artworks', 'notifications', 'notificationCount'));
     }
 
+    //get the data to be displayed to seller dashboard blade
     public function SellerDashboard(){
 
         $user = Auth::user();
         $artworks = collect();
         $ordered = collect();
-        $monthlySales = [];
-        $monthlyItems = [];
-        $categoryLabels = [];
-        $categoryValues = [];
-        $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+
+        $notifications = Notification::where('user_id', Auth::id())->latest()->get(); 
         $notificationCount = $notifications->count();
 
         // Fetch artworks only if the user is a seller
@@ -90,11 +56,13 @@ class SellerDashboardController extends Controller
             
             // sa Business insight
             $totalorders = $ordered->count();
-            $totalsale = $ordered->sum('total_amount');
-            $monthlysale = $ordered->filter(function ($order) {
+            $totalsale = $ordered->whereIn('status_id', 4)->sum('total_amount');
+
+            $monthlysale = $ordered->whereIn('status_id', 4)->filter(function ($order) {
                 return $order->ordered_at && \Carbon\Carbon::parse($order->ordered_at)->isCurrentMonth();
             })->sum('total_amount');
-            $yearlysale = $ordered->filter(function ($order) {
+
+            $yearlysale = $ordered->whereIn('status_id', 4)->filter(function ($order) {
                 return $order->ordered_at && \Carbon\Carbon::parse($order->ordered_at)->isCurrentYear();
             })->sum('total_amount');
             
@@ -105,7 +73,7 @@ class SellerDashboardController extends Controller
             }
 
             foreach ($months as $month) {
-                $monthlyOrders = $ordered->filter(function ($order) use ($month) {
+                $monthlyOrders = $ordered->whereIn('status_id', 4)->filter(function ($order) use ($month) {
                     return $order->ordered_at && Carbon::parse($order->ordered_at)->format('Y-m') === $month->format('Y-m');
                 });
 
@@ -120,18 +88,20 @@ class SellerDashboardController extends Controller
                 return $item->artwork->category->category_name ?? 'Uncategorized';
             })->map->count();
 
-            $categoryLabels = $categoryData->keys()->toArray();   // Example: ['Painting', 'Digital', 'Sketch']
+            $categoryLabels = $categoryData->keys()->toArray();   // Example: ['Painting', 'Drawings', 'Sculpture']
             $categoryValues = $categoryData->values()->toArray();
         }
        
         return view('Seller.dashboard', compact('ordered', 'artworks', 'notifications', 'notificationCount', 'totalsale', 'totalorders', 'monthlysale', 'yearlysale', 'monthlySales', 'monthlyItems', 'categoryLabels', 'categoryValues'));
     }
 
+    //get sellers ordered artowrks
     function SellerOrder(){
 
         $user = Auth::user();
         $artworks = collect();
         $ordered = collect();
+        $status = Status::all();
         $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
         $notificationCount = $notifications->count();
 
@@ -150,24 +120,27 @@ class SellerDashboardController extends Controller
  
         }
        
-        return view('Seller.orders', compact('ordered', 'artworks', 'notifications', 'notificationCount'));
+        return view('Seller.orders', compact('ordered', 'artworks', 'notifications', 'notificationCount', 'status'));
     }
 
+    //change status function
     public function updateOrder(Request $request, Orders $order)
     {
         $validated = $request->validate([
             'status_id' => 'required|integer|exists:status,id',
         ]);
 
+        //update the status
         $order->status_id = $validated['status_id'];
         $order->save();
 
+        //store change status notification with buyer id
         if ($order->status_id == 3) {
             $item = $order->items->first();;
             $artworkTitle = $item->artwork->artwork_title;
             $approved = now()->format('Y-m-d');
 
-            Notification::create([ // SA USER NOTIFY
+            Notification::create([ 
                 'user_id' => $order->user_id,
                 'message' => 'This ' .$approved. ',your order #' . $order->id . ' '. $artworkTitle . '  has been confirmed and marked as to receive.',
             ]);
@@ -176,7 +149,7 @@ class SellerDashboardController extends Controller
         return back()->with('success', 'Order status updated');
     }
 
-    // update the new edited user info
+    //function that edit artwork details
     public function SellerEditArtwork(Request $request, $id){
         $editArt = Artworks::find($id);
         
@@ -190,7 +163,7 @@ class SellerDashboardController extends Controller
             'image'         => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        //update artwork yes
+        //update artwork 
         $editArt->artwork_title = $request->artwork_title;
         $editArt->description = $request->description;
         $editArt->category_id = $request->category_id;
@@ -210,10 +183,26 @@ class SellerDashboardController extends Controller
             return redirect()->back()->with('error', 'Artwork update failed');
         }
     }
-    public function SellerChat()
+
+    //function to remove artwork of seller
+    public function removeArtwork($id)
     {
-        return view('Seller.sellerchat');
+        $user = auth::user();
+
+        // Find the artwork and delete it
+        $artwork = Artworks::findOrFail($id);
+        $artwork->delete();
+
+        $approved = now()->format('Y-m-d');
+        $artworkTitle = $artwork->artwork_title;
+        $sellerId = $artwork->user_id;
+
+        // store delete notification with seller id
+        Notification::create([ 
+            'user_id' => $sellerId,
+            'message' => 'This ' . $approved . ', you removed ' . $artworkTitle . '',
+        ]);
+
+        return redirect()->back()->with('success', 'Artwork removed.');
     }
-    
-    
 }

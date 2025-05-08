@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\ArtworksController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
@@ -12,22 +11,29 @@ use App\Http\Controllers\PurchasesController;
 use App\Http\Controllers\SellerDashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\ChatController;
+use App\Http\Controllers\NavController;
 
 
-//home
+// REGISTRATION / LOGIN
+Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+//landing page
 Route::get('/', function () {
     return view('landing');
 });
-
 Route::get('/', [ArtworksController::class, 'homeDisplay'])->name('home'); 
 
-// authenticated onli access
+// authenticated users access
 Route::middleware(['auth'])->group(function() {
 
+    //logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // tigsaro ko na so pag show kang profile with modals yes
+    //profile display
     Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile'); 
 
     //profile edit & update user info
@@ -49,28 +55,26 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/checkout', [CheckoutController::class, 'checkoutCart'])->name('checkout.cart');
     Route::post('/checkout', [CheckoutController::class, 'placeOrder'])->name('checkout.store');
 
-    //sa my purchases yes
+    //users purchases page
     Route::get('/purchases', [PurchasesController::class, 'displayPurchases'])->name('purchases');
     Route::post('/purchases/{order}', [PurchasesController::class, 'cancelOrder'])->name('cancel-order');
     Route::patch('/purchases/{orderId}', [PurchasesController::class, 'receivedOrder'])->name('received-order');
     Route::post('/purchases', [PurchasesController::class, 'reviewOrder'])->name('review-order');
     Route::patch('/purchases/{payId}/gcash-payment', [PurchasesController::class, 'gcashpay'])->name('gcash-payment');
 
-
-
     // Artwork Upload & edit
     Route::post('/storeUpload', [ArtworksController::class, 'storeUpload'])->name('storeUpload');
     Route::put('/artworks/{id}', [ArtworksController::class, 'editArtwork'])->name('artworks.update');
 
     //sellerdashboard
-    Route::get('sellerdashboard', [SellerDashboardController::class, 'SellerDashDisplay'])->name('sellerdashboard');
     Route::patch('ordersModal/{order}', [SellerDashboardController::class, 'updateOrder'])->name('order.update');
     Route::get('/Seller/dashboard', [SellerDashboardController::class, 'SellerDashboard'])->name('SellerDashboard');
     Route::get('/Seller/orders', [SellerDashboardController::class, 'SellerOrder'])->name('SellerOrders');
     Route::get('/Seller/artworks', [SellerDashboardController::class, 'SellerArtworkDisplay'])->name('SellerArtworks');
     Route::put('/Seller/artworksModal/{id}', [SellerDashboardController::class, 'SellerEditArtwork'])->name('SellerEditArtwork');
+    Route::delete('/Seller/artworks/{id}', [SellerDashboardController::class, 'removeArtwork'])->name('removeArtwork');
 
-    //sa notifications
+    //notifications
     Route::get('/notification', [NotificationController::class, 'displayNotif']);
 
     //sa admin
@@ -80,11 +84,9 @@ Route::middleware(['auth'])->group(function() {
     Route::patch('/application/{id}', [AdminController::class, 'approveApplication'])->name('approveApplication');
 });
 
-
-
 // guest access
 Route::middleware(['guest'])->group(function() {
-    //auth routes
+    //login & register page
     Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
     Route::get('/register', [AuthController::class, 'showRegister'])->name('show.register');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -93,7 +95,9 @@ Route::middleware(['guest'])->group(function() {
 
 //display all artworks
 Route::get('/artworks', [ArtworksController::class, 'showAllArtworks'])->name('artworks');
-//Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/all-artworks', [ArtworksController::class, 'showAllArtworks'])->name('all-artworks');
+
+//artist list page
 Route::get('/artists', [ProfileController::class, 'showArtistList'])->name('artists');
 //get the clicked artist by its id
 Route::get('/view_artist/{id}', [ProfileController::class, 'AboutArtist'] )->name('view_artist');
@@ -101,53 +105,32 @@ Route::get('/view_artist/{id}', [ProfileController::class, 'AboutArtist'] )->nam
 Route::get('/announcements', [EventController::class, 'displayEvents'])->name('announcements');
 
 
+//paintings page
 Route::get('/paintings', function () {
     return view('Mods.painting');
 })->name('paintings');
 
-Route::get('/forChat', function () {
-    return view('layouts.forChat');
-})->name('forChat');
-
-Route::get('/forNotif', function () {
-    return view('layouts.forNotif');
-})->name('forNotif');
-
+//drawings page
 Route::get('/drawings', function () {
     return view('Mods.drawings');
 })->name('drawings');
 
+//sculpture page
 Route::get('/sculptures', function () {
     return view('Mods.sculptures');
 })->name('sculptures');
 
-// STATIC PAGES
-
-//PRODUCT VIEW
+//artwork view
 Route::get('/product-details', function () {
     return view('productView.product');
 })->name('product-details');
 
+//layouts 
 
-//  FOR ADMIN
-Route::get('/admin', function () {
-    return view('Admin.admin');
-})->name('admin');
-
-Route::get('/management', function () {
-    return view('Admin.management');
-})->name('management');
-
-Route::get('/application', function () {
-    return view('Admin.application');
-})->name('application');
-
+//admin navbar
 Route::get('/forAdmin', function () {
     return view('layouts.forAdmin');
 })->name('forAdmin');
-
-
-//LAYOUTS
 
 // FOR VIEWPROFILE
 Route::get('/forViewProfile', function () {
@@ -175,6 +158,7 @@ Route::get('/example', function () {
 Route::get('/featuredpainting', function () {
     return view('Example.featuredpainting');
 })->name('featuredpainting');
+
 Route::get('/howtoget', function () {
     return view('Example.howtoget');
 })->name('howtoget');
@@ -184,6 +168,6 @@ Route::get('/footer', function () {
     return view('layouts.footer');
 })->name('footer');
 
-
+//display artworks by category & its details
 Route::get('/product-details/{id}', [ArtworksController::class, 'showDetails'])->name('product-details');
 Route::get('/category/{category}', [ArtworksController::class, 'showByCategory'])->name('category');

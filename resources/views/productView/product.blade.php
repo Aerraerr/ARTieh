@@ -43,26 +43,7 @@
             <!-- Main Image -->
             <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="w-full rounded-lg object-cover">
             
-            <!-- Thumbnail Navigation with Arrows -->
-            <div class=" flex items-center justify-center gap-2 mt-3 relative">
-                <!-- Left Arrow -->
-                <button class="ml-10 absolute left-0 -translate-x-10 bg-gray-300 hover:bg-gray-400 p-2 rounded-full">
-                    &#9664;
-                </button>
 
-                <!-- Thumbnails -->
-                <div class="flex gap-2">
-                    <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="w-16 h-14 object-cover rounded cursor-pointer">
-                    <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="w-16 h-14 object-cover rounded cursor-pointer">
-                    <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="w-16 h-14 object-cover rounded cursor-pointer">
-                    <img src="{{ asset($artwork->image_path) }}" alt="{{ $artwork->artwork_title }}" class="w-16 h-14 object-cover rounded cursor-pointer">
-                </div>
-
-                <!-- Right Arrow -->
-                <button class="mr-10 absolute right-0 translate-x-10 bg-gray-300 hover:bg-gray-400 p-2 rounded-full">
-                    &#9654;
-                </button>
-            </div>
         </div>
 
 
@@ -72,12 +53,30 @@
                 <h2 class="text-[#6e4d41] text-4xl font-bold">{{ $artwork->artwork_title }}</h2>
                 <div class="mb-5 text-[#6e4d41] text-xl font-semibold">₱ {{ number_format($artwork->price, 2) }}</div>
 
+                
+                <hr class="">
+                <!-- Artwork Details -->
+                <div style="color:#6e4d41;" class=" grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                    <strong>Dimension:</strong> <span>{{ $artwork->dimension ?? 'No Dimension Set'}}</span>
+                    <strong>Category:</strong> <span>{{ $artwork->category->category_name ?? 'Uncategorized' }}</span>
+                    <strong>Artist:</strong> <span>{{ $artwork->user?->full_name ?? 'Unknown Artist' }}</span> <!-- palitan nalang yan na email pag may name na ok? ok-->
+                </div>
+
+                <hr class="">
+                <!-- Description -->
+                <p class="text-[#6e4d41] text-sm leading-relaxed">Description: <br> {{ $artwork->description }} </p>
                 <!-- Buttons -->
                 <div class="flex justify-end gap-4 mt-20">
                     @auth
-                        <a href="{{ route('checkout', $artwork->id) }}" class="px-6 py-2 bg-[#6e4d41] text-white rounded hover:bg-[#A99476] transition duration-300">
+                        @if($user->address === null)
+                            <button onclick="promptSetAddress()" class="px-6 py-2 bg-[#6e4d41] text-white rounded hover:bg-[#A99476] transition duration-300">
                             Buy Now
-                        </a>
+                        </button>
+                        @else
+                            <a href="{{ route('checkout', $artwork->id) }}" class="px-6 py-2 bg-[#6e4d41] text-white rounded hover:bg-[#A99476] transition duration-300">
+                                Buy Now
+                            </a>
+                        @endif
 
                         <form action="{{ route('cart.add', $artwork->id) }}" method="POST">
                         @csrf
@@ -97,19 +96,8 @@
                         </a>
                     @endguest   
                 </div>
-                
-                <hr class="">
-                <!-- Artwork Details -->
-                <div style="color:#6e4d41;" class=" grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-                    <strong>Dimension:</strong> <span>{{ $artwork->dimension ?? 'No Dimension Set'}}</span>
-                    <strong>Category:</strong> <span>{{ $artwork->category->category_name ?? 'Uncategorized' }}</span>
-                    <strong>Artist:</strong> <span>{{ $artwork->user?->full_name ?? 'Unknown Artist' }}</span> <!-- palitan nalang yan na email pag may name na ok? ok-->
-                </div>
-
-                <hr class="">
-                <!-- Description -->
-                <p class="text-[#6e4d41] text-sm leading-relaxed">Description: <br> {{ $artwork->description }} </p>
             </div>
+            
         </div>
 
         <!-- More Works Section -->
@@ -161,4 +149,19 @@
         </div>
     </div>
 </body>
+<script>
+function promptSetAddress() {
+    Swal.fire({
+        icon: 'warning',
+        title: 'Complete Your Profile',
+        text: 'Please set your address before proceeding to checkout.',
+        confirmButtonText: 'Go to Profile',
+        confirmButtonColor: '#6e4d41'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "{{ route('profile') }}";
+        }
+    });
+}
+</script>
 </html>

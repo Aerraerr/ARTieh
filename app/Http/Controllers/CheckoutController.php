@@ -15,30 +15,25 @@ use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
+    // get the artwork data via id
     public function checkoutProduct($id){
 
         $user = auth::user();
         $artwork = Artworks::findOrFail($id);
 
         return view('Mods.checkout', compact('user', 'artwork'));
-
     }
     
+    // get the artwork data via id in the cart page
     public function checkoutCart(Request $request, $artworkIds){
         
         $user = auth::user();
-
-        //$artworkIds = json_decode($request->artworks, true); // decodes json array
-        //dd($request->artworks, json_decode($request->artworks, true));
         $artwork = Artworks::whereIn('id', $artworkIds)->firstOrFail();
  
-
         return view('Mods.checkout', compact('user', 'artwork', 'artworks'));
-        
-
     }
 
-    //order pa dai ng pirak
+    // create the order
     public function placeOrder(Request $request)
     {
         // Validate the request
@@ -52,11 +47,12 @@ class CheckoutController extends Controller
         $deliveryFee = $validated['delivery_method'] === 'request delivery' ? 58 : 0;
         $totalAmount = $artwork->price + $deliveryFee;
 
-        //unique ref no generator ./.
+        //unique ref no generator 
         $timestamp = substr(time(), -9);
         $random = rand(100, 999);
         $reference = $timestamp . $random;
 
+        //store the data in the orders table
         $order = Orders::create([
             'user_id' => auth::id(),
             'status_id' => 1,
@@ -66,12 +62,14 @@ class CheckoutController extends Controller
             'reference_no' => $reference
         ]);
 
+        // store the data in order_items table
         Order_Items::create([
             'artwork_id' => $validated['artwork_id'],
             'order_id' => $order->id,
             'price' => $artwork->price
         ]);
 
+        //store the data in the payments table
         Payments::create([
             'order_id' => $order->id,
             'payment_method' => $validated['payment_method'],
@@ -85,11 +83,13 @@ class CheckoutController extends Controller
         $sellerId = $artwork->user_id;
         $buyer = Auth::user()->full_name;
 
-        Notification::create([ // sa buyer notify cancel
+        //store message about user checkout
+        Notification::create([ 
             'user_id' => Auth::id(),
             'message' => 'This ' .$approved . ', you have checkout ' . $artworkTitle. '',
         ]);
-        Notification::create([ // sa seller notify cancel
+        // store meesage with seller id
+        Notification::create([ 
             'user_id' => $sellerId,
             'message' => 'This ' . $approved . ', your artwork "' . $artworkTitle . '" has been checkout by '.$buyer. '',
         ]);

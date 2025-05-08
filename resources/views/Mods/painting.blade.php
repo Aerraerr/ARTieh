@@ -11,7 +11,13 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <style>
+        .search-active-image img {
+            object-fit: contain !important;
+            aspect-ratio: 4 / 3;
+            height: auto !important;
+        }
+    </style>
 
 </head>
 <body style="height:auto;"  class="bg-white text-gray-900 ">
@@ -20,15 +26,14 @@
     @include('Mods.forNotif')
     @include('Mods.forChat')
     
-
-
-
-
 <section>    
 
 <div  class="bg-white p-4 rounded shadow-lg border  max-w-[100%] sm:max-w-[100%]" >
-<h4 class="mt-10 mb-5 font-bold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl ml-0 sm:ml-[130px] md:ml-[130px]">Paintings</h4> 
-        <!-- Toggle Button for Mobile View -->
+<h4 class="mt-10 font-bold text-[#6E4D41] text-3xl sm:text-xl md:text-3xl lg:text-3xl ml-0 sm:ml-[130px] md:ml-[130px]">Paintings</h4> 
+<h5 class="mb-5 text-[#6E4D41] text-sm italic ml-0 sm:ml-[130px] md:ml-[130px]">
+    Immerse yourself in the world of vibrant brushstrokes.
+</h5> 
+<!-- Toggle Button for Mobile View -->
         <a id="toggleFilterBtn"
         class="btn sm:hidden sm:ml-[120px] ml-[53%] sm:mt-[-30px] mt-[-42px] absolute text-[10px] flex items-center gap-1 whitespace-nowrap">
         <img src="{{ asset('/iconused/filters.png') }}" 
@@ -38,58 +43,24 @@
         </a>
 
         <!-- Search Bar -->
-        <div id="filterDiv" class="search-bar mr-[130px] mb-3 sm:w-1/2 w-full">
-            <select id="priceFilter" class="form-select d-inline-block sm:h-10 sm:w-200 w-200">
-                <option selected>Price</option> 
-                <option value="low-to-high">Price: Low to High</option>
-                <option value="high-to-low">Price: High to Low</option>
-            </select>
-            <select class="form-select d-inline-block sm:h-10 sm:w-25 w-200">
-                <option selected disabled>Genre / Type</option>
-                <option>Renaisance</option>
-                <option>Retro</option>
-                <option>Indie</option>
-                <option>Realism</option>
-                <option>Abstract</option>
-            </select>
+        <div id="filterDiv" class="search-bar mr-[75px] mb-3 sm:w-1/2 w-full">
+        <select id="priceFilter" class="form-select d-inline-block sm:h-10 sm:w-[300px] w-200">
+            <option selected>Price</option> 
+            <option value="low-to-high">Price: Low to High</option>
+            <option value="high-to-low">Price: High to Low</option>
+        </select>
             <input type="text" class="form-control d-inline-block h-10 w-50" placeholder="Search by name, artist">
-            <button class="btn h-10 w-35">Search</button>
+            <button class="btn h-10 w-45">Search</button>
         </div>
 
         <div class="line sm:w-[82%] w-full ml-10 mr-10"><hr></div>
 
         @include('Example.cardscategory')
-    <nav aria-label="Page navigation example">
-    <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#"><</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">></a></li>
-    </ul>
-    </nav>
+
 
 </div>
 </section>
 
-
-       
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 
 @include('Example.howtoget')
 @include('layouts.footer')

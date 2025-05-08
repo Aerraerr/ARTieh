@@ -66,12 +66,15 @@
             border-radius: 0.375rem;
             margin-top: 0.5rem;
         }
-       
+        .btn-primary {
+    background-color: #6e4d41 !important;
+}
     </style>
 </head>
-<body class="bg-white text-gray-900 font-rubik">
+<body style="height:auto;"  class="bg-white text-gray-900 font-rubik " >
 @include('layouts.forNav')
 @extends('layouts.forbg')
+@include('Mods.forChat')
 @if(session('success'))
         <script>
             Swal.fire({
@@ -83,32 +86,32 @@
         </script>
     @endif
 <section>
-    <div class="container-fluid py-5 px-4">
-        <div class="bg-white p-4 rounded shadow-lg border mx-auto" style="max-width: 90%;">
+    <div class="container-fluid py-5 px-1 " style="max-width: 100%;">
+        <div class="bg-white p-4 rounded shadow-lg border mx-auto" style="max-width: 100%;">
             
             <!-- Purchase Status Tabs -->
-            <div class="flex justify-between border-b pb-2 text-gray-500">
-                <div class="tab flex flex-col items-center cursor-pointer active" data-tab="to-pay">
-                    <img src="{{ asset('images/topay.png') }}" class="w-8 h-8" alt="To Pay">
-                    <span>To Pay</span>
-                </div>
-                <div class="tab flex flex-col items-center cursor-pointer" data-tab="to-pickup">
-                    <img src="{{ asset('images/topickup.png') }}" class="w-8 h-8" alt="To Pickup">
-                    <span>To Pickup</span>
-                </div>
-                <div class="tab flex flex-col items-center cursor-pointer" data-tab="to-receive">
-                    <img src="{{ asset('images/toreceive.png') }}" class="w-8 h-8" alt="To Receive">
-                    <span>To Receive</span>
-                </div>
-                <div class="tab flex flex-col items-center cursor-pointer" data-tab="completed-orders">
-                    <img src="{{ asset('images/completed.png') }}" class="w-8 h-8" alt="Completed Orders">
-                    <span>Completed Orders</span>
-                </div>
-                <div class="tab flex flex-col items-center cursor-pointer" data-tab="cancelled-items">
-                    <img src="{{ asset('images/cancelled.png') }}" class="w-8 h-8" alt="Cancelled Items">
-                    <span>Cancelled Items</span>
-                </div>
-            </div>
+            <div class="flex overflow-x-auto sm:justify-between border-b pb-2 text-gray-500 text-sm scrollbar-hide">
+        <div class="tab flex flex-col items-center cursor-pointer active min-w-[80px] px-2" data-tab="to-pay">
+            <img src="{{ asset('images/topay.png') }}" class="w-7 h-7 sm:w-8 sm:h-8" alt="To Pay">
+            <span>To Pay</span>
+        </div>
+        <div class="tab flex flex-col items-center cursor-pointer min-w-[80px] px-2" data-tab="to-pickup">
+            <img src="{{ asset('images/topickup.png') }}" class="w-7 h-7 sm:w-8 sm:h-8" alt="To Pickup">
+            <span>To Pickup</span>
+        </div>
+        <div class="tab flex flex-col items-center cursor-pointer min-w-[80px] px-2" data-tab="to-receive">
+            <img src="{{ asset('images/toreceive.png') }}" class="w-7 h-7 sm:w-8 sm:h-8" alt="To Receive">
+            <span>To Receive</span>
+        </div>
+        <div class="tab flex flex-col items-center cursor-pointer min-w-[80px] px-2 text-center" data-tab="completed-orders">
+            <img src="{{ asset('images/completed.png') }}" class="w-7 h-7 sm:w-8 sm:h-8" alt="Completed Orders">
+            <span class="leading-tight">Completed</span>
+        </div>
+        <div class="tab flex flex-col items-center cursor-pointer min-w-[80px] px-2 text-center" data-tab="cancelled-items">
+            <img src="{{ asset('images/cancelled.png') }}" class="w-7 h-7 sm:w-8 sm:h-8" alt="Cancelled Items">
+            <span class="leading-tight">Cancelled</span>
+        </div>
+    </div>
 
 
             <!-- to pay -->
@@ -130,32 +133,34 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="order-details mt-4 text-sm space-y-2">
+                        <div class="order-details mt-4 text-sm space-y-4">
+                        <!-- Grid Layout for Order Info -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <p><strong class="text-gray-700">Date of Purchase:</strong> {{$order->ordered_at}}</p>
-                                    <p><strong class="text-gray-700">Seller:</strong>{{$item->artwork->user->full_name}}</p>
-                                    <p><strong class="text-gray-700">Price:</strong> ${{$item->price}}</p>
+                                <div class="space-y-1">
+                                    <p><strong class="text-gray-700">Date of Purchase:</strong> {{ $order->ordered_at }}</p>
+                                    <p><strong class="text-gray-700">Seller:</strong> {{ $item->artwork->user->full_name }}</p>
+                                    <p><strong class="text-gray-700">Price:</strong> ${{ $item->price }}</p>
                                 </div>
-                                <div>
-                                    <p><strong class="text-gray-700">Delivery Method:</strong>{{$order->delivery_method}}</p>
+                                <div class="space-y-1">
+                                    <p><strong class="text-gray-700">Delivery Method:</strong> {{ $order->delivery_method }}</p>
                                     @if($order->delivery_method === 'request delivery')
                                         <p><strong class="text-gray-700">Delivery Fee:</strong> $58</p>
                                     @endif
-                                    <p><strong class="text-gray-700">Total:</strong> ${{$order->total_amount}}</p>
+                                    <p><strong class="text-gray-700">Total:</strong> ${{ $order->total_amount }}</p>
                                 </div>
                             </div>
+                            <!-- Action Buttons -->
                             <div class="flex justify-end space-x-2 mt-4">
-                            @if($order->payment->payment_method === 'gcash'  &&  $order->payment->payment_reference === null && $order->payment->payment_proof === null && $order->payment->payment_date === null)
-                                <button class="btn-primary " data-bs-toggle="modal" data-bs-target="#pay{{$order->id}}">Pay Now</button>
-                            @elseif($order->payment->payment_method === 'cod' || $order->payment->payment_reference !== null && $order->payment->payment_proof !== null && $order->payment->payment_date !== null)
-                                <span class="mt-2 text-gray-500">Waiting for Seller's Approval..</span>
-                            @endif
-                                <button class="btn-outline" data-bs-toggle="modal" data-bs-target="#cancel{{$order->id}}">Cancel Order</button>
-                                <a href="{{route('user', $item->artwork->user->id)}}" class="no-underline btn-outline">Contact Seller</a>
+                                @if($order->payment->payment_method === 'gcash'  &&  $order->payment->payment_reference === null && $order->payment->payment_proof === null && $order->payment->payment_date === null)
+                                    <button class="btn-primary " data-bs-toggle="modal" data-bs-target="#pay{{$order->id}}">Pay Now</button>
+                                @elseif($order->payment->payment_method === 'cod' || $order->payment->payment_reference !== null && $order->payment->payment_proof !== null && $order->payment->payment_date !== null)
+                                    <span class="mt-2 text-gray-500">Waiting for Seller's Approval..</span>
+                                @endif
+                                    <button class="btn-outline" data-bs-toggle="modal" data-bs-target="#cancel{{$order->id}}">Cancel Order</button>
+                                    <a href="{{route('user', $item->artwork->user->id)}}" class="no-underline btn-outline">Contact Seller</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
                     @if($topay->isNotEmpty())
                         {{-- PAY MODAL ======== --}}
@@ -317,7 +322,7 @@
                             <form method="POST" action="{{ route('received-order', $order->id) }}" class="receive-form">
                             @csrf
                             @method('PATCH')
-                                <button type="submit" class="btn-primary">Receive Order</button>
+                                <button type="submit" class="bg-[#6e4d41] btn-primary">Receive Order</button>
                             </form>
                             <a href="{{route('user', $item->artwork->user->id)}}" class="no-underline btn-outline">Contact Seller</a>
                         </div>
@@ -509,6 +514,12 @@
 </section>
 
 
+
+@include('layouts.footer')
+
+
+</body>
+</html>
 <script>
     document.addEventListener('DOMContentLoaded', function() { //tabs sa status
         // Tab switching functionality
@@ -588,8 +599,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 text: "This action will mark the order as received.",
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
+                confirmButtonColor: '#6e4d41',
                 confirmButtonText: 'Confirm',
                 cancelButtonText: 'Cancel'
             }).then((result) => {
@@ -615,8 +625,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 text: "This action will send the information to the seller.",
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
+                confirmButtonColor: '#6e4d41',
                 confirmButtonText: 'Confirm',
                 cancelButtonText: 'Cancel'
             }).then((result) => {
@@ -628,9 +637,3 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
-
-</body>
-<footer>
-    @include('layouts.footer')
-</footer>
-</html>

@@ -13,16 +13,24 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('category')->insert([
-            ['category_name' => 'Paintings'],
-            ['category_name' => 'Drawings'],
-            ['category_name' => 'Sculpture'],
-            ['category_name' => 'Portrait'],
-            ['category_name' => 'Landscape'],
-            ['category_name' => 'Still Life'],
-            ['category_name' => 'Conceptual'],
-            ['category_name' => 'Photography'],
-        ]);
+        $categories = [
+            'Paintings', 'Drawings', 'Sculpture', 'Portrait', 'Landscape', 'Still Life', 'Conceptual', 'Photography',
+            'Renaissance', 'Baroque', 'Rococo', 'Neoclassicism', 'Romanticism',
+            'Realism', 'Impressionism', 'Post-Impressionism', 'Expressionism', 'Fauvism',
+            'Symbolism', 'Art Nouveau', 'Cubism', 'Dada', 'Surrealism',
+            'Abstract', 'Abstract Expressionism', 'Pop Art', 'Minimalism', 'Conceptual Art',
+            'Contemporary', 'Modernism', 'Postmodernism', 'Street Art', 'Graffiti',
+            'Futurism', 'Constructivism', 'Retro', 'Indie', 'Digital Art',
+            'Photorealism', 'Fantasy', 'Naïve Art', 'Outsider Art', 'Installation Art',
+            'Performance Art', 'Nude Art'
+        ];
+
+        foreach ($categories as $category) {
+            DB::table('category')->updateOrInsert(
+                ['category_name' => $category], // Check if category already exists
+                ['created_at' => now(), 'updated_at' => now()]
+            );
+        }
         
     }
 }

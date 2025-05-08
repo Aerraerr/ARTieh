@@ -10,12 +10,11 @@
         <h1 style="font-family:rubik;" class="text-[#6e4d41] ml-5 text-3xl font-bold mb-4">Artwork Management</h1>
         <div class="flex justify-between mb-2">
             <button onclick="toggleModal('upload-modal')" class="border-[#A99476]  w-[120px] border rounded-lg ml-[43%] p-1">&#43; artwork</button>
-            <select id="roleFilter" style="padding-left:10px; height:40px; width:10%;" class="border border-[#A99476]  border rounded-lg">
+            <select id="categoryFilter" style="padding-left:10px; height:40px; width:10%;" class="border border-[#A99476]  border rounded-lg">
                 <option value="">Category</option>
-                <option value="Admin">Paintings</option>
-                <option value="">Drawings</option>
-                <option value="">Drawings</option>
-                <option value="">Sculptures</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                @endforeach
             </select>
             <input type="text" id="orderSearch" style="padding-left:10px; height:40px;" class="border border-[#A99476] mr-8 border text-[#A99476]  rounded-lg w-1/3" placeholder="Search users...">
         </div>
@@ -35,7 +34,7 @@
             <tbody class="divide-y divide-gray-200">
                 @if(Auth::user()->role === 'seller' && $artworks->count() > 0)
                 @foreach($artworks as $artwork)
-                    <tr class="hover:bg-gray-100" data-bs-toggle="modal">
+                    <tr class="hover:bg-gray-100" data-bs-toggle="modal" data-category="{{ $artwork->category->id }}">
                         <td class="text-center py-3 px-4 border-b">{{$artwork->id}}</td>
                         <td class="text-center py-3 px-6 border-b"><img src="{{ asset($artwork->image_path) }}" class="w-[50px] h-[50px] object-cover"></td>
                         <td class="text-center py-3 px-6 border-b">{{ $artwork->artwork_title }}</td>
@@ -44,14 +43,18 @@
                         <td class="text-center py-3 px-6 border-b">₱{{$artwork->price}}</td>
                         <td class="text-center py-3 px-6 border-b">
                             <div class="flex flex-col sm:flex-row gap-2 py-1">
-                                <button class="border px-3 py-1 rounded text-xs hover:bg-[#2E2420] whitespace-nowrap"
+                                <button class="border px-3 h-[26px] rounded text-xs hover:bg-[#2E2420] whitespace-nowrap"
                                     data-bs-toggle="modal" data-bs-target="#updateArtmodal{{ $artwork->id }}">
                                     <img src="{{ asset('images/edit.svg') }}" class="w-4 h-4">
                                 </button>
-                                <button class="border px-3 py-1 rounded text-xs hover:bg-[#2E2420] whitespace-nowrap"
-                                    data-bs-toggle="modal" data-bs-target="#processOrderModal">
-                                    <img src="{{ asset('images/del.svg') }}" class="w-4 h-4">
-                                </button>
+                                <form method="POST" action={{route('removeArtwork', $artwork->id)}}>
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="border px-3 py-1 rounded text-xs hover:bg-[#2E2420] whitespace-nowrap"
+                                        data-bs-toggle="modal" data-bs-target="#processOrderModal">
+                                        <img src="{{ asset('images/del.svg') }}" class="w-4 h-4">
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -92,4 +95,18 @@
       row.style.display = rowText.includes(searchValue) ? "" : "none";
     });
   });
+
+  document.getElementById('categoryFilter').addEventListener('change', function () {
+        const selectedCategory = this.value;
+        const rows = document.querySelectorAll('tr[data-category]');
+
+        rows.forEach(row => {
+            const category = row.getAttribute('data-category');
+            if (!selectedCategory || category === selectedCategory) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
 </script>

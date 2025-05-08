@@ -59,15 +59,14 @@ class User extends Authenticatable
     }
 
     //para sa full name call nalang ining function --full_name--
-    /*public function getFullNameAttribute()
+    public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
-    }*/
+    }
 
     public function getNameAttribute()
     {
-        //return $this->full_name;
-        return "{$this->first_name} {$this->last_name}";
+        return $this->full_name;
     }
     
 

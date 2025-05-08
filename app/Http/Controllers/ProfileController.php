@@ -14,15 +14,15 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    //for logged in only artworks display
+    //for current logged in profile display
     public function showProfile(){
-        $categories = Category::all();  // Fetch all categories
+        $categories = Category::all(); 
 
         $user = Auth::user();
         $artworks = collect();
         $ordered = collect();
 
-        $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+        $notifications = Notification::where('user_id', Auth::id())->latest()->get(); 
         $notificationCount = $notifications->count();
 
         // Fetch artworks only if the user is a seller
@@ -42,15 +42,18 @@ class ProfileController extends Controller
         return view('Mods.profile', compact('user', 'categories', 'artworks', 'ordered', 'notifications', 'notificationCount'));
     }
 
+    // display all users with seller role with artworks
     public function showArtistList()
     {
-        $notifications = Notification::where('user_id', Auth::id())->latest()->get(); // para sa notification
+        $notifications = Notification::where('user_id', Auth::id())->latest()->get(); 
         $notificationCount = $notifications->count();
 
-        $creator = User::where('role', 'seller') //pag seller ang role
-            ->whereHas('artworks') // tas may artworks
-            ->with('artworks') // pede makuwa data hali artworks
-            ->get(); // matik kuwa agad for display
+        // checks if user role is seller and has artworks
+        $creator = User::where('role', 'seller') 
+            ->whereHas('artworks') 
+            ->with('artworks') 
+            ->get(); 
+
         return view('Mods.artists', compact('creator', 'notifications', 'notificationCount'));
     }
 
@@ -64,12 +67,13 @@ class ProfileController extends Controller
                     'artworks.orderItems.order' => function ($query) {
                         $query->whereIn('status_id', [1, 2, 3, 4, 5]);
                     }
-                ]) // pede makuwa data hali artworks and category tables
+                ]) 
                 ->firstOrFail();
+
         return view('Mods.view_artist', compact('artist'));
    }
 
-   //sa artworks tab
+   // current user edit profile function
     public function editProfile(Request $request, $id){
         $profile = User::find($id);
 
@@ -80,11 +84,11 @@ class ProfileController extends Controller
             'email' => 'required|email|unique:users,email,'.$id,
             'phone' => 'nullable|digits_between:8,15',
             'address' => 'nullable|string|max:255',
-            'profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'profile_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10485760',
             'biography'  => 'nullable|string|max:1000'
         ]);
 
-        //update yes
+        //update the data yes
         $profile = User::find($id);
         $profile->first_name=$request->first_name;
         $profile->last_name=$request->last_name;
@@ -104,12 +108,16 @@ class ProfileController extends Controller
             return redirect()->back()->with('error', 'Profile update failed');
         }
     }
+
+    
     public function applySeller()
     {
         $user = Auth::user();
 
         return view('Mods.beSeller', compact('user'));
     }
+
+    // function for user(buyer) apply to be a seller 
     public function beASeller(Request $request, $id)
     {
         $users = User::where('id', $id)->first();
@@ -120,8 +128,8 @@ class ProfileController extends Controller
             'email' => 'required|email|unique:users,email,'.$id,
             'phone' => 'nullable|digits_between:8,15',
             'gcash_no' => 'nullable|digits_between:8,15',
-            'sampleArt' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'validId' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'sampleArt' => 'required|image|mimes:jpeg,png,jpg,gif|max:10485760',
+            'validId' => 'required|image|mimes:jpeg,png,jpg,gif|max:10485760',
             'biography'  => 'nullable|string|max:1000'
         ]);
 

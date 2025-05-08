@@ -1,31 +1,31 @@
+
 @extends('layouts.forSeller')
 @include('Mods.forNotif')
 @include('Mods.forChat')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
 <section>
 <div class="ml-[15%] mr-3 mt-10 p-6 bg-white shadow-lg rounded-lg">
     <h1 style="font-family:rubik;" class="text-[#6e4d41] ml-5 text-3xl font-bold mb-4">Order Management</h1>
     <div style ="margin-left:90%; ">
-        <button class="border border-[#A99476] border rounded-lg"><img src="{{ asset('images/print.svg') }}" class="opacity-70 w-10 h-9"></button>
-        <button class="border border-[#A99476] border rounded-lg"><img src="{{ asset('images/export.svg') }}" class="opacity-70 w-10 h-9"></button>
+        <button id="printBtn" class="border border-[#A99476] border rounded-lg"><img src="{{ asset('images/print.svg') }}" class="opacity-70 w-10 h-9"></button>
+        <button id="exportBtn" class="border border-[#A99476] border rounded-lg"><img src="{{ asset('images/export.svg') }}" class="opacity-70 w-10 h-9"></button>
     </div>
     <div class="flex justify-between mb-4">
         <select id="statusFilter" style="padding-left:10px; height:40px; width:10%; margin-left:53%;" class="border border-[#A99476]  border rounded-lg">
-            <option value="">Status</option>
-            <option value="to pay">to pay</option>
-            <option value="to pickup">to pickup</option>
-             <option value="to receive">to receive</option>
-              <option value="completed">completed</option>
-               <option value="cancelled">cancelled</option>
+            <option value="all">Status</option>
+            @foreach ($status as $stats)
+                <option value="{{ $stats->id }}">{{ $stats->status_name }}</option>
+            @endforeach
         </select>
         <input type="text" id="orderSearch" style="padding-left:10px; height:40px;" class="border border-[#A99476] mr-8 border text-[#A99476]  rounded-lg w-1/3" placeholder="Search users...">
 
     </div>
-    <div class="overflow-x-auto ml-2 mr-2 p-4  rounded-lg">
+    <div id="orderTableContainer" class="overflow-x-auto ml-2 mr-2 p-4  rounded-lg">
         @if($ordered->count() > 0)
             <table id="example" class="w-full border border-gray-300 rounded-lg text-sm text-gray-700">
                 <thead class="bg-[#F3EBE1]   text-gray-600 uppercase text-sm">
@@ -42,7 +42,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200">
                     @foreach($ordered as $order)
-                        <tr class="hover:bg-gray-100" data-bs-toggle="modal">
+                        <tr class="hover:bg-gray-100" data-status="{{ $order->status_id }}" data-bs-toggle="modal">
                             <td class="py-3 px-4 border-b">{{ $order->id }}</td>
                             <td class="py-3 px-6 border-b">
                                 @foreach($order->items as $item)
@@ -102,14 +102,101 @@
     });
 </script>
 
-<script> //search para sa manage orders
-  document.getElementById("orderSearch").addEventListener("input", function () {
-    const searchValue = this.value.toLowerCase();
-    const orderRows = document.querySelectorAll("table tbody tr");
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Search 
+  const orderSearch = document.getElementById("orderSearch");
+  if (orderSearch) {
+    orderSearch.addEventListener("input", function() {
+      const searchValue = this.value.toLowerCase();
+      const orderRows = document.querySelectorAll("table tbody tr");
 
-    orderRows.forEach(row => {
-      const rowText = row.textContent.toLowerCase();
-      row.style.display = rowText.includes(searchValue) ? "" : "none";
+      orderRows.forEach(row => {
+        const rowText = row.textContent.toLowerCase();
+        row.style.display = rowText.includes(searchValue) ? "" : "none";
+      });
     });
-  });
+  }
+
+  // Status filter
+  const statusFilter = document.getElementById('statusFilter');
+  const orderRows = document.querySelectorAll("table tbody tr");
+
+  if (statusFilter && orderRows.length > 0) {
+    statusFilter.addEventListener('change', function() {
+      const selectedStatus = this.value;
+      
+      orderRows.forEach(row => {
+        const statusId = row.getAttribute('data-status');
+        
+        if (selectedStatus === 'all' || statusId === selectedStatus) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    });
+  }
+});
+</script>
+<script>
+// Print
+document.getElementById("printBtn").addEventListener("click", function () {
+    const originalTable = document.querySelector("#example"); 
+    const clonedTable = originalTable.cloneNode(true);
+
+    // Remove the "Action" column 
+    const headerCells = clonedTable.querySelectorAll("thead tr th");
+    if (headerCells.length > 0) headerCells[headerCells.length - 1].remove();
+
+    const bodyRows = clonedTable.querySelectorAll("tbody tr");
+    bodyRows.forEach(row => {
+        if (row.children.length > 0) row.lastElementChild.remove();
+    });
+
+    // Create print wrapper
+    const printContainer = document.createElement("div");
+    printContainer.innerHTML = `
+        <h2 style="text-align:center; font-family: Poppins;">Orders Report</h2>
+        ${clonedTable.outerHTML}
+    `;
+
+    const originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContainer.innerHTML;
+    window.print();
+    document.body.innerHTML = originalContents;
+    location.reload();
+});
+
+// Export PDF
+document.getElementById("exportBtn").addEventListener("click", function () {
+    const originalTable = document.querySelector("#example"); 
+    const clonedTable = originalTable.cloneNode(true);
+
+    // Remove the "Action" column 
+    const headerCells = clonedTable.querySelectorAll("thead tr th");
+    if (headerCells.length > 0) headerCells[headerCells.length - 1].remove();
+
+    const bodyRows = clonedTable.querySelectorAll("tbody tr");
+    bodyRows.forEach(row => {
+        if (row.children.length > 0) row.lastElementChild.remove();
+    });
+
+    // Create container for PDF export
+    const exportContainer = document.createElement("div");
+    exportContainer.innerHTML = `
+        <h2 style="text-align:center; font-family: Poppins;">Orders Report</h2>
+        ${clonedTable.outerHTML}
+    `;
+
+    const opt = {
+        margin:       0.5,
+        filename:     'orders_report.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+    };
+
+    html2pdf().set(opt).from(exportContainer).save();
+});
 </script>

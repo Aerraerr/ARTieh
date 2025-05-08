@@ -1,4 +1,5 @@
 @extends('layouts.forAdmin')
+<link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
 
 <div class="ml-[15%] ml-3 mr-3 mt-10 p-6 bg-white shadow-lg rounded-lg">
   <h1 class="text-[#6e4d41] ml-5 text-3xl font-bold mb-8" style="font-family: 'Rubik', sans-serif;">
@@ -10,37 +11,37 @@
     <!-- Card 1: Total Sellers -->
     <div class="p-5 bg-[#f9f9f9] rounded-lg shadow">
       <h2 class="text-lg font-semibold text-[#6e4d41] mb-2" style="font-family: 'Rubik', sans-serif;">Total Sellers</h2>
-      <p class="text-3xl font-bold text-[#333]">120</p>
+      <p class="text-3xl font-bold text-[#333]">{{$users->where('role', 'seller')->count()}}</p>
     </div>
 
     <!-- Card 2: Total Buyers -->
     <div class="p-5 bg-[#f9f9f9] rounded-lg shadow">
       <h2 class="text-lg font-semibold text-[#6e4d41] mb-2" style="font-family: 'Rubik', sans-serif;">Total Buyers</h2>
-      <p class="text-3xl font-bold text-[#333]">850</p>
+      <p class="text-3xl font-bold text-[#333]">{{$users->where('role', 'buyer')->count()}}</p>
     </div>
 
     <!-- Card 3: Total Artworks -->
     <div class="p-5 bg-[#f9f9f9] rounded-lg shadow">
       <h2 class="text-lg font-semibold text-[#6e4d41] mb-2" style="font-family: 'Rubik', sans-serif;">Total Artworks</h2>
-      <p class="text-3xl font-bold text-[#333]">430</p>
+      <p class="text-3xl font-bold text-[#333]">{{$artworks->count()}}</p>
     </div>
 
     <!-- Card 4: Total Orders -->
     <div class="p-5 bg-[#f9f9f9] rounded-lg shadow">
       <h2 class="text-lg font-semibold text-[#6e4d41] mb-2" style="font-family: 'Rubik', sans-serif;">Total Orders</h2>
-      <p class="text-3xl font-bold text-[#333]">270</p>
+      <p class="text-3xl font-bold text-[#333]">{{$orders->whereIn('status_id', [1,2,3,4])->count()}}</p>
     </div>
 
     <!-- Card 5: Completed Orders -->
     <div class="p-5 bg-[#f9f9f9] rounded-lg shadow">
       <h2 class="text-lg font-semibold text-[#6e4d41] mb-2" style="font-family: 'Rubik', sans-serif;">Completed Orders</h2>
-      <p class="text-3xl font-bold text-[#333]">250</p>
+      <p class="text-3xl font-bold text-[#333]">{{$orders->whereIn('status_id', 5)->count()}}</p>
     </div>
 
     <!-- Card 6: Pending Orders -->
     <div class="p-5 bg-[#f9f9f9] rounded-lg shadow">
       <h2 class="text-lg font-semibold text-[#6e4d41] mb-2" style="font-family: 'Rubik', sans-serif;">Pending Orders</h2>
-      <p class="text-3xl font-bold text-[#333]">20</p>
+      <p class="text-3xl font-bold text-[#333]">{{$orders->whereIn('status_id', 1)->count()}}</p>
     </div>
 
   </div>
@@ -69,7 +70,7 @@ const userAnalyticsChart = new Chart(ctx, {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         datasets: [{
             label: 'Number of Users',
-            data: [50, 60, 75, 100, 120, 140, 160, 180, 210, 230, 250, 270],
+            data: @json($monthlyUserCounts),
             backgroundColor: 'rgba(110, 77, 65, 0.2)', 
             borderColor: '#6e4d41', 
             borderWidth: 2,

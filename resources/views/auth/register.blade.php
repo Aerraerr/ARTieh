@@ -6,6 +6,7 @@
     <title>ARTieg - Registration</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/registration.css') }}">
+    <link rel="website icon" type="png" href="{{ asset('images/websiteicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
 
 </head>
@@ -171,8 +172,8 @@
 
                 <div class="flex justify-between items-center mt-3 ">
                     <label class="ml-1 flex items-center text-[12px] text-gray-600">
-                        <input type="checkbox" class="mr-2 w-3 h-3"> I agree <a href="#" class="ml-1 mr-1 text-[12px] text-[#A99476] hover:underline"> Terms of Service</a>
-                         and <a href="#" class="ml-1 text-[12px] text-[#A99476] hover:underline"> Privacy Policy</a>
+                        <input type="checkbox" class="mr-2 w-3 h-3"> I agree <button data-bs-toggle="modal" data-bs-target="#TermsOfService" class="ml-1 mr-1 text-[12px] text-[#A99476] hover:underline"> Terms of Service</button>
+                         and <button data-bs-toggle="modal" data-bs-target="#PrivacyPolicy" class="ml-1 text-[12px] text-[#A99476] hover:underline"> Privacy Policy</button>
                     </label>
                 </div>
 
@@ -198,6 +199,14 @@
            
         <!-- Your Form or Other Content Here -->
         </div>
+        @if (session('verification_required'))
+        <script>
+            window.addEventListener('DOMContentLoaded', function () {
+                const modal = new bootstrap.Modal(document.getElementById('verificationModal'));
+                modal.show();
+            });
+        </script>
+        @endif
 
     </div>
    
